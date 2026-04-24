@@ -80,7 +80,8 @@ body::after{
 
 /* ── SOCCER BALL (replaces rocket) ── */
 #ball-wrap{
-  position:fixed;right:40px;bottom:40px;
+  position:fixed;right:40px;bottom:-100px;
+  transition:bottom .07s linear;
   z-index:500;pointer-events:none;
   width:54px;height:54px;
   filter:drop-shadow(0 0 18px rgba(255,255,255,0.35)) drop-shadow(0 8px 16px rgba(0,0,0,0.6));
@@ -634,7 +635,7 @@ footer a:hover{color:var(--white);}
       <a href="#contact" class="btn-g">Get in Touch</a>
     </div>
     <div class="chips reveal" data-d="3">
-      <a href="/cdn-cgi/l/email-protection#88e9e5e9e6a6e9ece0e9fec8e9fbfda6edecfd" class="chip">✉ <span class="__cf_email__" data-cfemail="e58488848bcb84818d8493a5849690cb808190">[email&#160;protected]</span></a>
+      <a href="/cdn-cgi/l/email-protection#4021362124282136002133356e252435" class="chip">✉ <span class="__cf_email__" data-cfemail="33524552575b5245735240461d565746">[email&#160;protected]</span></a>
       <a href="https://linkedin.com/in/aman-adhav/" target="_blank" class="chip">↗ LinkedIn</a>
       <a href="https://github.com/amanadhav" target="_blank" class="chip">↗ GitHub</a>
       <span class="chip">◈ Tempe, AZ</span>
@@ -656,20 +657,20 @@ footer a:hover{color:var(--white);}
 <!-- ══ CODE MARQUEE 1 ══ -->
 <div class="code-marquee">
   <div class="marq-track">
-    <span><span class="cm"># Football is life ⚽</span></span>
-    <span><span class="kw">def</span> <span class="fn">score_goal</span><span class="punct">(</span><span class="nm">player</span><span class="punct">,</span> <span class="nm">distance</span><span class="punct">=</span><span class="st">'30m'</span><span class="punct">):</span></span>
-    <span><span class="kw">return</span> <span class="nm">player</span><span class="punct">.</span><span class="fn">shoot</span><span class="punct">(</span><span class="st">'top_corner'</span><span class="punct">)</span></span>
-    <span><span class="kw">async def</span> <span class="fn">deploy</span><span class="punct">():</span> <span class="kw">await</span> <span class="nm">aws</span><span class="punct">.</span><span class="fn">ship</span><span class="punct">()</span></span>
-    <span><span class="cm"># CS @ ASU · 3.81 GPA</span></span>
-    <span><span class="kw">import</span> <span class="nm">tensorflow</span> <span class="kw">as</span> <span class="nm">tf</span></span>
-    <span><span class="nm">model</span><span class="punct">.</span><span class="fn">compile</span><span class="punct">(</span><span class="nm">optimizer</span><span class="punct">=</span><span class="st">'adam'</span><span class="punct">)</span></span>
-    <span><span class="cm"># Football is life ⚽</span></span>
-    <span><span class="kw">def</span> <span class="fn">score_goal</span><span class="punct">(</span><span class="nm">player</span><span class="punct">,</span> <span class="nm">distance</span><span class="punct">=</span><span class="st">'30m'</span><span class="punct">):</span></span>
-    <span><span class="kw">return</span> <span class="nm">player</span><span class="punct">.</span><span class="fn">shoot</span><span class="punct">(</span><span class="st">'top_corner'</span><span class="punct">)</span></span>
-    <span><span class="kw">async def</span> <span class="fn">deploy</span><span class="punct">():</span> <span class="kw">await</span> <span class="nm">aws</span><span class="punct">.</span><span class="fn">ship</span><span class="punct">()</span></span>
-    <span><span class="cm"># CS @ ASU · 3.81 GPA</span></span>
-    <span><span class="kw">import</span> <span class="nm">tensorflow</span> <span class="kw">as</span> <span class="nm">tf</span></span>
-    <span><span class="nm">model</span><span class="punct">.</span><span class="fn">compile</span><span class="punct">(</span><span class="nm">optimizer</span><span class="punct">=</span><span class="st">'adam'</span><span class="punct">)</span></span>
+    <span><span class="cm"># Pedri sees the pass before anyone else does</span></span>
+    <span><span class="kw">class</span> <span class="fn">AttackingMidfielder</span><span class="punct">(</span><span class="nm">Aman</span><span class="punct">):</span></span>
+    <span><span class="nm">vision</span> <span class="punct">=</span> <span class="st">'through_ball'</span><span class="punct">;</span> <span class="nm">first_touch</span> <span class="punct">=</span> <span class="st">'clean'</span></span>
+    <span><span class="kw">def</span> <span class="fn">press_trigger</span><span class="punct">(</span><span class="nm">self</span><span class="punct">,</span> <span class="nm">cue</span><span class="punct">):</span> <span class="kw">return</span> <span class="nm">self</span><span class="punct">.</span><span class="fn">win_ball</span><span class="punct">()</span></span>
+    <span><span class="cm"># Barca without the ball is just 10 outfield players running</span></span>
+    <span><span class="kw">async def</span> <span class="fn">deploy_pipeline</span><span class="punct">():</span> <span class="kw">await</span> <span class="nm">aws</span><span class="punct">.</span><span class="fn">ship</span><span class="punct">()</span></span>
+    <span><span class="nm">xG</span> <span class="punct">=</span> <span class="fn">expected_goals</span><span class="punct">(</span><span class="nm">shot_quality</span><span class="punct">=</span><span class="st">'low_block_curler'</span><span class="punct">)</span></span>
+    <span><span class="cm"># Pedri sees the pass before anyone else does</span></span>
+    <span><span class="kw">class</span> <span class="fn">AttackingMidfielder</span><span class="punct">(</span><span class="nm">Aman</span><span class="punct">):</span></span>
+    <span><span class="nm">vision</span> <span class="punct">=</span> <span class="st">'through_ball'</span><span class="punct">;</span> <span class="nm">first_touch</span> <span class="punct">=</span> <span class="st">'clean'</span></span>
+    <span><span class="kw">def</span> <span class="fn">press_trigger</span><span class="punct">(</span><span class="nm">self</span><span class="punct">,</span> <span class="nm">cue</span><span class="punct">):</span> <span class="kw">return</span> <span class="nm">self</span><span class="punct">.</span><span class="fn">win_ball</span><span class="punct">()</span></span>
+    <span><span class="cm"># Barca without the ball is just 10 outfield players running</span></span>
+    <span><span class="kw">async def</span> <span class="fn">deploy_pipeline</span><span class="punct">():</span> <span class="kw">await</span> <span class="nm">aws</span><span class="punct">.</span><span class="fn">ship</span><span class="punct">()</span></span>
+    <span><span class="nm">xG</span> <span class="punct">=</span> <span class="fn">expected_goals</span><span class="punct">(</span><span class="nm">shot_quality</span><span class="punct">=</span><span class="st">'low_block_curler'</span><span class="punct">)</span></span>
   </div>
 </div>
 
@@ -768,18 +769,18 @@ footer a:hover{color:var(--white);}
 <!-- ══ CODE MARQUEE 2 ══ -->
 <div class="code-marquee">
   <div class="marq-track" style="animation-duration:55s;animation-direction:reverse;">
-    <span><span class="cm"># Messi &gt; Ronaldo · fight me</span></span>
-    <span><span class="kw">class</span> <span class="fn">Midfielder</span><span class="punct">(</span><span class="nm">Player</span><span class="punct">):</span></span>
-    <span><span class="kw">def</span> <span class="fn">pass_ball</span><span class="punct">(</span><span class="nm">self</span><span class="punct">,</span> <span class="nm">target</span><span class="punct">):</span> <span class="kw">return</span> <span class="st">'assist'</span></span>
-    <span><span class="nm">kubectl</span> <span class="fn">apply</span> <span class="punct">-f</span> <span class="st">deploy.yaml</span></span>
-    <span><span class="cm"># shipping at scale since 2023</span></span>
-    <span><span class="kw">SELECT</span> <span class="punct">*</span> <span class="kw">FROM</span> <span class="nm">goals</span> <span class="kw">WHERE</span> <span class="nm">quality</span> <span class="punct">=</span> <span class="st">'worldie'</span></span>
-    <span><span class="cm"># Messi &gt; Ronaldo · fight me</span></span>
-    <span><span class="kw">class</span> <span class="fn">Midfielder</span><span class="punct">(</span><span class="nm">Player</span><span class="punct">):</span></span>
-    <span><span class="kw">def</span> <span class="fn">pass_ball</span><span class="punct">(</span><span class="nm">self</span><span class="punct">,</span> <span class="nm">target</span><span class="punct">):</span> <span class="kw">return</span> <span class="st">'assist'</span></span>
-    <span><span class="nm">kubectl</span> <span class="fn">apply</span> <span class="punct">-f</span> <span class="st">deploy.yaml</span></span>
-    <span><span class="cm"># shipping at scale since 2023</span></span>
-    <span><span class="kw">SELECT</span> <span class="punct">*</span> <span class="kw">FROM</span> <span class="nm">goals</span> <span class="kw">WHERE</span> <span class="nm">quality</span> <span class="punct">=</span> <span class="st">'worldie'</span></span>
+    <span><span class="cm"># Iniesta in the 2010 final — the greatest moment in football</span></span>
+    <span><span class="kw">SELECT</span> <span class="nm">player</span><span class="punct">,</span> <span class="nm">rating</span> <span class="kw">FROM</span> <span class="nm">squad</span> <span class="kw">WHERE</span> <span class="nm">club</span> <span class="punct">=</span> <span class="st">'FC Barcelona'</span> <span class="kw">ORDER BY</span> <span class="nm">rating</span> <span class="kw">DESC</span></span>
+    <span><span class="kw">def</span> <span class="fn">through_ball</span><span class="punct">(</span><span class="nm">self</span><span class="punct">,</span> <span class="nm">defender_line</span><span class="punct">):</span> <span class="kw">return</span> <span class="st">'weight_of_pass == perfect'</span></span>
+    <span><span class="nm">tiki_taka</span><span class="punct">.</span><span class="fn">execute</span><span class="punct">(</span><span class="nm">touches</span><span class="punct">=</span><span class="nm">one</span><span class="punct">,</span> <span class="nm">intensity</span><span class="punct">=</span><span class="st">'100%'</span><span class="punct">)</span></span>
+    <span><span class="cm"># the AM role: link play, create space, arrive late into the box</span></span>
+    <span><span class="nm">formation</span> <span class="punct">=</span> <span class="st">'4-3-3'</span><span class="punct">;</span> <span class="nm">my_role</span> <span class="punct">=</span> <span class="st">'No. 8 — engine of the press'</span></span>
+    <span><span class="cm"># Iniesta in the 2010 final — the greatest moment in football</span></span>
+    <span><span class="kw">SELECT</span> <span class="nm">player</span><span class="punct">,</span> <span class="nm">rating</span> <span class="kw">FROM</span> <span class="nm">squad</span> <span class="kw">WHERE</span> <span class="nm">club</span> <span class="punct">=</span> <span class="st">'FC Barcelona'</span> <span class="kw">ORDER BY</span> <span class="nm">rating</span> <span class="kw">DESC</span></span>
+    <span><span class="kw">def</span> <span class="fn">through_ball</span><span class="punct">(</span><span class="nm">self</span><span class="punct">,</span> <span class="nm">defender_line</span><span class="punct">):</span> <span class="kw">return</span> <span class="st">'weight_of_pass == perfect'</span></span>
+    <span><span class="nm">tiki_taka</span><span class="punct">.</span><span class="fn">execute</span><span class="punct">(</span><span class="nm">touches</span><span class="punct">=</span><span class="nm">one</span><span class="punct">,</span> <span class="nm">intensity</span><span class="punct">=</span><span class="st">'100%'</span><span class="punct">)</span></span>
+    <span><span class="cm"># the AM role: link play, create space, arrive late into the box</span></span>
+    <span><span class="nm">formation</span> <span class="punct">=</span> <span class="st">'4-3-3'</span><span class="punct">;</span> <span class="nm">my_role</span> <span class="punct">=</span> <span class="st">'No. 8 — engine of the press'</span></span>
   </div>
 </div>
 
@@ -877,9 +878,9 @@ footer a:hover{color:var(--white);}
     <div class="contact-layout">
       <div class="contact-side reveal">
         <p class="contact-intro">Open to Summer 2026 internships and full-time opportunities starting Jan 2027 in software engineering, cloud infrastructure, and AI-adjacent roles.</p>
-        <a href="/cdn-cgi/l/email-protection#60010d010e4e0104080116200113154e050415" class="c-card">
+        <a href="/cdn-cgi/l/email-protection#56372037323e37201637252378333223" class="c-card">
           <div class="c-ico">✉</div>
-          <div><div class="c-lbl">Email</div><div class="c-val"><span class="__cf_email__" data-cfemail="abcac6cac585cacfc3caddebcad8de85cecfde">[email&#160;protected]</span></div></div>
+          <div><div class="c-lbl">Email</div><div class="c-val"><span class="__cf_email__" data-cfemail="b4d5c2d5d0dcd5c2f4d5c7c19ad1d0c1">[email&#160;protected]</span></div></div>
         </a>
         <a href="https://linkedin.com/in/aman-adhav/" target="_blank" class="c-card">
           <div class="c-ico">↗</div>
@@ -911,7 +912,7 @@ footer a:hover{color:var(--white);}
 <footer>
   <span>© 2026 Aman Adhav</span>
   <span style="color:var(--dim)">Built with precision</span>
-  <span><a href="/cdn-cgi/l/email-protection#caaba7aba4e4abaea2abbc8aabb9bfe4afaebf"><span class="__cf_email__" data-cfemail="cbaaa6aaa5e5aaafa3aabd8baab8bee5aeafbe">[email&#160;protected]</span></a></span>
+  <span><a href="/cdn-cgi/l/email-protection#90f1e6f1f4f8f1e6d0f1e3e5bef5f4e5"><span class="__cf_email__" data-cfemail="83e2f5e2e7ebe2f5c3e2f0f6ade6e7f6">[email&#160;protected]</span></a></span>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -938,15 +939,16 @@ footer a:hover{color:var(--white);}
 
 /* SOCCER BALL + PROGRESS */
 (()=>{
-  const ball=document.getElementById('ball'),p=document.getElementById('prog');
-  let lastScroll=0,rotation=0,vel=0;
+  const ball=document.getElementById('ball'),wrap=document.getElementById('ball-wrap'),p=document.getElementById('prog');
+  let lastScroll=0,rotation=0;
   const update=()=>{
     const pct=scrollY/Math.max(1,document.body.scrollHeight-innerHeight);
     const delta=scrollY-lastScroll;
-    vel=delta;
-    rotation+=delta*2;
+    rotation+=delta*1.8;
     ball.style.animation='none';
     ball.style.transform='rotate('+rotation+'deg)';
+    // scroll up as user scrolls down — travels from bottom to top
+    wrap.style.bottom=(pct*(innerHeight+160)-100)+'px';
     lastScroll=scrollY;
     p.style.width=(pct*100)+'%';
   };
