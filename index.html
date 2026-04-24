@@ -68,19 +68,110 @@ body::after{
 /* ── STARS ── */
 #stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;}
 
-/* ── ROCKET ── */
-#rocket{
-  position:fixed;right:32px;bottom:-180px;
-  z-index:500;pointer-events:none;
-  filter:drop-shadow(0 0 12px rgba(255,255,255,0.22));
-  transition:bottom .07s linear;
+/* ── GLOBAL CODE BACKGROUND ── */
+#code-bg-global{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:url('code-snippet-bg.png') repeat;
+  background-size:520px auto;
+  opacity:.04;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 20%,transparent 85%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 20%,transparent 85%);
 }
-#rocket svg{width:40px;}
-.fwrap{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;}
-.fl{border-radius:50%;animation:fl .1s ease-in-out infinite alternate;}
-.fl1{width:8px;height:24px;background:linear-gradient(180deg,#fff 0%,#ccc 40%,transparent 100%);}
-.fl2{width:4px;height:12px;background:linear-gradient(180deg,#aaa,transparent);opacity:.5;animation-delay:.05s;}
-@keyframes fl{from{transform:scaleX(1);}to{transform:scaleX(.82) scaleY(1.15);}}
+
+/* ── SOCCER BALL (replaces rocket) ── */
+#ball-wrap{
+  position:fixed;right:40px;bottom:40px;
+  z-index:500;pointer-events:none;
+  width:54px;height:54px;
+  filter:drop-shadow(0 0 18px rgba(255,255,255,0.35)) drop-shadow(0 8px 16px rgba(0,0,0,0.6));
+}
+#ball{
+  width:100%;height:100%;
+  animation:spin 3s linear infinite;
+  transform-origin:center;
+}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+#ball-trail{
+  position:absolute;inset:0;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.15);
+  animation:ripple 1.8s ease-out infinite;
+}
+@keyframes ripple{
+  0%{transform:scale(1);opacity:.8;}
+  100%{transform:scale(2);opacity:0;}
+}
+
+/* ── LOOPING CODE MARQUEE (between sections) ── */
+.code-marquee{
+  position:relative;height:120px;overflow:hidden;
+  border-top:1px solid var(--border-s);
+  border-bottom:1px solid var(--border-s);
+  background:var(--off);
+  mask-image:linear-gradient(90deg,transparent 0%,black 15%,black 85%,transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,black 15%,black 85%,transparent 100%);
+  z-index:1;
+}
+.marq-track{
+  position:absolute;top:50%;left:0;
+  display:flex;gap:80px;
+  white-space:nowrap;
+  animation:marq 40s linear infinite;
+  transform:translateY(-50%);
+  font-family:var(--fm);font-size:.82rem;
+  color:var(--dim);
+}
+.marq-track span{display:inline-flex;align-items:center;gap:14px;}
+.marq-track b{color:var(--white);font-weight:500;}
+.marq-track em{font-style:normal;color:var(--silver);}
+.marq-track .kw{color:#c586c0;font-weight:500;}  /* purple keyword */
+.marq-track .fn{color:#dcdcaa;}  /* yellow function */
+.marq-track .st{color:#ce9178;}  /* orange string */
+.marq-track .nm{color:#9cdcfe;}  /* blue variable */
+.marq-track .cm{color:#6a9955;font-style:italic;} /* green comment */
+.marq-track .punct{color:var(--dim);}
+@keyframes marq{from{transform:translate(0,-50%);}to{transform:translate(-50%,-50%);}}
+
+/* ── FOOTBALL SKILL CODE BLOCK (hero accent) ── */
+.code-block{
+  margin-top:44px;
+  max-width:540px;
+  background:#0a0a0a;
+  border:1px solid var(--border-s);
+  border-radius:14px;
+  overflow:hidden;
+  font-family:var(--fm);
+  font-size:.78rem;line-height:1.7;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+}
+.code-head{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 16px;
+  border-bottom:1px solid var(--border-s);
+  background:rgba(255,255,255,0.02);
+}
+.code-dot{width:10px;height:10px;border-radius:50%;}
+.code-dot.r{background:#ff5f56;}
+.code-dot.y{background:#ffbd2e;}
+.code-dot.g{background:#27c93f;}
+.code-file{margin-left:14px;font-family:var(--fm);font-size:.68rem;color:var(--dim);letter-spacing:.5px;}
+.code-body{padding:18px 22px;color:#d4d4d4;overflow-x:auto;}
+.code-body .kw{color:#c586c0;}
+.code-body .fn{color:#dcdcaa;}
+.code-body .st{color:#ce9178;}
+.code-body .nm{color:#9cdcfe;}
+.code-body .cm{color:#6a9955;font-style:italic;}
+.code-body .num{color:#b5cea8;}
+.code-body .pt{color:#808080;}
+.code-line{display:block;}
+.code-indent{display:inline-block;width:1.6em;}
+
+/* Typing cursor for code */
+.code-cursor{
+  display:inline-block;width:7px;height:1em;vertical-align:middle;
+  background:var(--white);margin-left:3px;
+  animation:blink 1s step-end infinite;
+}
+@keyframes blink{50%{opacity:0;}}
 
 /* ─────────────────────────────────────────
    NAV
@@ -478,7 +569,7 @@ footer a:hover{color:var(--white);}
   .edu-card{grid-template-columns:1fr;}
   .edu-meta{text-align:left;flex-direction:row;align-items:center;gap:24px;}
   .frow{grid-template-columns:1fr;}
-  #rocket{right:14px;}
+  #ball-wrap{right:14px;bottom:14px;width:44px;height:44px;}
   footer{flex-direction:column;gap:8px;text-align:center;padding:22px;}
 }
 </style>
@@ -489,32 +580,28 @@ footer a:hover{color:var(--white);}
 <canvas id="stars"></canvas>
 <div id="prog"></div>
 
-<!-- ROCKET -->
-<div id="rocket">
-  <div class="fwrap">
-    <div class="fl fl1"></div>
-    <div class="fl fl2"></div>
-  </div>
-  <svg viewBox="0 0 48 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M24 8C14 8 9 26 9 44V74H39V44C39 26 34 8 24 8Z" fill="#0a0a0a" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-    <path d="M24 8C19 8 13 22 11 36L15 36C17 24 21 12 24 8Z" fill="rgba(255,255,255,0.08)"/>
-    <path d="M24 8C19 8 12 18 10 28H38C36 18 29 8 24 8Z" fill="url(#cg)"/>
-    <circle cx="24" cy="44" r="8.5" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-    <circle cx="24" cy="44" r="5" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)" stroke-width=".8"/>
-    <ellipse cx="22" cy="42" rx="1.8" ry="1.2" fill="rgba(255,255,255,0.35)"/>
-    <path d="M9 58L2 78L9 70Z" fill="url(#fg)" opacity=".8"/>
-    <path d="M39 58L46 78L39 70Z" fill="url(#fg)" opacity=".8"/>
-    <rect x="17" y="74" width="14" height="7" rx="2" fill="#050505" stroke="rgba(255,255,255,0.15)" stroke-width=".8"/>
-    <line x1="9" y1="36" x2="39" y2="36" stroke="rgba(255,255,255,0.08)" stroke-width=".7"/>
-    <line x1="9" y1="56" x2="39" y2="56" stroke="rgba(255,255,255,0.08)" stroke-width=".7"/>
-    <defs>
-      <linearGradient id="cg" x1="24" y1="8" x2="24" y2="28" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#777"/>
-      </linearGradient>
-      <linearGradient id="fg" x1="0" y1="58" x2="0" y2="78" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/><stop offset="100%" stop-color="rgba(255,255,255,0.12)"/>
-      </linearGradient>
-    </defs>
+<!-- GLOBAL CODE BACKGROUND -->
+<div id="code-bg-global"></div>
+
+<!-- SOCCER BALL -->
+<div id="ball-wrap">
+  <div id="ball-trail"></div>
+  <svg id="ball" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="32" cy="32" r="30" fill="#ffffff" stroke="#111" stroke-width="1"/>
+    <!-- Center pentagon -->
+    <polygon points="32,18 42,25 38,37 26,37 22,25" fill="#0a0a0a"/>
+    <!-- Connecting lines to outer pentagons -->
+    <line x1="32" y1="18" x2="32" y2="6" stroke="#0a0a0a" stroke-width="1.5"/>
+    <line x1="42" y1="25" x2="54" y2="20" stroke="#0a0a0a" stroke-width="1.5"/>
+    <line x1="38" y1="37" x2="48" y2="50" stroke="#0a0a0a" stroke-width="1.5"/>
+    <line x1="26" y1="37" x2="16" y2="50" stroke="#0a0a0a" stroke-width="1.5"/>
+    <line x1="22" y1="25" x2="10" y2="20" stroke="#0a0a0a" stroke-width="1.5"/>
+    <!-- Outer edge pentagons (partial) -->
+    <path d="M32 6 L22 4 L14 10 L10 20" stroke="#0a0a0a" stroke-width="1.2" fill="none"/>
+    <path d="M32 6 L42 4 L50 10 L54 20" stroke="#0a0a0a" stroke-width="1.2" fill="none"/>
+    <path d="M54 20 L60 30 L58 42 L48 50" stroke="#0a0a0a" stroke-width="1.2" fill="none"/>
+    <path d="M48 50 L36 58 L28 58 L16 50" stroke="#0a0a0a" stroke-width="1.2" fill="none"/>
+    <path d="M16 50 L6 42 L4 30 L10 20" stroke="#0a0a0a" stroke-width="1.2" fill="none"/>
   </svg>
 </div>
 
@@ -547,8 +634,8 @@ footer a:hover{color:var(--white);}
       <a href="#contact" class="btn-g">Get in Touch</a>
     </div>
     <div class="chips reveal" data-d="3">
-      <a href="mailto:avadhav@asu.edu" class="chip">✉ avadhav@asu.edu</a>
-      <a href="https://linkedin.com/in/aman-adhav" target="_blank" class="chip">↗ LinkedIn</a>
+      <a href="/cdn-cgi/l/email-protection#88e9e5e9e6a6e9ece0e9fec8e9fbfda6edecfd" class="chip">✉ <span class="__cf_email__" data-cfemail="e58488848bcb84818d8493a5849690cb808190">[email&#160;protected]</span></a>
+      <a href="https://linkedin.com/in/aman-adhav/" target="_blank" class="chip">↗ LinkedIn</a>
       <a href="https://github.com/amanadhav" target="_blank" class="chip">↗ GitHub</a>
       <span class="chip">◈ Tempe, AZ</span>
     </div>
@@ -563,6 +650,26 @@ footer a:hover{color:var(--white);}
     <div class="stat reveal" data-d="1"><div class="stat-n">200<sup>+</sup></div><div class="stat-l">Students taught as TA</div></div>
     <div class="stat reveal" data-d="2"><div class="stat-n">4<sup></sup></div><div class="stat-l">Shipped projects</div></div>
     <div class="stat reveal" data-d="3"><div class="stat-n">Dec<sup>'26</sup></div><div class="stat-l">Graduating</div></div>
+  </div>
+</div>
+
+<!-- ══ CODE MARQUEE 1 ══ -->
+<div class="code-marquee">
+  <div class="marq-track">
+    <span><span class="cm"># Football is life ⚽</span></span>
+    <span><span class="kw">def</span> <span class="fn">score_goal</span><span class="punct">(</span><span class="nm">player</span><span class="punct">,</span> <span class="nm">distance</span><span class="punct">=</span><span class="st">'30m'</span><span class="punct">):</span></span>
+    <span><span class="kw">return</span> <span class="nm">player</span><span class="punct">.</span><span class="fn">shoot</span><span class="punct">(</span><span class="st">'top_corner'</span><span class="punct">)</span></span>
+    <span><span class="kw">async def</span> <span class="fn">deploy</span><span class="punct">():</span> <span class="kw">await</span> <span class="nm">aws</span><span class="punct">.</span><span class="fn">ship</span><span class="punct">()</span></span>
+    <span><span class="cm"># CS @ ASU · 3.81 GPA</span></span>
+    <span><span class="kw">import</span> <span class="nm">tensorflow</span> <span class="kw">as</span> <span class="nm">tf</span></span>
+    <span><span class="nm">model</span><span class="punct">.</span><span class="fn">compile</span><span class="punct">(</span><span class="nm">optimizer</span><span class="punct">=</span><span class="st">'adam'</span><span class="punct">)</span></span>
+    <span><span class="cm"># Football is life ⚽</span></span>
+    <span><span class="kw">def</span> <span class="fn">score_goal</span><span class="punct">(</span><span class="nm">player</span><span class="punct">,</span> <span class="nm">distance</span><span class="punct">=</span><span class="st">'30m'</span><span class="punct">):</span></span>
+    <span><span class="kw">return</span> <span class="nm">player</span><span class="punct">.</span><span class="fn">shoot</span><span class="punct">(</span><span class="st">'top_corner'</span><span class="punct">)</span></span>
+    <span><span class="kw">async def</span> <span class="fn">deploy</span><span class="punct">():</span> <span class="kw">await</span> <span class="nm">aws</span><span class="punct">.</span><span class="fn">ship</span><span class="punct">()</span></span>
+    <span><span class="cm"># CS @ ASU · 3.81 GPA</span></span>
+    <span><span class="kw">import</span> <span class="nm">tensorflow</span> <span class="kw">as</span> <span class="nm">tf</span></span>
+    <span><span class="nm">model</span><span class="punct">.</span><span class="fn">compile</span><span class="punct">(</span><span class="nm">optimizer</span><span class="punct">=</span><span class="st">'adam'</span><span class="punct">)</span></span>
   </div>
 </div>
 
@@ -658,6 +765,24 @@ footer a:hover{color:var(--white);}
   </div>
 </section>
 
+<!-- ══ CODE MARQUEE 2 ══ -->
+<div class="code-marquee">
+  <div class="marq-track" style="animation-duration:55s;animation-direction:reverse;">
+    <span><span class="cm"># Messi &gt; Ronaldo · fight me</span></span>
+    <span><span class="kw">class</span> <span class="fn">Midfielder</span><span class="punct">(</span><span class="nm">Player</span><span class="punct">):</span></span>
+    <span><span class="kw">def</span> <span class="fn">pass_ball</span><span class="punct">(</span><span class="nm">self</span><span class="punct">,</span> <span class="nm">target</span><span class="punct">):</span> <span class="kw">return</span> <span class="st">'assist'</span></span>
+    <span><span class="nm">kubectl</span> <span class="fn">apply</span> <span class="punct">-f</span> <span class="st">deploy.yaml</span></span>
+    <span><span class="cm"># shipping at scale since 2023</span></span>
+    <span><span class="kw">SELECT</span> <span class="punct">*</span> <span class="kw">FROM</span> <span class="nm">goals</span> <span class="kw">WHERE</span> <span class="nm">quality</span> <span class="punct">=</span> <span class="st">'worldie'</span></span>
+    <span><span class="cm"># Messi &gt; Ronaldo · fight me</span></span>
+    <span><span class="kw">class</span> <span class="fn">Midfielder</span><span class="punct">(</span><span class="nm">Player</span><span class="punct">):</span></span>
+    <span><span class="kw">def</span> <span class="fn">pass_ball</span><span class="punct">(</span><span class="nm">self</span><span class="punct">,</span> <span class="nm">target</span><span class="punct">):</span> <span class="kw">return</span> <span class="st">'assist'</span></span>
+    <span><span class="nm">kubectl</span> <span class="fn">apply</span> <span class="punct">-f</span> <span class="st">deploy.yaml</span></span>
+    <span><span class="cm"># shipping at scale since 2023</span></span>
+    <span><span class="kw">SELECT</span> <span class="punct">*</span> <span class="kw">FROM</span> <span class="nm">goals</span> <span class="kw">WHERE</span> <span class="nm">quality</span> <span class="punct">=</span> <span class="st">'worldie'</span></span>
+  </div>
+</div>
+
 <!-- ══ PROJECTS ══ -->
 <section id="projects">
   <div class="s-in">
@@ -752,13 +877,13 @@ footer a:hover{color:var(--white);}
     <div class="contact-layout">
       <div class="contact-side reveal">
         <p class="contact-intro">Open to Summer 2026 internships and full-time opportunities starting Jan 2027 in software engineering, cloud infrastructure, and AI-adjacent roles.</p>
-        <a href="mailto:avadhav@asu.edu" class="c-card">
+        <a href="/cdn-cgi/l/email-protection#60010d010e4e0104080116200113154e050415" class="c-card">
           <div class="c-ico">✉</div>
-          <div><div class="c-lbl">Email</div><div class="c-val">avadhav@asu.edu</div></div>
+          <div><div class="c-lbl">Email</div><div class="c-val"><span class="__cf_email__" data-cfemail="abcac6cac585cacfc3caddebcad8de85cecfde">[email&#160;protected]</span></div></div>
         </a>
-        <a href="https://linkedin.com/in/aman-adhav" target="_blank" class="c-card">
+        <a href="https://linkedin.com/in/aman-adhav/" target="_blank" class="c-card">
           <div class="c-ico">↗</div>
-          <div><div class="c-lbl">LinkedIn</div><div class="c-val">linkedin.com/in/aman-adhav</div></div>
+          <div><div class="c-lbl">LinkedIn</div><div class="c-val">linkedin.com/in/aman-adhav/</div></div>
         </a>
         <a href="https://github.com/amanadhav" target="_blank" class="c-card">
           <div class="c-ico">↗</div>
@@ -786,10 +911,10 @@ footer a:hover{color:var(--white);}
 <footer>
   <span>© 2026 Aman Adhav</span>
   <span style="color:var(--dim)">Built with precision</span>
-  <span><a href="mailto:avadhav@asu.edu">avadhav@asu.edu</a></span>
+  <span><a href="/cdn-cgi/l/email-protection#caaba7aba4e4abaea2abbc8aabb9bfe4afaebf"><span class="__cf_email__" data-cfemail="cbaaa6aaa5e5aaafa3aabd8baab8bee5aeafbe">[email&#160;protected]</span></a></span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* STARS */
 (()=>{
   const c=document.getElementById('stars'),ctx=c.getContext('2d');
@@ -811,12 +936,18 @@ footer a:hover{color:var(--white);}
   (function loop(){cx+=(tx-cx)*.08;cy+=(ty-cy)*.08;sp.style.left=cx+'px';sp.style.top=cy+'px';requestAnimationFrame(loop);})();
 })();
 
-/* ROCKET + PROGRESS */
+/* SOCCER BALL + PROGRESS */
 (()=>{
-  const r=document.getElementById('rocket'),p=document.getElementById('prog');
+  const ball=document.getElementById('ball'),p=document.getElementById('prog');
+  let lastScroll=0,rotation=0,vel=0;
   const update=()=>{
     const pct=scrollY/Math.max(1,document.body.scrollHeight-innerHeight);
-    r.style.bottom=(pct*(innerHeight+240)-180)+'px';
+    const delta=scrollY-lastScroll;
+    vel=delta;
+    rotation+=delta*2;
+    ball.style.animation='none';
+    ball.style.transform='rotate('+rotation+'deg)';
+    lastScroll=scrollY;
     p.style.width=(pct*100)+'%';
   };
   addEventListener('scroll',update,{passive:true});
