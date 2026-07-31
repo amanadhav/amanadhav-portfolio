@@ -327,6 +327,8 @@ h1.hero-name:hover .hollow{
 .proj-badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border:1px solid var(--border);border-radius:999px;font-family:var(--fm);font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--white);}
 .proj-badge::before{content:'★';font-size:.7rem;}
 .proj-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.rec-video{margin-top:18px;max-width:640px;aspect-ratio:16/9;border:1px solid var(--border-s);border-radius:12px;overflow:hidden;background:#000;}
+.rec-video iframe{width:100%;height:100%;display:block;border:0;}
 
 /* ─────────────────────────────────────────
    SECTION SCAFFOLD
@@ -694,6 +696,7 @@ footer a:hover{color:var(--white);}
           <div class="rec-title">Featured Developer, Kiro Developer Spotlight</div>
           <div class="rec-sub">LIVESTREAM · OFFICIAL KIRO (AWS) YOUTUBE CHANNEL · JULY 2026</div>
           <p class="rec-desc">Walked through AllVoice's architecture and a live code review of the agent pipeline on air.</p>
+          <div class="rec-video"><iframe src="https://www.youtube-nocookie.com/embed/ktpKOuWAbO8?start=129" title="Kiro Developer Spotlight — AllVoice" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
         </div>
       </div>
     </div>
@@ -849,7 +852,7 @@ footer a:hover{color:var(--white);}
         <div class="proj-meta">Kiro Spark Challenge (AWS) · April 2026</div>
         <p class="proj-desc">Voice-controlled Chrome extension that lets blind and low-vision users operate the browser and AI tools entirely by speech. I owned the pipeline architecture and agent orchestration: a 6-stage voice-to-action pipeline with a mandatory Ethics Logic Gate at stage 3 — a pure function that blocks password, PII, and payment-field actions before anything executes. Built spec-first in Kiro with 5 steering files, 8 agent hooks, MCP for live web access, and 103 automated tests, all in 24 hours.</p>
         <div class="proj-pills"><span class="proj-pill">JavaScript</span><span class="proj-pill">Chrome Extensions API</span><span class="proj-pill">Kiro</span><span class="proj-pill">MCP</span><span class="proj-pill">Claude API</span><span class="proj-pill">Web Speech API</span></div>
-        <div class="proj-links"><a href="https://github.com/amanadhav/AllVoice" target="_blank" class="chip">↗ GitHub</a></div>
+        <div class="proj-links"><a href="https://github.com/amanadhav/AllVoice" target="_blank" class="chip">↗ GitHub</a><a href="https://www.youtube.com/watch?v=ktpKOuWAbO8&amp;t=129s" target="_blank" class="chip">↗ Kiro Developer Spotlight</a></div>
       </div>
 
       <div class="proj-card reveal" data-d="1">
