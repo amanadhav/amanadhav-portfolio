@@ -10,17 +10,31 @@
 :root{
   --black:#000000;--off:#050505;--charcoal:#0d0d0d;
   --surface:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.14);--border-s:rgba(255,255,255,0.08);--border-h:rgba(255,255,255,0.4);
-  --white:#ffffff;--pearl:#e0e0e0;--silver:#9a9a9a;--dim:#5a5a5a;--deep:#2a2a2a;
+  --white:#ffffff;--pearl:#f1f1f1;--silver:#c6c6c6;--dim:#8d8d8d;--deep:#2a2a2a;
   --acc1:oklch(78% 0.13 290);--acc2:oklch(78% 0.13 200);--acc3:oklch(78% 0.13 70);--acc4:oklch(78% 0.13 150);
   --acc1d:oklch(60% 0.16 290);--acc2d:oklch(60% 0.16 200);
-  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
+  --navbg:rgba(0,0,0,0.55);--fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
+[data-theme="light"]{--black:#f6f5f2;--off:#edebe6;--charcoal:#e4e2db;--surface:rgba(0,0,0,0.03);--border:rgba(0,0,0,0.2);--border-s:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.45);--white:#111111;--pearl:#242424;--silver:#454545;--dim:#6f6f6f;--deep:#c8c8c8;--acc1:oklch(50% 0.17 290);--acc2:oklch(50% 0.15 200);--acc3:oklch(56% 0.14 70);--acc4:oklch(52% 0.15 150);--acc1d:oklch(72% 0.09 290);--acc2d:oklch(72% 0.09 200);--navbg:rgba(246,245,242,0.7);}
+[data-theme="light"] #stars{opacity:.14;filter:invert(1);}
+[data-theme="light"] #spot{background:radial-gradient(circle,rgba(0,0,0,0.04) 0%,transparent 60%);mix-blend-mode:multiply;}
+[data-theme="light"] .lg img{filter:none;opacity:.8;}
+[data-theme="light"] .lg:hover img{filter:none;opacity:1;}
+[data-theme="light"] .marq-track .kw{color:#8a2fae;}
+[data-theme="light"] .marq-track .fn{color:#7d6300;}
+[data-theme="light"] .marq-track .st{color:#a83e1c;}
+[data-theme="light"] .marq-track .nm{color:#075e96;}
+[data-theme="light"] .marq-track .cm{color:#3c763c;}
+[data-theme="light"] #code-bg-global,[data-theme="light"] #pitch-bg{filter:invert(1);}
+[data-theme="light"] body::after{opacity:.05;}
+[data-theme="light"] .aurora{opacity:.22;}
+
 html{scroll-behavior:smooth;}
-body{font-family:var(--fb);background:var(--black);color:var(--pearl);overflow-x:hidden;font-weight:300;letter-spacing:.1px;}
+body{font-family:var(--fb);background:var(--black);color:var(--pearl);overflow-x:hidden;font-weight:400;letter-spacing:.1px;}
 a{color:var(--pearl);}
 a:hover{color:var(--white);}
-body::after{content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.03;mix-blend-mode:overlay;}
+body::after{content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.02;mix-blend-mode:overlay;}
 /* ── AURORA BLOBS ── */
 .aurora{position:fixed;width:60vw;height:60vw;border-radius:50%;filter:blur(110px);opacity:.1;pointer-events:none;z-index:0;will-change:transform;}
 #au1{background:radial-gradient(circle,var(--acc1d),transparent 65%);top:-20vw;left:-15vw;animation:drift1 26s ease-in-out infinite alternate;}
@@ -29,14 +43,12 @@ body::after{content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;b
 @keyframes drift2{from{transform:translate(0,0) scale(1.1);}to{transform:translate(-10vw,-12vh) scale(.95);}}
 /* ── SPOTLIGHT ── */
 #spot{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.045) 0%,transparent 60%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);transition:opacity .4s;mix-blend-mode:screen;}
+#pitch-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.035;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1200' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Crect x='30' y='30' width='740' height='1140'/%3E%3Cline x1='30' y1='600' x2='770' y2='600'/%3E%3Ccircle cx='400' cy='600' r='100'/%3E%3Ccircle cx='400' cy='600' r='4' fill='%23ffffff'/%3E%3Crect x='210' y='30' width='380' height='150'/%3E%3Crect x='300' y='30' width='200' height='60'/%3E%3Crect x='210' y='1020' width='380' height='150'/%3E%3Crect x='300' y='1110' width='200' height='60'/%3E%3C/svg%3E") center/min(90vw,700px) auto no-repeat;}
 #prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--acc1),var(--acc2));z-index:1000;transition:width .06s linear;}
 #stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;}
-#code-bg-global{position:fixed;inset:0;z-index:0;pointer-events:none;background:url('code-snippet-bg.png') repeat;background-size:520px auto;opacity:.04;mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 20%,transparent 85%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 20%,transparent 85%);}
-/* ── SOCCER BALL ── */
-#ball-wrap{position:fixed;right:40px;bottom:-100px;transition:bottom .07s linear;z-index:500;pointer-events:none;width:54px;height:54px;filter:drop-shadow(0 0 18px rgba(255,255,255,0.35)) drop-shadow(0 8px 16px rgba(0,0,0,0.6));}
-#ball{width:100%;height:100%;transform-origin:center;}
-#ball-trail{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,0.15);animation:ripple 1.8s ease-out infinite;}
-@keyframes ripple{0%{transform:scale(1);opacity:.8;}100%{transform:scale(2);opacity:0;}}
+#code-bg-global{position:fixed;inset:0;z-index:0;pointer-events:none;background:url('code-snippet-bg.png') repeat;background-size:520px auto;opacity:.03;mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 20%,transparent 85%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 20%,transparent 85%);}
+/* ── SCROLL COMET ── */
+#comet{position:fixed;top:0;right:0;width:150px;height:100vh;z-index:500;pointer-events:none;}
 /* ── CODE MARQUEE ── */
 .code-marquee{position:relative;height:120px;overflow:hidden;border-top:1px solid var(--border-s);border-bottom:1px solid var(--border-s);background:var(--off);mask-image:linear-gradient(90deg,transparent 0%,black 15%,black 85%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0%,black 15%,black 85%,transparent 100%);z-index:1;will-change:transform;transition:transform .15s ease-out;}
 .marq-track{position:absolute;top:50%;left:0;display:flex;gap:80px;white-space:nowrap;animation:marq 40s linear infinite;transform:translateY(-50%);font-family:var(--fm);font-size:.82rem;color:var(--dim);}
@@ -52,17 +64,17 @@ body::after{content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;b
 .logo-marquee{position:relative;overflow:hidden;padding:34px 0;background:var(--black);border-bottom:1px solid var(--border-s);mask-image:linear-gradient(90deg,transparent 0%,black 12%,black 88%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0%,black 12%,black 88%,transparent 100%);z-index:1;}
 .logo-track{display:flex;gap:56px;white-space:nowrap;width:max-content;animation:marqx 45s linear infinite;align-items:center;}
 @keyframes marqx{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-.lg{display:inline-flex;align-items:center;gap:12px;font-family:var(--fm);font-size:.72rem;color:var(--silver);letter-spacing:.5px;transition:color .2s;}
+.lg{display:inline-flex;align-items:center;gap:12px;font-family:var(--fm);font-size:.78rem;color:var(--silver);letter-spacing:.5px;transition:color .2s;}
 .lg img{width:24px;height:24px;object-fit:contain;filter:invert(1) opacity(.75);transition:filter .25s,transform .25s;}
 .lg:hover{color:var(--white);}
 .lg:hover img{filter:invert(1) opacity(1);transform:scale(1.18);}
-@media(prefers-reduced-motion:reduce){.marq-track,.logo-track,#ball,.eyebrow-pulse,.aurora{animation:none!important;}}
+@media(prefers-reduced-motion:reduce){.marq-track,.logo-track,.eyebrow-pulse,.aurora{animation:none!important;}#comet{display:none;}}
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:600;height:68px;padding:0 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.55);backdrop-filter:blur(32px) saturate(1.4);-webkit-backdrop-filter:blur(32px) saturate(1.4);border-bottom:1px solid var(--border-s);}
+nav{position:fixed;top:0;left:0;right:0;z-index:600;height:68px;padding:0 48px;display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--navbg);backdrop-filter:blur(32px) saturate(1.4);-webkit-backdrop-filter:blur(32px) saturate(1.4);border-bottom:1px solid var(--border-s);}
 .nav-logo{font-family:var(--fd);font-size:.95rem;font-weight:800;color:var(--white);letter-spacing:-.3px;}
 .nav-logo em{font-style:normal;color:var(--deep);font-weight:400;}
 .nav-links{display:flex;gap:36px;list-style:none;}
-.nav-links a{font-family:var(--fm);font-size:.72rem;color:var(--silver);text-decoration:none;letter-spacing:.5px;transition:color .2s;}
+.nav-links a{font-family:var(--fm);font-size:.84rem;color:var(--silver);text-decoration:none;letter-spacing:.5px;transition:color .2s;}
 .nav-links a:hover,.nav-links a.act{color:var(--white);}
 .nav-btn{padding:9px 20px;border-radius:999px;font-size:.75rem;font-weight:500;background:transparent;color:var(--white);text-decoration:none;border:1px solid var(--border);transition:all .25s;letter-spacing:.3px;font-family:var(--fb);will-change:transform;}
 .nav-btn:hover{background:var(--white);color:var(--black);border-color:var(--white);}
@@ -73,21 +85,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:600;height:68px;padding:0 48px;d
 .eyebrow-pulse{width:6px;height:6px;border-radius:50%;background:var(--acc4);box-shadow:0 0 10px var(--acc4);animation:pulse 2s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
 .hero-mini{display:flex;gap:44px;margin-bottom:30px;}
-.hm-n{font-family:var(--fd);font-size:1.7rem;font-weight:800;letter-spacing:-1px;color:var(--white);line-height:1;}
-.hm-l{font-family:var(--fm);font-size:.6rem;color:var(--dim);margin-top:7px;letter-spacing:1.5px;text-transform:uppercase;}
+.hm-n{font-family:var(--fd);font-size:1.9rem;font-weight:800;letter-spacing:-1px;color:var(--white);line-height:1;}
+.hm-l{font-family:var(--fm);font-size:.72rem;color:var(--dim);margin-top:7px;letter-spacing:1.5px;text-transform:uppercase;}
 h1.hero-name{font-family:var(--fd);font-size:clamp(3.6rem,8.5vw,7.8rem);font-weight:800;line-height:.9;color:var(--white);letter-spacing:-4px;margin-bottom:40px;}
 h1.hero-name .hollow{display:block;background:linear-gradient(100deg,var(--acc1),var(--acc2) 50%,var(--acc1));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 7s linear infinite;}
 @keyframes shimmer{from{background-position:0% 0;}to{background-position:200% 0;}}
-.hero-sub{font-size:.92rem;color:var(--silver);margin-bottom:18px;font-weight:300;letter-spacing:.3px;}
+.hero-sub{font-size:.98rem;color:var(--silver);margin-bottom:18px;font-weight:400;letter-spacing:.3px;}
 .hero-sub strong{color:var(--pearl);font-weight:500;}
-.hero-bio{max-width:520px;font-size:.95rem;line-height:1.85;color:var(--silver);margin-bottom:44px;font-weight:300;}
+.hero-bio{max-width:560px;font-size:1.07rem;line-height:1.85;color:var(--silver);margin-bottom:44px;font-weight:400;}
 .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px;}
 .btn-w{padding:13px 28px;border-radius:999px;font-size:.82rem;font-weight:500;background:var(--white);color:var(--black);text-decoration:none;border:1px solid var(--white);transition:all .25s;font-family:var(--fb);letter-spacing:.2px;will-change:transform;}
 .btn-w:hover{background:transparent;color:var(--white);}
 .btn-g{padding:13px 28px;border-radius:999px;font-size:.82rem;font-weight:500;background:transparent;border:1px solid var(--border);color:var(--pearl);text-decoration:none;transition:all .25s;font-family:var(--fb);will-change:transform;}
 .btn-g:hover{border-color:var(--acc2);color:var(--acc2);}
 .chips{display:flex;gap:10px;flex-wrap:wrap;}
-.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;font-size:.72rem;background:transparent;border:1px solid var(--border-s);color:var(--silver);text-decoration:none;transition:all .25s;font-family:var(--fm);}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;font-size:.85rem;background:transparent;border:1px solid var(--border-s);color:var(--silver);text-decoration:none;transition:all .25s;font-family:var(--fm);}
 .chip:hover{border-color:var(--white);color:var(--white);}
 .hero-photo{position:relative;justify-self:end;}
 .hero-photo::before{content:'';position:absolute;inset:-14px;border-radius:26px;background:linear-gradient(135deg,var(--acc1d),transparent 40%,transparent 60%,var(--acc2d));opacity:.55;filter:blur(22px);z-index:0;}
@@ -100,21 +112,21 @@ h1.hero-name .hollow{display:block;background:linear-gradient(100deg,var(--acc1)
 .stat{padding:56px 32px;text-align:left;border-right:1px solid var(--border-s);position:relative;}
 .stat:last-child{border-right:none;}
 .stat::before{content:'';position:absolute;left:32px;top:44px;width:22px;height:2px;background:var(--sc,var(--acc1));}
-.stat-n{font-family:var(--fd);font-size:2.8rem;font-weight:800;color:var(--white);letter-spacing:-2px;margin-bottom:10px;line-height:1;padding-top:14px;}
+.stat-n{font-family:var(--fd);font-size:3.1rem;font-weight:800;color:var(--white);letter-spacing:-2px;margin-bottom:10px;line-height:1;padding-top:14px;}
 .stat-n sup{font-size:1.3rem;color:var(--dim);font-weight:500;margin-left:2px;vertical-align:super;}
-.stat-l{font-family:var(--fm);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
+.stat-l{font-family:var(--fm);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
 /* ── RECOGNITION ── */
 #recognition{border-top:1px solid var(--border-s);}
-.rec-list{display:flex;flex-direction:column;gap:14px;}
-.rec-card{display:grid;grid-template-columns:auto 1fr auto;gap:32px;padding:34px 36px;border:1px solid var(--border-s);border-radius:18px;background:var(--surface);transition:border-color .3s,transform .3s;align-items:start;}
+.rec-list{display:flex;flex-direction:column;gap:18px;}
+.rec-card{display:grid;grid-template-columns:auto 1fr auto;gap:36px;padding:40px 42px;border:1px solid var(--border-s);border-radius:18px;background:var(--surface);transition:border-color .3s,transform .3s;align-items:start;}
 .rec-card:hover{border-color:var(--border);transform:translateY(-3px);}
 .rec-num{font-family:var(--fm);font-size:.65rem;color:var(--dim);letter-spacing:2px;padding-top:7px;}
-.rec-title{font-family:var(--fd);font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.35;}
-.rec-sub{font-family:var(--fm);font-size:.68rem;color:var(--silver);letter-spacing:.5px;margin-bottom:12px;}
-.rec-desc{font-size:.88rem;line-height:1.8;color:var(--silver);font-weight:300;max-width:640px;}
+.rec-title{font-family:var(--fd);font-size:1.32rem;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.35;}
+.rec-sub{font-family:var(--fm);font-size:.8rem;color:var(--silver);letter-spacing:.5px;margin-bottom:12px;}
+.rec-desc{font-size:1.04rem;line-height:1.8;color:var(--silver);font-weight:400;max-width:640px;}
 .rec-figs{display:flex;flex-direction:column;gap:16px;text-align:right;min-width:110px;}
-.rf-n{font-family:var(--fd);font-size:1.6rem;font-weight:800;letter-spacing:-1px;color:var(--white);line-height:1;}
-.rf-l{font-family:var(--fm);font-size:.56rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-top:5px;}
+.rf-n{font-family:var(--fd);font-size:1.85rem;font-weight:800;letter-spacing:-1px;color:var(--white);line-height:1;}
+.rf-l{font-family:var(--fm);font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-top:5px;}
 .proj-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-family:var(--fm);font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--black);background:linear-gradient(90deg,var(--acc3),var(--acc1));font-weight:500;}
 .proj-badge::before{content:'★';font-size:.7rem;}
 .proj-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
@@ -124,97 +136,97 @@ h1.hero-name .hollow{display:block;background:linear-gradient(100deg,var(--acc1)
 section{position:relative;z-index:1;}
 .s-in{max-width:1180px;margin:0 auto;padding:120px 52px;}
 .s-head{margin-bottom:64px;}
-.s-lbl{font-family:var(--fm);font-size:.65rem;letter-spacing:3px;color:var(--silver);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.s-lbl{font-family:var(--fm);font-size:.72rem;letter-spacing:3px;color:var(--silver);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:16px;}
 .s-lbl::before{content:'';width:18px;height:2px;background:var(--sc,var(--acc1));}
-h2.s-title{font-family:var(--fd);font-size:clamp(2rem,4vw,3.2rem);font-weight:800;color:var(--white);letter-spacing:-1.5px;line-height:1.05;}
+h2.s-title{font-family:var(--fd);font-size:clamp(2.3rem,4vw,3.6rem);font-weight:800;color:var(--white);letter-spacing:-1.5px;line-height:1.05;}
 h2.s-title em{font-style:normal;color:var(--sc,var(--acc1));}
 /* ── EDUCATION ── */
 #education{border-top:1px solid var(--border-s);--sc:var(--acc2);}
-.edu-card{border:1px solid var(--border-s);border-radius:20px;padding:40px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;background:var(--surface);transition:border-color .3s;}
+.edu-card{border:1px solid var(--border-s);border-radius:22px;padding:48px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;background:var(--surface);transition:border-color .3s;}
 .edu-card:hover{border-color:var(--border);}
-.edu-school{font-family:var(--fd);font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.edu-school{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:6px;}
 .edu-deg{font-size:.92rem;color:var(--pearl);margin-bottom:14px;font-weight:400;}
-.edu-course{font-size:.82rem;color:var(--silver);line-height:1.75;max-width:640px;font-weight:300;}
+.edu-course{font-size:.98rem;color:var(--silver);line-height:1.8;max-width:640px;font-weight:400;}
 .edu-course strong{color:var(--pearl);font-weight:500;font-family:var(--fm);font-size:.72rem;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:8px;}
 .edu-meta{text-align:right;display:flex;flex-direction:column;gap:14px;min-width:180px;}
 .edu-gpa{font-family:var(--fd);font-size:2.2rem;font-weight:800;color:var(--white);letter-spacing:-1.5px;line-height:1;}
 .edu-gpa-l{font-family:var(--fm);font-size:.6rem;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
-.edu-date{font-family:var(--fm);font-size:.7rem;color:var(--silver);letter-spacing:1px;}
+.edu-date{font-family:var(--fm);font-size:.76rem;color:var(--silver);letter-spacing:1px;}
 /* ── SKILLS ── */
 #skills{background:var(--black);--sc:var(--acc1);}
 .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-s);border:1px solid var(--border-s);border-radius:20px;overflow:hidden;}
-.sk-cell{background:var(--off);padding:36px 32px;position:relative;overflow:hidden;transition:background .25s;}
+.sk-cell{background:var(--off);padding:40px 36px;position:relative;overflow:hidden;transition:background .25s;}
 .sk-cell:hover{background:var(--charcoal);}
 .sk-num{font-family:var(--fm);font-size:.6rem;color:var(--dim);margin-bottom:14px;letter-spacing:2px;}
-.sk-title{font-family:var(--fd);font-size:.82rem;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;display:flex;align-items:center;gap:9px;}
+.sk-title{font-family:var(--fd);font-size:.92rem;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;display:flex;align-items:center;gap:9px;}
 .sk-title::before{content:'';width:8px;height:8px;border-radius:2px;background:var(--kc,var(--acc1));flex-shrink:0;}
 .tags{display:flex;flex-wrap:wrap;gap:6px;}
-.tag{padding:4px 11px;border-radius:4px;font-size:.72rem;background:transparent;border:1px solid var(--border-s);color:var(--silver);font-family:var(--fm);transition:all .15s;}
+.tag{padding:5px 12px;border-radius:5px;font-size:.86rem;background:transparent;border:1px solid var(--border-s);color:var(--silver);font-family:var(--fm);transition:all .15s;}
 .tag:hover{border-color:var(--kc,var(--acc1));color:var(--white);}
 /* ── EXPERIENCE ── */
 #experience{background:var(--black);--sc:var(--acc3);}
-.exp-list{display:flex;flex-direction:column;gap:14px;}
+.exp-list{display:flex;flex-direction:column;gap:18px;}
 .exp-card{border-radius:18px;overflow:hidden;background:var(--surface);border:1px solid var(--border-s);transition:border-color .3s;}
 .exp-card:hover,.exp-card.open{border-color:var(--border);}
-.exp-head{padding:28px 32px;display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;gap:20px;}
-.exp-role{font-family:var(--fd);font-size:1.08rem;font-weight:700;color:var(--white);margin-bottom:6px;}
-.exp-co{font-size:.85rem;color:var(--pearl);font-weight:400;margin-bottom:4px;}
+.exp-head{padding:32px 38px;display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;gap:20px;}
+.exp-role{font-family:var(--fd);font-size:1.28rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.exp-co{font-size:.92rem;color:var(--pearl);font-weight:400;margin-bottom:4px;}
 .exp-co em{font-style:normal;color:var(--silver);}
-.exp-date{font-family:var(--fm);font-size:.68rem;color:var(--dim);}
+.exp-date{font-family:var(--fm);font-size:.78rem;color:var(--dim);}
 .exp-tog{width:28px;height:28px;border-radius:50%;flex-shrink:0;border:1px solid var(--border-s);display:flex;align-items:center;justify-content:center;color:var(--silver);font-size:1rem;margin-top:2px;transition:all .25s;}
 .exp-card.open .exp-tog{transform:rotate(45deg);border-color:var(--white);color:var(--white);}
-.exp-body{max-height:0;overflow:hidden;padding:0 32px;transition:max-height .4s ease,padding .3s;}
-.exp-card.open .exp-body{max-height:1100px;padding:0 32px 28px;}
+.exp-body{max-height:0;overflow:hidden;padding:0 38px;transition:max-height .4s ease,padding .3s;}
+.exp-card.open .exp-body{max-height:1100px;padding:0 38px 32px;}
 .exp-body ul{list-style:none;border-top:1px solid var(--border-s);padding-top:22px;display:flex;flex-direction:column;gap:10px;}
-.exp-body li{padding-left:18px;position:relative;font-size:.88rem;color:var(--pearl);line-height:1.75;font-weight:300;}
+.exp-body li{padding-left:20px;position:relative;font-size:1.03rem;color:var(--pearl);line-height:1.8;font-weight:400;}
 .exp-body li::before{content:'—';position:absolute;left:0;color:var(--dim);font-family:var(--fm);font-size:.75rem;}
 .exp-figs{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
 .ef{padding:10px 16px;border:1px solid var(--border-s);border-radius:12px;background:rgba(255,255,255,0.02);}
-.ef b{display:block;font-family:var(--fd);font-size:1.05rem;font-weight:700;color:var(--white);letter-spacing:-.5px;line-height:1.2;}
-.ef span{font-family:var(--fm);font-size:.56rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);}
+.ef b{display:block;font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--white);letter-spacing:-.5px;line-height:1.2;}
+.ef span{font-family:var(--fm);font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);}
 /* ── PROJECTS ── */
 #projects{background:var(--off);--sc:var(--acc2);}
-.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-.proj-card{border-radius:20px;padding:36px 32px;position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--black);border:1px solid var(--border-s);transition:transform .3s,border-color .3s;min-height:280px;}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+.proj-card{border-radius:22px;padding:42px 38px;position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--black);border:1px solid var(--border-s);transition:transform .3s,border-color .3s;min-height:280px;}
 .proj-card:hover{border-color:var(--border);}
 .proj-card::after{content:'';position:absolute;inset:0;border-radius:20px;background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,0.07),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none;}
 .proj-card:hover::after{opacity:1;}
-.proj-card::before{content:'';position:absolute;top:0;left:32px;right:32px;height:2px;background:linear-gradient(90deg,transparent,var(--pc,var(--acc1)),transparent);opacity:0;transition:opacity .35s;}
-.proj-card:hover::before{opacity:.9;}
+.proj-card::before{content:'';position:absolute;inset:0;border-radius:20px;padding:2px;background:conic-gradient(from var(--ga,0deg) at 50% 50%,transparent 0deg,transparent 150deg,var(--pc,var(--acc1)) 175deg,var(--pc,var(--acc1)) 185deg,transparent 210deg,transparent 360deg);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:0;transition:opacity .3s;pointer-events:none;}
+.proj-card:hover::before{opacity:1;}
 .proj-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
 .proj-n{font-family:var(--fm);font-size:.65rem;color:var(--dim);letter-spacing:2px;}
 .proj-year{font-family:var(--fm);font-size:.65rem;color:var(--dim);letter-spacing:1px;padding:3px 10px;border:1px solid var(--border-s);border-radius:999px;}
-.proj-name{font-family:var(--fd);font-size:1.15rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:8px;}
-.proj-meta{font-family:var(--fm);font-size:.68rem;color:var(--silver);letter-spacing:.5px;margin-bottom:16px;}
-.proj-desc{font-size:.88rem;line-height:1.8;color:var(--silver);flex:1;margin-bottom:20px;font-weight:300;}
+.proj-name{font-family:var(--fd);font-size:1.4rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:8px;}
+.proj-meta{font-family:var(--fm);font-size:.8rem;color:var(--silver);letter-spacing:.5px;margin-bottom:16px;}
+.proj-desc{font-size:1.04rem;line-height:1.8;color:var(--silver);flex:1;margin-bottom:20px;font-weight:400;}
 .proj-figs{display:flex;gap:24px;margin-bottom:20px;padding:14px 20px;border:1px solid var(--border-s);border-radius:14px;background:rgba(255,255,255,0.02);}
-.pf b{display:block;font-family:var(--fd);font-size:1.2rem;font-weight:800;color:var(--pc,var(--acc1));letter-spacing:-.5px;line-height:1.15;}
-.pf span{font-family:var(--fm);font-size:.55rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);}
+.pf b{display:block;font-family:var(--fd);font-size:1.4rem;font-weight:800;color:var(--pc,var(--acc1));letter-spacing:-.5px;line-height:1.15;}
+.pf span{font-family:var(--fm);font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);}
 .proj-pills{display:flex;flex-wrap:wrap;gap:6px;}
-.proj-pill{padding:3px 10px;border-radius:4px;font-size:.68rem;background:transparent;border:1px solid var(--border-s);color:var(--silver);font-family:var(--fm);}
+.proj-pill{padding:4px 11px;border-radius:5px;font-size:.82rem;background:transparent;border:1px solid var(--border-s);color:var(--silver);font-family:var(--fm);}
 /* ── OPEN SOURCE / CERTS ── */
 #opensource{background:var(--off);border-top:1px solid var(--border-s);--sc:var(--acc4);}
 #certifications{background:var(--black);--sc:var(--acc3);}
-.certs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.cert{border-radius:14px;padding:28px;position:relative;background:var(--surface);border:1px solid var(--border-s);transition:border-color .3s,transform .3s;}
+.certs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.cert{border-radius:16px;padding:34px 32px;position:relative;background:var(--surface);border:1px solid var(--border-s);transition:border-color .3s,transform .3s;}
 .cert:hover{border-color:var(--border);transform:translateY(-3px);}
 .cert-n{font-family:var(--fm);font-size:.6rem;color:var(--acc3);letter-spacing:2px;margin-bottom:14px;}
-.cert-title{font-family:var(--fd);font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.4;}
-.cert-by{font-family:var(--fm);font-size:.65rem;color:var(--silver);letter-spacing:1px;text-transform:uppercase;}
+.cert-title{font-family:var(--fd);font-size:1.08rem;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.4;}
+.cert-by{font-family:var(--fm);font-size:.78rem;color:var(--silver);letter-spacing:1px;text-transform:uppercase;}
 /* ── CONTACT ── */
 #contact{background:var(--off);--sc:var(--acc1);}
 .contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:56px;align-items:start;}
 .contact-side{display:flex;flex-direction:column;gap:10px;}
-.contact-intro{font-size:.95rem;line-height:1.9;color:var(--silver);font-weight:300;margin-bottom:28px;}
+.contact-intro{font-size:1.06rem;line-height:1.9;color:var(--silver);font-weight:400;margin-bottom:28px;}
 .c-card{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:12px;background:var(--surface);border:1px solid var(--border-s);text-decoration:none;transition:all .25s;}
 .c-card:hover{border-color:var(--white);transform:translateX(4px);}
 .c-ico{width:34px;height:34px;border-radius:8px;background:transparent;border:1px solid var(--border-s);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;color:var(--white);}
-.c-lbl{font-family:var(--fm);font-size:.6rem;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
-.c-val{font-size:.87rem;color:var(--pearl);font-weight:500;}
+.c-lbl{font-family:var(--fm);font-size:.72rem;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+.c-val{font-size:.94rem;color:var(--pearl);font-weight:500;}
 .cform{display:flex;flex-direction:column;gap:14px;}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.field label{display:block;font-family:var(--fm);font-size:.6rem;color:var(--silver);margin-bottom:8px;letter-spacing:2px;text-transform:uppercase;}
-.field input,.field textarea{width:100%;padding:13px 16px;border-radius:10px;font-family:var(--fb);font-size:.88rem;font-weight:300;background:var(--surface);border:1px solid var(--border-s);color:var(--pearl);transition:border-color .2s;resize:vertical;}
+.field label{display:block;font-family:var(--fm);font-size:.66rem;color:var(--silver);margin-bottom:8px;letter-spacing:2px;text-transform:uppercase;}
+.field input,.field textarea{width:100%;padding:14px 16px;border-radius:10px;font-family:var(--fb);font-size:.94rem;font-weight:400;background:var(--surface);border:1px solid var(--border-s);color:var(--pearl);transition:border-color .2s;resize:vertical;}
 .field input::placeholder,.field textarea::placeholder{color:var(--dim);}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--acc2);}
 .fsub{padding:14px;border-radius:10px;background:var(--white);color:var(--black);font-family:var(--fd);font-size:.88rem;font-weight:700;border:none;cursor:pointer;letter-spacing:.3px;transition:all .25s;will-change:transform;}
@@ -222,6 +234,38 @@ h2.s-title em{font-style:normal;color:var(--sc,var(--acc1));}
 footer{border-top:1px solid var(--border-s);padding:28px 52px;display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:.68rem;color:var(--dim);position:relative;z-index:1;background:var(--black);}
 footer a{color:var(--dim);text-decoration:none;transition:color .2s;}
 footer a:hover{color:var(--white);}
+/* ── BENCHMARKS ── */
+#benchmarks{background:var(--black);border-top:1px solid var(--border-s);--sc:var(--acc2);position:relative;z-index:1;}
+.bench-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.bench-card{border:1px solid var(--border-s);border-radius:18px;padding:36px 38px;background:var(--surface);}
+.bench-card.wide{grid-column:1/-1;}
+.bench-title{font-family:var(--fd);font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.bench-sub{font-family:var(--fm);font-size:.72rem;color:var(--silver);letter-spacing:1px;text-transform:uppercase;margin-bottom:26px;}
+.bar-row{margin-bottom:20px;}
+.bar-top{display:flex;justify-content:space-between;gap:12px;font-size:.95rem;color:var(--pearl);margin-bottom:8px;}
+.bar-top b{font-family:var(--fm);font-weight:500;color:var(--white);}
+.bar{height:10px;border-radius:99px;background:rgba(255,255,255,0.05);border:1px solid var(--border-s);overflow:hidden;}
+[data-theme="light"] .bar{background:rgba(0,0,0,0.05);}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--bc,var(--acc2)),var(--bc2,var(--acc1)));transition:width 1.3s cubic-bezier(.2,.7,.2,1);}
+.bar.dim i{background:var(--deep);}
+.bench-note{font-size:.85rem;color:var(--silver);margin-top:18px;font-family:var(--fm);letter-spacing:.3px;}
+#cqsim{width:100%;height:200px;display:block;border:1px solid var(--border-s);border-radius:12px;background:rgba(255,255,255,0.015);}
+[data-theme="light"] #cqsim{background:rgba(0,0,0,0.02);}
+.cq-stats{display:flex;gap:40px;flex-wrap:wrap;margin-top:20px;}
+.cq-stat b{display:block;font-family:var(--fd);font-size:1.6rem;font-weight:800;color:var(--white);line-height:1.2;}
+.cq-stat b em{font-style:normal;font-size:.9rem;color:var(--dim);}
+.cq-stat b.ok{color:var(--acc4);}
+.cq-stat span{font-family:var(--fm);font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);}
+/* ── ALLVOICE PIPELINE ── */
+.pipe{display:flex;align-items:center;gap:5px;margin-bottom:10px;}
+.pnode{flex:1;text-align:center;font-family:var(--fm);font-size:.6rem;letter-spacing:.4px;text-transform:uppercase;color:var(--silver);padding:8px 2px;border:1px solid var(--border-s);border-radius:8px;transition:all .25s;white-space:nowrap;overflow:hidden;}
+.pnode.gate{border-color:color-mix(in oklab,var(--acc3),transparent 40%);color:var(--acc3);}
+.pnode.lit{background:rgba(255,255,255,0.07);color:var(--white);border-color:var(--border-h);}
+[data-theme="light"] .pnode.lit{background:rgba(0,0,0,0.06);}
+.pnode.block{border-color:#ff6060;color:#ff6060;background:rgba(255,96,96,0.08);}
+.pipe-status{font-family:var(--fm);font-size:.68rem;letter-spacing:1px;color:var(--dim);margin-bottom:18px;min-height:1.2em;}
+.pipe-status.ok{color:var(--acc4);}
+.pipe-status.bad{color:#ff6060;}
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease;}
 .reveal.in{opacity:1;transform:none;}
@@ -238,13 +282,17 @@ footer a:hover{color:var(--white);}
   .hero-photo img{max-width:300px;}
   .proj-grid,.skills-grid,.certs{grid-template-columns:1fr;}
   .rec-card{grid-template-columns:1fr;gap:12px;}
+  .bench-grid{grid-template-columns:1fr;}
+  .cq-stats{gap:22px;}
+  .pipe{flex-wrap:wrap;}
+  .pnode{flex:1 1 30%;}
   .rec-figs{flex-direction:row;text-align:left;gap:28px;}
   .contact-layout{grid-template-columns:1fr;}
   .stats-in{grid-template-columns:1fr 1fr;}
   .edu-card{grid-template-columns:1fr;}
   .edu-meta{text-align:left;flex-direction:row;align-items:center;gap:24px;}
   .frow{grid-template-columns:1fr;}
-  #ball-wrap{right:14px;bottom:14px;width:44px;height:44px;}
+  #comet{width:70px;}
   footer{flex-direction:column;gap:8px;text-align:center;padding:22px;}
 }
 </style>
@@ -257,24 +305,9 @@ footer a:hover{color:var(--white);}
 <canvas id="stars"></canvas>
 <div id="prog"></div>
 <div id="code-bg-global"></div>
+<div id="pitch-bg"></div>
 
-<div id="ball-wrap">
-  <div id="ball-trail"></div>
-  <svg id="ball" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="32" cy="32" r="30" fill="#ffffff" stroke="#111" stroke-width="1"/>
-    <polygon points="32,18 42,25 38,37 26,37 22,25" fill="#0a0a0a"/>
-    <line x1="32" y1="18" x2="32" y2="6" stroke="#0a0a0a" stroke-width="1.5"/>
-    <line x1="42" y1="25" x2="54" y2="20" stroke="#0a0a0a" stroke-width="1.5"/>
-    <line x1="38" y1="37" x2="48" y2="50" stroke="#0a0a0a" stroke-width="1.5"/>
-    <line x1="26" y1="37" x2="16" y2="50" stroke="#0a0a0a" stroke-width="1.5"/>
-    <line x1="22" y1="25" x2="10" y2="20" stroke="#0a0a0a" stroke-width="1.5"/>
-    <path d="M32 6 L22 4 L14 10 L10 20" stroke="#0a0a0a" stroke-width="1.2" fill="none"/>
-    <path d="M32 6 L42 4 L50 10 L54 20" stroke="#0a0a0a" stroke-width="1.2" fill="none"/>
-    <path d="M54 20 L60 30 L58 42 L48 50" stroke="#0a0a0a" stroke-width="1.2" fill="none"/>
-    <path d="M48 50 L36 58 L28 58 L16 50" stroke="#0a0a0a" stroke-width="1.2" fill="none"/>
-    <path d="M16 50 L6 42 L4 30 L10 20" stroke="#0a0a0a" stroke-width="1.2" fill="none"/>
-  </svg>
-</div>
+<canvas id="comet"></canvas>
 
 <nav id="nav">
   <div class="nav-logo">Aman Adhav <em>/ Portfolio</em></div>
@@ -287,7 +320,7 @@ footer a:hover{color:var(--white);}
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="#contact" class="nav-btn">Hire me</a>
+  <button id="themeTog" title="Toggle light/dark" style="width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--white);cursor:pointer;font-size:1rem;line-height:1;margin-right:12px;">◐</button><a href="#contact" class="nav-btn">Hire me</a>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -298,11 +331,11 @@ footer a:hover{color:var(--white);}
       <div class="hero-mini reveal" data-d="1">
         <div><div class="hm-n"><span data-count="3.83" data-dec="2">3.83</span></div><div class="hm-l">GPA at ASU</div></div>
         <div><div class="hm-n"><span data-count="6000" data-prefix="$" data-comma="1">$6,000</span></div><div class="hm-l">Grand prize</div></div>
-        <div><div class="hm-n"><span data-count="7">7</span></div><div class="hm-l">Shipped projects</div></div>
+        <div><div class="hm-n"><span data-count="8">8</span></div><div class="hm-l">Shipped projects</div></div>
       </div>
       <h1 class="hero-name reveal" data-d="1"><span class="decode" data-text="Aman">Aman</span><span class="hollow decode" data-text="Adhav.">Adhav.</span></h1>
-      <p class="hero-sub reveal" data-d="2"><strong>Computer Science @ ASU</strong> &nbsp;·&nbsp; Software Engineer &nbsp;·&nbsp; Agentic AI</p>
-      <p class="hero-bio reveal" data-d="2">CS senior building production integrations, agentic AI tooling, and cloud automation. Currently on the Integration &amp; APIs team at ASU Enterprise Technology, where I ship event-driven pipelines, AI agent skills, and CI/CD automation used across engineering teams. Grand Prize winner, Kiro Spark Challenge (AWS).</p>
+      <p class="hero-sub reveal" data-d="2"><strong>Software Engineer</strong> &nbsp;·&nbsp; Agentic AI &amp; Backend &nbsp;·&nbsp; B.S. CS @ ASU, Dec 2026</p>
+      <p class="hero-bio reveal" data-d="2">Software engineer on the Integration &amp; APIs team at ASU Enterprise Technology, shipping production AI agent skills, event-driven pipelines, and cloud automation. Amazon Kiro Challenge Grand Prize and Best in Build — 1st of 50 teams. Available for full-time roles from January 2027.</p>
       <div class="btn-row reveal" data-d="3">
         <a href="#projects" class="btn-w">View Work →</a>
         <a href="#contact" class="btn-g">Get in Touch</a>
@@ -311,6 +344,9 @@ footer a:hover{color:var(--white);}
         <a href="#" id="footer-email" class="chip">✉ Email</a>
         <a href="https://linkedin.com/in/aman-adhav/" target="_blank" class="chip">↗ LinkedIn</a>
         <a href="https://github.com/amanadhav" target="_blank" class="chip">↗ GitHub</a>
+        <a href="Aman_Adhav_SWE_Resume.pdf" download class="chip">⤓ Resume · SWE</a>
+        <a href="Aman_Adhav_AI_Resume.pdf" download class="chip">⤓ Resume · AI</a>
+        <a href="Aman_Adhav_ML_Resume.pdf" download class="chip">⤓ Resume · ML</a>
         <span class="chip">◈ Tempe, AZ · Open to relocation</span>
       </div>
     </div>
@@ -326,7 +362,7 @@ footer a:hover{color:var(--white);}
   <div class="stats-code"></div>
   <div class="stats-in">
     <div class="stat reveal" style="--sc:var(--acc1);"><div class="stat-n"><span data-count="3.83" data-dec="2">3.83</span><sup>/4.0</sup></div><div class="stat-l">GPA at ASU</div></div>
-    <div class="stat reveal" data-d="1" style="--sc:var(--acc2);"><div class="stat-n"><span data-count="6000" data-prefix="$" data-comma="1">$6,000</span></div><div class="stat-l">Hackathon grand prize</div></div>
+    <div class="stat reveal" data-d="1" style="--sc:var(--acc2);"><div class="stat-n"><span data-count="6000" data-prefix="$" data-comma="1">$6,000</span></div><div class="stat-l">Amazon Kiro Challenge · 1st of 50</div></div>
     <div class="stat reveal" data-d="2" style="--sc:var(--acc3);"><div class="stat-n"><span data-count="200">200</span><sup>+</sup></div><div class="stat-l">Students taught as TA</div></div>
     <div class="stat reveal" data-d="3" style="--sc:var(--acc4);"><div class="stat-n">Dec<sup>'26</sup></div><div class="stat-l">Graduating</div></div>
   </div>
@@ -347,7 +383,7 @@ footer a:hover{color:var(--white);}
     <span class="lg"><img src="https://unpkg.com/simple-icons@13/icons/docker.svg" alt="" onerror="this.style.display='none'">Docker</span>
     <span class="lg"><img src="https://unpkg.com/simple-icons@13/icons/postgresql.svg" alt="" onerror="this.style.display='none'">PostgreSQL</span>
     <span class="lg"><img src="https://unpkg.com/simple-icons@13/icons/redis.svg" alt="" onerror="this.style.display='none'">Redis</span>
-    <span class="lg"><img src="https://unpkg.com/simple-icons@13/icons/mysql.svg" alt="" onerror="this.style.display='none'">MySQL</span>
+    <span class="lg"><img src="https://unpkg.com/simple-icons@13/icons/sqlite.svg" alt="" onerror="this.style.display='none'">SQLite</span>
     <span class="lg"><img src="https://unpkg.com/simple-icons@13/icons/supabase.svg" alt="" onerror="this.style.display='none'">Supabase</span>
     <span class="lg"><img src="https://unpkg.com/simple-icons@13/icons/vercel.svg" alt="" onerror="this.style.display='none'">Vercel</span>
     <span class="lg"><img src="https://unpkg.com/simple-icons@13/icons/githubactions.svg" alt="" onerror="this.style.display='none'">GitHub Actions</span>
@@ -372,8 +408,8 @@ footer a:hover{color:var(--white);}
     <div class="edu-card reveal">
       <div>
         <div class="edu-school">Arizona State University</div>
-        <div class="edu-deg">B.S. Computer Science · Tempe, AZ</div>
-        <div class="edu-course"><strong>Relevant Coursework</strong>Machine Learning · iOS Development (Swift/SwiftUI) · Data Structures · Operating Systems · Software Engineering · Distributed Software Development · Cloud Computing</div>
+        <div class="edu-deg">Bachelor of Science in Computer Science · Tempe, AZ</div>
+        <div class="edu-course"><strong>Relevant Coursework</strong>Machine Learning · Software QA &amp; Testing · Databases · iOS Development (Swift/SwiftUI) · Data Structures · Operating Systems · Software Engineering · Cloud Computing<br><br><strong>Capstone (CSE 486)</strong>MyEdMaster — AI-powered Algebra 1 tutoring platform (React, Gemini API, KaTeX). Sponsored project; repo private under NDA.</div>
       </div>
       <div class="edu-meta">
         <div><div class="edu-gpa"><span data-count="3.83" data-dec="2">3.83</span></div><div class="edu-gpa-l">GPA / 4.00</div></div>
@@ -415,25 +451,23 @@ footer a:hover{color:var(--white);}
         <div class="exp-head" onclick="toggleExp(this)">
           <div>
             <div class="exp-role">Software Engineer</div>
-            <div class="exp-co">ASU Enterprise Technology <em>· Integration &amp; APIs · SkySong Building 5</em></div>
+            <div class="exp-co">ASU Enterprise Technology <em>· Integration &amp; APIs Team · Scottsdale, AZ</em></div>
             <div class="exp-date">Mar 2026 — Present</div>
           </div>
           <div class="exp-tog">+</div>
         </div>
         <div class="exp-body">
           <ul>
-            <li>Built two production AI agent skills for an AWS EventBridge event streaming platform: one automating end-to-end publisher/subscriber onboarding across Jira, Terraform, GitHub, and a live event catalog with human approval gates at every write; the other querying a partitioned S3/Athena event archive with partition-aware queries and schema stability analysis</li>
-            <li>Diagnosed and resolved a production outage caused by revoked upstream integration credentials, then traced the root cause to reveal that all calls through that path had been silently failing for months</li>
-            <li>Built serverless data synchronization between an enterprise CRM and an operational data store covering roughly 80,000 student records, including a chunked-batching fix for oversized request URIs</li>
-            <li>Shipped a reusable GitHub Action for static analysis and code quality gates, adopted across team repositories</li>
-            <li>Led decommissioning of roughly 40 legacy integration repositories: Terraform teardown across five environments, GitHub archiving, and Jira tracking end to end</li>
-            <li>Fixed observability gaps in Datadog monitors and added a feature-flagged request pre-filter backed by 32 unit tests</li>
+            <li>Built two production AI agent skills for an AWS EventBridge enterprise event bus: one automating publisher/subscriber onboarding end to end across Jira, Terraform, a live event catalog, and GitHub pull requests with human approval gates at every write; the other running partition-aware Athena queries over the S3 event archive with per-source access control and schema stability analysis</li>
+            <li>Designed layered guardrails so bad agent output cannot ship: Terraform variable validations catch invalid config at plan time, IAM scoped per publisher, Athena access scoped per event source, and approval gates at catalog writes, pull requests, and deploys</li>
+            <li>Authored a Jira-to-EventBridge integration design (design POC): API-Gateway-fronted ingress Lambda, rotation-tolerant shared-secret auth, and privacy-minimal event payloads with enrich-on-demand callbacks for full ticket data</li>
+            <li>Diagnosed and fixed a production chatbot outage caused by revoked upstream integration credentials, then shipped a feature-flagged whitelist pre-filter backed by 32 unit tests</li>
+            <li>Fixed Datadog monitor noise, resolved a URI-too-long failure by chunking Salesforce ID batching, and built a reusable GitHub Action for SonarQube quality gates</li>
+            <li>Decommissioning roughly 40 legacy MuleSoft integration repos: Terraform teardown, GitHub archiving, and Jira tracking end to end</li>
           </ul>
           <div class="exp-figs">
             <div class="ef"><b>2</b><span>Prod agent skills</span></div>
-            <div class="ef"><b>~80K</b><span>Records synced</span></div>
             <div class="ef"><b>~40</b><span>Repos decommissioned</span></div>
-            <div class="ef"><b>5</b><span>Environments</span></div>
             <div class="ef"><b>32</b><span>Unit tests</span></div>
           </div>
         </div>
@@ -441,21 +475,63 @@ footer a:hover{color:var(--white);}
       <div class="exp-card reveal">
         <div class="exp-head" onclick="toggleExp(this)">
           <div>
-            <div class="exp-role">Teaching Assistant — Mathematics</div>
-            <div class="exp-co">Arizona State University <em>· MAT 242 (Calculus III) &amp; MAT 210</em></div>
-            <div class="exp-date">Aug 2023 — Mar 2026</div>
+            <div class="exp-role">Undergraduate Teaching Assistant — Mathematics</div>
+            <div class="exp-co">Arizona State University <em>· MAT 242 (Linear Algebra) · MAT 210 · MAT 266 · MAT 117</em></div>
+            <div class="exp-date">Aug 2024 — Mar 2026</div>
           </div>
           <div class="exp-tog">+</div>
         </div>
         <div class="exp-body">
           <ul>
-            <li>Held weekly office hours and proctored exams for 200+ students across multiple sections</li>
-            <li>Explained multivariable calculus, vector fields, and integration to diverse student cohorts</li>
+            <li>TA, grader, and instructional aide across four math courses: weekly office hours, problem sessions, and graded work with written feedback across multiple concurrent sections</li>
+            <li>Taught linear algebra (MAT 242) for three semesters — vector spaces, eigenvectors, matrix decomposition — the same math behind the SVD factorization deployed in CineMind</li>
           </ul>
           <div class="exp-figs">
             <div class="ef"><b>200+</b><span>Students</span></div>
-            <div class="ef"><b>2.5</b><span>Years</span></div>
-            <div class="ef"><b>2</b><span>Courses</span></div>
+            <div class="ef"><b>4</b><span>Courses</span></div>
+            <div class="ef"><b>3</b><span>Semesters of linear algebra</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="exp-card reveal" data-d="1">
+        <div class="exp-head" onclick="toggleExp(this)">
+          <div>
+            <div class="exp-role">Software Engineer Intern</div>
+            <div class="exp-co">Rachita Infotech <em>· Pune, India · Hybrid</em></div>
+            <div class="exp-date">May 2024 — Aug 2024</div>
+          </div>
+          <div class="exp-tog">+</div>
+        </div>
+        <div class="exp-body">
+          <ul>
+            <li>Built a full-stack app in React, Node.js, and Express that improved internal project-tracking workflows by roughly 15%</li>
+            <li>Designed RESTful APIs over MongoDB with Mongoose; containerized services with Docker and supported deployment to AWS (EC2, S3)</li>
+            <li>Wrote Jest unit tests raising core-module coverage from roughly 60% to roughly 75%; worked in Agile ceremonies tracked in Jira</li>
+          </ul>
+          <div class="exp-figs">
+            <div class="ef"><b>~15%</b><span>Workflow improvement</span></div>
+            <div class="ef"><b>60→75%</b><span>Test coverage</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="exp-card reveal" data-d="2">
+        <div class="exp-head" onclick="toggleExp(this)">
+          <div>
+            <div class="exp-role">Data Science Intern</div>
+            <div class="exp-co">Rachita Infotech <em>· Pune, India · Remote</em></div>
+            <div class="exp-date">Jun 2023 — Aug 2023</div>
+          </div>
+          <div class="exp-tog">+</div>
+        </div>
+        <div class="exp-body">
+          <ul>
+            <li>Built a customer churn prediction model with scikit-learn and XGBoost, reaching roughly 84% accuracy on held-out test data</li>
+            <li>Cleaned and preprocessed large datasets with pandas and SQL, cutting data preparation time by roughly 20%</li>
+            <li>Built Tableau dashboards for team presentations and packaged a Flask model endpoint with Docker</li>
+          </ul>
+          <div class="exp-figs">
+            <div class="ef"><b>~84%</b><span>Model accuracy</span></div>
+            <div class="ef"><b>~20%</b><span>Faster data prep</span></div>
           </div>
         </div>
       </div>
@@ -475,13 +551,13 @@ footer a:hover{color:var(--white);}
         <div class="rec-num">01</div>
         <div>
           <div style="margin-bottom:12px;"><span class="proj-badge">Grand Prize</span></div>
-          <div class="rec-title">Grand Prize + Best in Build, Kiro Spark Challenge</div>
-          <div class="rec-sub">AWS / KIRO-HOSTED 24-HOUR HACKATHON · ASU · APRIL 2026</div>
-          <p class="rec-desc">$6,000 scholarship. Team of 3.</p>
+          <div class="rec-title">Grand Prize + Best in Build, Amazon Kiro Challenge</div>
+          <div class="rec-sub">KIRO SPARK CHALLENGE · 1ST OF 50 TEAMS · ASU · MAY 2026</div>
+          <p class="rec-desc">$6,000 in scholarships with team "21 Brain Cells" (3 members) for AllVoice — Best in Build category winner and highest overall score across 50 ASU teams, with guaranteed interviews with Kiro.</p>
         </div>
         <div class="rec-figs">
-          <div><div class="rf-n"><span data-count="140">140</span>+</div><div class="rf-l">Students</div></div>
-          <div><div class="rf-n"><span data-count="50">50</span></div><div class="rf-l">Teams</div></div>
+          <div><div class="rf-n">1st</div><div class="rf-l">Of 50 teams</div></div>
+          <div><div class="rf-n">$6K</div><div class="rf-l">Scholarships</div></div>
           <div><div class="rf-n">24h</div><div class="rf-l">Build time</div></div>
         </div>
       </div>
@@ -492,6 +568,44 @@ footer a:hover{color:var(--white);}
           <div class="rec-sub">LIVESTREAM · OFFICIAL KIRO (AWS) YOUTUBE CHANNEL · JULY 2026</div>
           <p class="rec-desc">Walked through AllVoice's architecture and a live code review of the agent pipeline on air.</p>
           <div class="rec-video"><iframe src="https://www.youtube-nocookie.com/embed/ktpKOuWAbO8?start=129" title="Kiro Developer Spotlight — AllVoice" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BENCHMARKS ══ -->
+<section id="benchmarks" data-screen-label="Numbers">
+  <div class="s-in" style="padding-top:100px;padding-bottom:100px;">
+    <div class="s-head">
+      <div class="s-lbl reveal">Measured, not claimed</div>
+      <h2 class="s-title reveal">The numbers<em>.</em></h2>
+    </div>
+    <div class="bench-grid">
+      <div class="bench-card reveal">
+        <div class="bench-title">Fine-tuned vs zero-shot</div>
+        <div class="bench-sub">TakeMeter · r/soccer discourse classification</div>
+        <div class="bar-row"><div class="bar-top"><span>DistilBERT, fine-tuned (mine)</span><b><span data-count="69.4" data-dec="1">69.4</span>%</b></div><div class="bar"><i data-w="69.4%" style="--bc:var(--acc2);--bc2:var(--acc1);"></i></div></div>
+        <div class="bar-row"><div class="bar-top"><span>Llama-3.3-70B, zero-shot</span><b><span data-count="38.9" data-dec="1">38.9</span>%</b></div><div class="bar dim"><i data-w="38.9%"></i></div></div>
+        <div class="bench-note">+30.6 points from a 66M-parameter model against a 70B baseline · macro F1 0.68</div>
+      </div>
+      <div class="bench-card reveal" data-d="1">
+        <div class="bench-title">Test coverage, shipped</div>
+        <div class="bench-sub">Every project ships with its receipts</div>
+        <div class="bar-row"><div class="bar-top"><span>Safety gate · multi-agent pipeline</span><b><span data-count="100">100</span>%</b></div><div class="bar"><i data-w="100%" style="--bc:var(--acc4);--bc2:var(--acc2);"></i></div></div>
+        <div class="bar-row"><div class="bar-top"><span>JSON validator · 37/37 tests</span><b><span data-count="99">99</span>%</b></div><div class="bar"><i data-w="99%" style="--bc:var(--acc4);--bc2:var(--acc2);"></i></div></div>
+        <div class="bar-row"><div class="bar-top"><span>Rachita core modules · up from 60%</span><b><span data-count="75">75</span>%</b></div><div class="bar"><i data-w="75%" style="--bc:var(--acc4);--bc2:var(--acc2);"></i></div></div>
+        <div class="bench-note">Plus 103 tests on AllVoice · 71 on CineMind · 32 shipped at work</div>
+      </div>
+      <div class="bench-card wide reveal">
+        <div class="bench-title">ClassQ chaos test — live replay</div>
+        <div class="bench-sub">500 concurrent registrations · one 30-seat section · Redis Lua atomic seat claims</div>
+        <canvas id="cqsim"></canvas>
+        <div class="cq-stats">
+          <div class="cq-stat"><b id="cq-req">0</b><span>Requests fired</span></div>
+          <div class="cq-stat"><b id="cq-seat">0<em>/30</em></b><span>Seats filled</span></div>
+          <div class="cq-stat"><b id="cq-wait">0</b><span>Waitlisted, in order</span></div>
+          <div class="cq-stat"><b class="ok">0</b><span>Double-enrollments</span></div>
         </div>
       </div>
     </div>
@@ -525,63 +639,77 @@ footer a:hover{color:var(--white);}
     </div>
     <div class="proj-grid">
       <div class="proj-card reveal" style="--pc:var(--acc3);">
-        <div class="proj-top"><div class="proj-n">Project · 01</div><div class="proj-badge">Grand Prize Winner</div></div>
+        <div class="proj-top"><div class="proj-n">Project · 01</div><div class="proj-badge">Grand Prize · 1st of 50 Teams</div></div>
         <div class="proj-name">AllVoice</div>
-        <div class="proj-meta">Kiro Spark Challenge (AWS) · April 2026</div>
-        <p class="proj-desc">Voice-controlled Chrome extension that lets blind and low-vision users operate the browser and AI tools entirely by speech. I owned the pipeline architecture and agent orchestration: a 6-stage voice-to-action pipeline with a mandatory Ethics Logic Gate at stage 3 — a pure function that blocks password, PII, and payment-field actions before anything executes. Built spec-first in Kiro with 5 steering files, 8 agent hooks, and MCP for live web access.</p>
-        <div class="proj-figs"><div class="pf"><b>6</b><span>Pipeline stages</span></div><div class="pf"><b>103</b><span>Automated tests</span></div><div class="pf"><b>24h</b><span>Build time</span></div></div>
-        <div class="proj-pills"><span class="proj-pill">JavaScript</span><span class="proj-pill">Chrome Extensions API</span><span class="proj-pill">Kiro</span><span class="proj-pill">MCP</span><span class="proj-pill">Claude API</span><span class="proj-pill">Web Speech API</span></div>
+        <div class="proj-meta">Amazon Kiro Challenge · Grand Prize + Best in Build · May 2026</div>
+        <p class="proj-desc">Voice-controlled Chrome extension that lets blind and low-vision users operate the browser entirely by speech. I owned the pipeline architecture and orchestration: a 6-stage voice-to-action pipeline with a mandatory Ethics Logic Gate at stage 3 — a pure function evaluating 5 privacy and safety rules that blocks password, PII, and payment-field actions before anything touches the page. Built spec-first in Kiro with 5 steering files and 8 agent hooks.</p>
+        <div class="pipe"><div class="pnode">1 · Intent</div><div class="pnode">2 · Observe</div><div class="pnode gate">3 · Ethics Gate</div><div class="pnode">4 · Execute</div><div class="pnode">5 · Respond</div><div class="pnode">6 · Audit</div></div>
+        <div class="pipe-status" id="pipeStatus">LISTENING…</div>
+        <div class="proj-figs"><div class="pf"><b>6</b><span>Pipeline stages</span></div><div class="pf"><b>103</b><span>Automated tests</span></div><div class="pf"><b>5</b><span>Ethics rules</span></div></div>
+        <div class="proj-pills"><span class="proj-pill">TypeScript</span><span class="proj-pill">React 18</span><span class="proj-pill">Chrome Manifest V3</span><span class="proj-pill">Web Speech API</span><span class="proj-pill">Claude API</span><span class="proj-pill">Vitest</span><span class="proj-pill">Kiro</span></div>
         <div class="proj-links"><a href="https://github.com/amanadhav/AllVoice" target="_blank" class="chip">↗ GitHub</a><a href="https://www.youtube.com/watch?v=ktpKOuWAbO8&amp;t=129s" target="_blank" class="chip">↗ Kiro Developer Spotlight</a></div>
       </div>
       <div class="proj-card reveal" data-d="1" style="--pc:var(--acc1);">
-        <div class="proj-top"><div class="proj-n">Project · 02</div><div class="proj-year">Production</div></div>
-        <div class="proj-name">EEL Agent Skills</div>
-        <div class="proj-meta">ASU Enterprise Technology · 2026 · Internal work</div>
-        <p class="proj-desc">Two AI agent skills that automate infrastructure onboarding for an enterprise event bus. The agent parses freeform Slack requests, validates event sources against live config, transitions Jira tickets, edits Terraform across environments, updates an event catalog, and opens a pull request — with deliberate human approval gates rather than full autonomy. Branching logic covers publisher vs subscriber, AWS vs non-AWS sources, and new vs updated integrations.</p>
-        <div class="proj-figs"><div class="pf"><b>2</b><span>Agent skills</span></div><div class="pf"><b>5</b><span>Systems orchestrated</span></div><div class="pf"><b>100%</b><span>Writes gated</span></div></div>
-        <div class="proj-pills"><span class="proj-pill">Kiro</span><span class="proj-pill">AWS EventBridge</span><span class="proj-pill">Terraform</span><span class="proj-pill">Athena</span><span class="proj-pill">S3</span><span class="proj-pill">Jira</span><span class="proj-pill">Agentic AI</span></div>
+        <div class="proj-top"><div class="proj-n">Project · 02</div><div class="proj-year">2026</div></div>
+        <div class="proj-name">Capability Forge</div>
+        <div class="proj-meta">Personal Project · Agentic Browser Automation</div>
+        <p class="proj-desc">Discover once, replay deliberately. An LLM operates a deliberately hostile legacy banking UI — unlabeled inputs, table-based forms, no test IDs — while a recorder produces a typed capability artifact. A separate executor replays that artifact with new parameters and zero model calls. Policy allowlists, schema-validated artifacts, append-only audit logs, and a fenced 3-minute human-takeover lease bound everything the agent can do.</p>
+        <div class="proj-figs"><div class="pf"><b>0</b><span>Model calls on replay</span></div><div class="pf"><b>11</b><span>Replay scenarios</span></div></div>
+        <div class="proj-pills"><span class="proj-pill">Node.js 22</span><span class="proj-pill">Playwright</span><span class="proj-pill">OpenAI API</span><span class="proj-pill">JSON Schema / AJV</span><span class="proj-pill">GitHub Actions</span></div>
+        <div class="proj-links"><a href="https://github.com/amanadhav/capability-forge" target="_blank" class="chip">↗ GitHub</a></div>
       </div>
       <div class="proj-card reveal" style="--pc:var(--acc2);">
-        <div class="proj-top"><div class="proj-n">Project · 03</div><div class="proj-year">Live</div></div>
-        <div class="proj-name">ASU Orbit</div>
-        <div class="proj-meta">Personal Project · 2026</div>
-        <p class="proj-desc">Full-stack housing platform for ASU students: an apartment directory with resident-submitted photos and reviews, a sublease board where listings are tied to verified apartments, and a move-out marketplace. Multi-filter search across move-in date, rent, room type, and diet preference. Every submission routes through an admin moderation queue before going live.</p>
-        <div class="proj-figs"><div class="pf"><b>3</b><span>Marketplaces</span></div><div class="pf"><b>4</b><span>Search filters</span></div><div class="pf"><b>100%</b><span>Moderated</span></div></div>
-        <div class="proj-pills"><span class="proj-pill">Next.js 16</span><span class="proj-pill">React 19</span><span class="proj-pill">TypeScript</span><span class="proj-pill">Tailwind v4</span><span class="proj-pill">Supabase</span><span class="proj-pill">Zod</span><span class="proj-pill">Vercel</span></div>
-        <div class="proj-links"><a href="https://github.com/amanadhav/asu-orbit" target="_blank" class="chip">↗ GitHub</a><a href="https://asu-orbit.vercel.app/" target="_blank" class="chip">↗ Live site</a></div>
+        <div class="proj-top"><div class="proj-n">Project · 03</div><div class="proj-year">2026</div></div>
+        <div class="proj-name">Adversarial Coding Pipeline</div>
+        <div class="proj-meta">Personal Project · Multi-Agent System</div>
+        <p class="proj-desc">The agent proposes; deterministic policy disposes. Four specialized subagents — Architect, Coder (strict TDD), a 3-phase adversarial Reviewer, and a deterministic Safety Gate (pure Python, no LLM, no bypass) — build a production-quality JSON validator. The adversarial review caught 5 real issues in the pipeline's own output, including two P1 vulnerabilities: an arbitrary local file read via file:// schema refs and a recursion crash returning the wrong exit code.</p>
+        <div class="proj-figs"><div class="pf"><b>2</b><span>P1s caught</span></div><div class="pf"><b>37/37</b><span>Tests passing</span></div><div class="pf"><b>99%</b><span>Coverage</span></div></div>
+        <div class="proj-pills"><span class="proj-pill">Python</span><span class="proj-pill">Multi-Agent</span><span class="proj-pill">TDD</span><span class="proj-pill">Deterministic Gates</span></div>
+        <div class="proj-links"><a href="https://github.com/amanadhav/adversarial-coding-pipeline-demo" target="_blank" class="chip">↗ GitHub</a></div>
       </div>
       <div class="proj-card reveal" data-d="1" style="--pc:var(--acc4);">
         <div class="proj-top"><div class="proj-n">Project · 04</div><div class="proj-year">2026</div></div>
         <div class="proj-name">ClassQ</div>
-        <div class="proj-meta">Personal Project · 2026</div>
+        <div class="proj-meta">Personal Project · Distributed Systems</div>
         <p class="proj-desc">Course registration system built to prove it cannot oversell a section. Prerequisite validation via topological sort over a course DAG, Redis Lua atomic scripts to make seat claims race-free, and a transactional outbox pattern to decouple event delivery from the registration write. Provisioned on AWS with Terraform (ECS Fargate, RDS Multi-AZ, ElastiCache, ALB, ECR).</p>
-        <div class="proj-figs"><div class="pf"><b>500</b><span>Concurrent bots</span></div><div class="pf"><b>0</b><span>Sections oversold</span></div><div class="pf"><b>5</b><span>AWS services</span></div></div>
+        <div class="proj-figs"><div class="pf"><b>500</b><span>Concurrent requests</span></div><div class="pf"><b>0</b><span>Double-enrollments</span></div><div class="pf"><b>5</b><span>AWS services</span></div></div>
         <div class="proj-pills"><span class="proj-pill">Redis</span><span class="proj-pill">FastAPI</span><span class="proj-pill">Python</span><span class="proj-pill">Terraform</span><span class="proj-pill">AWS</span><span class="proj-pill">PostgreSQL</span></div>
         <div class="proj-links"><a href="https://github.com/amanadhav/ClassQ" target="_blank" class="chip">↗ GitHub</a></div>
       </div>
       <div class="proj-card reveal" style="--pc:var(--acc1);">
-        <div class="proj-top"><div class="proj-n">Project · 05</div><div class="proj-year">2026</div></div>
-        <div class="proj-name">TripSmart</div>
-        <div class="proj-meta">CSE 335 iOS Capstone · Spring 2026</div>
-        <p class="proj-desc">AI-powered iOS travel itinerary planner built with SwiftUI, MVVM, SwiftData &amp; Google Places/Geocoding APIs. MapKit with custom annotations, weather API, and Claude AI itinerary generation. Save-to-trips persistence with enhanced place detail views.</p>
-        <div class="proj-pills"><span class="proj-pill">SwiftUI</span><span class="proj-pill">SwiftData</span><span class="proj-pill">MapKit</span><span class="proj-pill">Claude API</span><span class="proj-pill">Google Places</span></div>
-        <div class="proj-links"><a href="https://github.com/amanadhav/TripSmart" target="_blank" class="chip">↗ GitHub</a></div>
+        <div class="proj-top"><div class="proj-n">Project · 05</div><div class="proj-year">Live</div></div>
+        <div class="proj-name">ASU Orbit</div>
+        <div class="proj-meta">Personal Project · 2026</div>
+        <p class="proj-desc">Full-stack housing platform for ASU students: an apartment directory with resident-submitted photos and reviews, a scam-resistant sublease board where listings are tied to verified apartments, and a move-out marketplace. Multi-filter search across move-in date, rent, room type, and diet preference. Every submission routes through an admin moderation queue before going live.</p>
+        <div class="proj-figs"><div class="pf"><b>3</b><span>Marketplaces</span></div><div class="pf"><b>4</b><span>Search filters</span></div><div class="pf"><b>100%</b><span>Moderated</span></div></div>
+        <div class="proj-pills"><span class="proj-pill">Next.js 16</span><span class="proj-pill">React 19</span><span class="proj-pill">TypeScript</span><span class="proj-pill">Tailwind v4</span><span class="proj-pill">Supabase</span><span class="proj-pill">Zod</span><span class="proj-pill">Vercel</span></div>
+        <div class="proj-links"><a href="https://github.com/amanadhav/asu-orbit" target="_blank" class="chip">↗ GitHub</a><a href="https://asu-orbit.vercel.app/" target="_blank" class="chip">↗ Live site</a></div>
       </div>
       <div class="proj-card reveal" data-d="1" style="--pc:var(--acc3);">
-        <div class="proj-top"><div class="proj-n">Project · 06</div><div class="proj-year">In progress</div></div>
-        <div class="proj-name">MyEdMaster</div>
-        <div class="proj-meta">CSE 485 Senior Capstone · Scrum Master · Aug 2025 — Present</div>
-        <p class="proj-desc">Gemini-powered adaptive math tutoring chatbot. Led Sprint planning and retrospectives; managed Jira board across 4 sprints. Implemented KaTeX math rendering, session metrics tracking, and Tremor chart theming.</p>
-        <div class="proj-pills"><span class="proj-pill">Gemini API</span><span class="proj-pill">KaTeX</span><span class="proj-pill">React</span><span class="proj-pill">Tremor</span><span class="proj-pill">Jira</span></div>
+        <div class="proj-top"><div class="proj-n">Project · 06</div><div class="proj-year">2026</div></div>
+        <div class="proj-name">TakeMeter</div>
+        <div class="proj-meta">CodePath AI201 · Fine-Tuned Classifier</div>
+        <p class="proj-desc">Fine-tuned DistilBERT classifier that grades r/soccer discourse quality: analysis vs hot take vs reaction. Collected 615 posts via the Arctic Shift API, hand-reviewed a balanced 239-example dataset, and fine-tuned on a Colab T4 — beating a zero-shot Llama-3.3-70B baseline by 30.6 points, with a genuine error analysis of where the model fails. Football and ML in one repo.</p>
+        <div class="proj-figs"><div class="pf"><b>+30.6</b><span>Pts vs 70B zero-shot</span></div><div class="pf"><b>69.4%</b><span>Accuracy</span></div><div class="pf"><b>0.68</b><span>Macro F1</span></div></div>
+        <div class="proj-pills"><span class="proj-pill">Python</span><span class="proj-pill">DistilBERT</span><span class="proj-pill">Hugging Face</span><span class="proj-pill">Gradio</span><span class="proj-pill">Colab</span></div>
+        <div class="proj-links"><a href="https://github.com/amanadhav/ai201-project3-takemeter" target="_blank" class="chip">↗ GitHub</a></div>
       </div>
       <div class="proj-card reveal" style="--pc:var(--acc2);">
-        <div class="proj-top"><div class="proj-n">Project · 07</div><div class="proj-year">2024</div></div>
+        <div class="proj-top"><div class="proj-n">Project · 07</div><div class="proj-year">Live</div></div>
         <div class="proj-name">CineMind</div>
-        <div class="proj-meta">Personal Project · 2024</div>
-        <p class="proj-desc">Movie recommendation engine comparing three approaches head to head: content-based filtering with TF-IDF over TMDB metadata, KNN collaborative filtering, and SVD matrix factorization on MovieLens ratings. An LLM chat layer sits on top so users can ask in plain language instead of using filters. Deployed on Railway.</p>
-        <div class="proj-figs"><div class="pf"><b>3</b><span>Algorithms compared</span></div><div class="pf"><b>1</b><span>LLM chat layer</span></div></div>
-        <div class="proj-pills"><span class="proj-pill">Python</span><span class="proj-pill">scikit-learn</span><span class="proj-pill">pandas</span><span class="proj-pill">SVD</span><span class="proj-pill">TF-IDF</span><span class="proj-pill">LLM</span></div>
+        <div class="proj-meta">Personal Project · Hybrid Recommender</div>
+        <p class="proj-desc">Hybrid movie recommender blending SVD matrix factorization over 100k+ MovieLens ratings (k=50 latent factors) with TF-IDF content similarity. New users are folded into the latent space without retraining, so cold-start picks are still personalized; the full factorization runs in about a second at startup and stays in memory. Next.js frontend on Vercel, Flask REST API on Railway.</p>
+        <div class="proj-figs"><div class="pf"><b>100k+</b><span>Ratings</span></div><div class="pf"><b>k=50</b><span>Latent factors</span></div><div class="pf"><b>71</b><span>Tests</span></div></div>
+        <div class="proj-pills"><span class="proj-pill">Python</span><span class="proj-pill">Flask</span><span class="proj-pill">scikit-learn</span><span class="proj-pill">SciPy (SVD)</span><span class="proj-pill">Next.js 14</span><span class="proj-pill">Railway</span></div>
         <div class="proj-links"><a href="https://github.com/amanadhav/Cinemind" target="_blank" class="chip">↗ GitHub</a><a href="https://cinemind-prod.vercel.app/" target="_blank" class="chip">↗ Live site</a></div>
+      </div>
+      <div class="proj-card reveal" data-d="1" style="--pc:var(--acc4);">
+        <div class="proj-top"><div class="proj-n">Project · 08</div><div class="proj-year">Spring 2026</div></div>
+        <div class="proj-name">TripSmart</div>
+        <div class="proj-meta">CSE 335 iOS Capstone · Solo Build</div>
+        <p class="proj-desc">AI-powered iOS travel planner: trip CRUD persisted with SwiftData, attraction discovery via Google Places, 5-day weather forecasts, and Claude-generated day-by-day itineraries in 10–15 seconds. Strict MVVM with five separated layers, MapKit with color-coded pins and Apple Maps deep links, and production UX patterns — loading, error, and empty states — throughout.</p>
+        <div class="proj-pills"><span class="proj-pill">Swift 5.9</span><span class="proj-pill">SwiftUI</span><span class="proj-pill">SwiftData</span><span class="proj-pill">MapKit</span><span class="proj-pill">Claude API</span><span class="proj-pill">Google Places</span></div>
+        <div class="proj-links"><a href="https://github.com/amanadhav/TripSmart" target="_blank" class="chip">↗ GitHub</a><a href="https://youtu.be/owPVkEs2f7I" target="_blank" class="chip">↗ Demo video</a></div>
       </div>
     </div>
   </div>
@@ -595,12 +723,12 @@ footer a:hover{color:var(--white);}
       <h2 class="s-title reveal">What I work with<em>.</em></h2>
     </div>
     <div class="skills-grid">
-      <div class="sk-cell reveal" style="--kc:var(--acc1);"><div class="sk-num">01</div><div class="sk-title">Languages</div><div class="tags"><span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">Swift</span><span class="tag">JavaScript</span><span class="tag">Java</span><span class="tag">SQL</span><span class="tag">Bash</span><span class="tag">HCL (Terraform)</span></div></div>
-      <div class="sk-cell reveal" data-d="1" style="--kc:var(--acc2);"><div class="sk-num">02</div><div class="sk-title">Frameworks</div><div class="tags"><span class="tag">Next.js 16</span><span class="tag">React 19</span><span class="tag">Tailwind v4</span><span class="tag">shadcn/ui</span><span class="tag">SwiftUI</span><span class="tag">SwiftData</span><span class="tag">FastAPI</span><span class="tag">Node.js</span><span class="tag">Vitest</span></div></div>
-      <div class="sk-cell reveal" data-d="2" style="--kc:var(--acc3);"><div class="sk-num">03</div><div class="sk-title">Cloud &amp; DevOps</div><div class="tags"><span class="tag">AWS Lambda</span><span class="tag">AWS EventBridge</span><span class="tag">DynamoDB</span><span class="tag">S3</span><span class="tag">Athena</span><span class="tag">AppSync/GraphQL</span><span class="tag">Amazon Lex</span><span class="tag">AWS Secrets Manager</span><span class="tag">Docker</span><span class="tag">Terraform</span><span class="tag">Terragrunt</span><span class="tag">Jenkins</span><span class="tag">GitHub Actions</span><span class="tag">Vercel</span><span class="tag">SonarQube</span><span class="tag">Datadog</span></div></div>
-      <div class="sk-cell reveal" style="--kc:var(--acc4);"><div class="sk-num">04</div><div class="sk-title">AI / Agents</div><div class="tags"><span class="tag">Kiro</span><span class="tag">MCP (Model Context Protocol)</span><span class="tag">Agentic AI</span><span class="tag">Agent Skills</span><span class="tag">AWS Bedrock</span><span class="tag">PyTorch</span><span class="tag">scikit-learn</span><span class="tag">Claude API</span><span class="tag">Gemini API</span><span class="tag">NLP</span><span class="tag">CNNs</span></div></div>
-      <div class="sk-cell reveal" data-d="1" style="--kc:var(--acc2);"><div class="sk-num">05</div><div class="sk-title">Tools &amp; APIs</div><div class="tags"><span class="tag">Git</span><span class="tag">Jira</span><span class="tag">Confluence</span><span class="tag">Salesforce (ODS)</span><span class="tag">REST APIs</span><span class="tag">Supabase</span><span class="tag">Zod</span><span class="tag">React Hook Form</span><span class="tag">Resend</span><span class="tag">pytest</span><span class="tag">MapKit</span><span class="tag">Google Places</span><span class="tag">uv</span></div></div>
-      <div class="sk-cell reveal" data-d="2" style="--kc:var(--acc1);"><div class="sk-num">06</div><div class="sk-title">Databases</div><div class="tags"><span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">DynamoDB</span><span class="tag">Redis</span><span class="tag">SwiftData</span></div></div>
+      <div class="sk-cell reveal" style="--kc:var(--acc1);"><div class="sk-num">01</div><div class="sk-title">Languages</div><div class="tags"><span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">JavaScript (Node.js)</span><span class="tag">Swift</span><span class="tag">Java</span><span class="tag">SQL (Postgres · Athena)</span><span class="tag">HCL (Terraform)</span><span class="tag">Lua (Redis)</span></div></div>
+      <div class="sk-cell reveal" data-d="1" style="--kc:var(--acc2);"><div class="sk-num">02</div><div class="sk-title">Frameworks</div><div class="tags"><span class="tag">Next.js 14/16</span><span class="tag">React 18/19</span><span class="tag">Tailwind v4</span><span class="tag">shadcn/ui</span><span class="tag">SwiftUI</span><span class="tag">SwiftData</span><span class="tag">FastAPI</span><span class="tag">Flask</span><span class="tag">Node.js</span><span class="tag">Playwright</span><span class="tag">Vitest</span><span class="tag">pytest</span></div></div>
+      <div class="sk-cell reveal" data-d="2" style="--kc:var(--acc3);"><div class="sk-num">03</div><div class="sk-title">Cloud &amp; DevOps</div><div class="tags"><span class="tag">AWS Lambda</span><span class="tag">EventBridge</span><span class="tag">S3 + Athena</span><span class="tag">ECS Fargate</span><span class="tag">RDS</span><span class="tag">ElastiCache</span><span class="tag">DynamoDB</span><span class="tag">IAM · SSO</span><span class="tag">Lex V2</span><span class="tag">API Gateway</span><span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">Jenkins</span><span class="tag">GitHub Actions</span><span class="tag">Datadog</span><span class="tag">SonarQube</span><span class="tag">Vercel</span></div></div>
+      <div class="sk-cell reveal" style="--kc:var(--acc4);"><div class="sk-num">04</div><div class="sk-title">AI / Agents</div><div class="tags"><span class="tag">Kiro Agent Skills + Hooks</span><span class="tag">MCP (GitHub · Jira)</span><span class="tag">Agent Guardrails + Approval Gates</span><span class="tag">Multi-Agent Pipelines</span><span class="tag">RAG (ChromaDB)</span><span class="tag">sentence-transformers</span><span class="tag">Claude API</span><span class="tag">OpenAI API</span><span class="tag">Groq · Llama 3.3</span><span class="tag">Gemini API</span><span class="tag">PyTorch (via Hugging Face)</span><span class="tag">scikit-learn</span><span class="tag">n8n</span></div></div>
+      <div class="sk-cell reveal" data-d="1" style="--kc:var(--acc2);"><div class="sk-num">05</div><div class="sk-title">Tools &amp; APIs</div><div class="tags"><span class="tag">Git</span><span class="tag">Jira</span><span class="tag">Confluence</span><span class="tag">Salesforce</span><span class="tag">REST API Design</span><span class="tag">WebSockets</span><span class="tag">Supabase</span><span class="tag">Pydantic</span><span class="tag">Zod</span><span class="tag">React Hook Form</span><span class="tag">Resend</span><span class="tag">MapKit</span><span class="tag">Google Places</span><span class="tag">Gradio</span></div></div>
+      <div class="sk-cell reveal" data-d="2" style="--kc:var(--acc1);"><div class="sk-num">06</div><div class="sk-title">Databases</div><div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">DynamoDB</span><span class="tag">SQLite</span><span class="tag">Supabase (Postgres)</span><span class="tag">SwiftData</span></div></div>
     </div>
   </div>
 </section>
@@ -632,12 +760,12 @@ footer a:hover{color:var(--white);}
       <h2 class="s-title reveal">Certifications &amp; Training<em>.</em></h2>
     </div>
     <div class="certs">
-      <div class="cert reveal"><div class="cert-n">01</div><div class="cert-title">CodePath AI201: Advanced AI Engineering</div><div class="cert-by">CodePath · Summer 2026 · In Progress</div></div>
-      <div class="cert reveal" data-d="1"><div class="cert-n">02</div><div class="cert-title">AWS Certified Solutions Architect Associate (SAA-C03)</div><div class="cert-by">Amazon Web Services · In Progress</div></div>
-      <div class="cert reveal" data-d="2"><div class="cert-n">03</div><div class="cert-title">AWS Certified Developer Associate (DVA-C02)</div><div class="cert-by">Amazon Web Services · In Progress</div></div>
-      <div class="cert reveal"><div class="cert-n">04</div><div class="cert-title">AWS Cloud Fundamentals</div><div class="cert-by">Pluralsight · ASU ET Growing a Competency Program</div></div>
-      <div class="cert reveal" data-d="1"><div class="cert-n">05</div><div class="cert-title">Machine Learning Specialization</div><div class="cert-by">Coursera</div></div>
-      <div class="cert reveal" data-d="2"><div class="cert-n">06</div><div class="cert-title">Advanced Git</div><div class="cert-by">Pluralsight</div></div>
+      <div class="cert reveal"><div class="cert-n">01</div><div class="cert-title">AWS Certified AI Practitioner</div><div class="cert-by">Amazon Web Services · 2025</div></div>
+      <div class="cert reveal" data-d="1"><div class="cert-n">02</div><div class="cert-title">AWS Certified Cloud Practitioner</div><div class="cert-by">Amazon Web Services · 2025</div></div>
+      <div class="cert reveal" data-d="2"><div class="cert-n">03</div><div class="cert-title">CodePath AI201: Applications of AI Engineering</div><div class="cert-by">CodePath · Completed 2026</div></div>
+      <div class="cert reveal"><div class="cert-n">04</div><div class="cert-title">AWS Certified Developer Associate (DVA-C02)</div><div class="cert-by">Amazon Web Services · In Progress</div></div>
+      <div class="cert reveal" data-d="1"><div class="cert-n">05</div><div class="cert-title">CodePath Intermediate Technical Interview Prep</div><div class="cert-by">CodePath · Course Completer</div></div>
+      <div class="cert reveal" data-d="2"><div class="cert-n">06</div><div class="cert-title">Kestra Fundamentals</div><div class="cert-by">Kestra</div></div>
     </div>
   </div>
 </section>
@@ -677,6 +805,17 @@ footer a:hover{color:var(--white);}
 </footer>
 
 <script>
+/* THEME TOGGLE */
+(()=>{
+  const root=document.documentElement,btn=document.getElementById('themeTog');
+  const saved=localStorage.getItem('aa-theme');
+  if(saved==='light')root.dataset.theme='light';
+  btn.addEventListener('click',()=>{
+    const light=root.dataset.theme==='light';
+    if(light){delete root.dataset.theme;localStorage.setItem('aa-theme','dark');}
+    else{root.dataset.theme='light';localStorage.setItem('aa-theme','light');}
+  });
+})();
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* STARS + CONSTELLATION */
 (()=>{
@@ -723,20 +862,58 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.addEventListener('mouseenter',()=>{sp.style.opacity='1';});
   (function loop(){cx+=(tx-cx)*.08;cy+=(ty-cy)*.08;sp.style.left=cx+'px';sp.style.top=cy+'px';requestAnimationFrame(loop);})();
 })();
-/* SOCCER BALL + PROGRESS */
+/* SCROLL COMET + PROGRESS */
 (()=>{
-  const ball=document.getElementById('ball'),wrap=document.getElementById('ball-wrap'),p=document.getElementById('prog');
-  let lastScroll=0,rotation=0;
-  const update=()=>{
+  const cv=document.getElementById('comet'),p=document.getElementById('prog');
+  const ctx=cv.getContext('2d');
+  const DPR=Math.min(2,devicePixelRatio||1);
+  let W,H;
+  const fit=()=>{W=cv.width=cv.offsetWidth*DPR;H=cv.height=innerHeight*DPR;cv.style.height=innerHeight+'px';};
+  fit();addEventListener('resize',fit);
+  let last=scrollY,vel=0,hue=270,t=0,parts=[];
+  const loop=()=>{
+    t++;
     const pct=scrollY/Math.max(1,document.body.scrollHeight-innerHeight);
-    rotation+=(scrollY-lastScroll)*1.8;
-    ball.style.transform='rotate('+rotation+'deg)';
-    wrap.style.bottom=(pct*(innerHeight+160)-100)+'px';
-    lastScroll=scrollY;
     p.style.width=(pct*100)+'%';
+    const d=scrollY-last;last=scrollY;
+    vel+=(d-vel)*.15;
+    const speed=Math.min(40,Math.abs(vel));
+    hue=(hue+.6+speed*.12)%360;
+    const light=document.documentElement.dataset.theme==='light';
+    const hx=W*.5+Math.sin(t*.02)*W*.14;
+    const hy=-120*DPR+pct*(H+240*DPR)+Math.cos(t*.013)*10*DPR;
+    if(!REDUCED){
+      const n=2+Math.round(speed*.5);
+      for(let k=0;k<n;k++){
+        const a=Math.random()*Math.PI*2,sp=(0.3+Math.random()*1.2)*DPR;
+        parts.push({x:hx+(Math.random()-.5)*6*DPR,y:hy+(Math.random()-.5)*6*DPR,vx:Math.cos(a)*sp*.5,vy:Math.sin(a)*sp*.5+(vel>0?1.4:-1.4)*DPR*(1+speed*.08),l:1,h:(hue+Math.random()*50)%360,r:(1+Math.random()*2.2)*DPR});
+      }
+    }
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation=light?'source-over':'lighter';
+    parts.forEach(q=>{
+      q.x+=q.vx;q.y+=q.vy;q.l-=.022;q.vx*=.985;q.vy*=.985;
+      ctx.beginPath();ctx.arc(q.x,q.y,Math.max(.1,q.r*q.l),0,7);
+      ctx.fillStyle=`hsla(${q.h},90%,${light?42:68}%,${q.l*.85})`;ctx.fill();
+    });
+    parts=parts.filter(q=>q.l>0);
+    if(parts.length>420)parts.splice(0,parts.length-420);
+    for(let o=0;o<3;o++){
+      const oa=t*.09+o*2.09,orx=13*DPR,ory=6*DPR;
+      const ox=hx+Math.cos(oa)*orx,oy=hy+Math.sin(oa)*ory;
+      ctx.beginPath();ctx.arc(ox,oy,1.8*DPR,0,7);
+      ctx.fillStyle=`hsla(${(hue+o*45)%360},95%,${light?40:72}%,.9)`;ctx.fill();
+    }
+    const g=ctx.createRadialGradient(hx,hy,0,hx,hy,22*DPR);
+    g.addColorStop(0,light?`hsla(${hue},85%,35%,.95)`:'rgba(255,255,255,.95)');
+    g.addColorStop(.35,`hsla(${hue},95%,${light?45:65}%,.55)`);
+    g.addColorStop(1,'hsla(0,0%,0%,0)');
+    ctx.beginPath();ctx.arc(hx,hy,22*DPR,0,7);ctx.fillStyle=g;ctx.fill();
+    ctx.beginPath();ctx.arc(hx,hy,3.4*DPR,0,7);ctx.fillStyle=light?'#111':'#fff';ctx.fill();
+    ctx.globalCompositeOperation='source-over';
+    requestAnimationFrame(loop);
   };
-  addEventListener('scroll',update,{passive:true});
-  update();
+  loop();
 })();
 /* REVEAL */
 (()=>{
@@ -795,6 +972,7 @@ function toggleExp(h){h.closest('.exp-card').classList.toggle('open');}
         card.style.transform=`perspective(1000px) rotateX(${(py-.5)*-5}deg) rotateY(${(px-.5)*5}deg) translateY(-6px)`;
         card.style.setProperty('--gx',px*100+'%');
         card.style.setProperty('--gy',py*100+'%');
+        card.style.setProperty('--ga',(Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI+270)%360+'deg');
         raf=null;
       });
     });
@@ -858,6 +1036,76 @@ function toggleExp(h){h.closest('.exp-card').classList.toggle('open');}
 (()=>{
   const t=document.getElementById('logoTrack');
   t.innerHTML+=t.innerHTML;
+})();
+/* BENCH BARS */
+(()=>{
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.bar i').forEach(b=>{b.style.width=b.dataset.w;});io.unobserve(e.target);}});},{threshold:.3});
+  document.querySelectorAll('.bench-card').forEach(c=>io.observe(c));
+})();
+/* ALLVOICE PIPELINE */
+(()=>{
+  const nodes=[...document.querySelectorAll('.pnode')],st=document.getElementById('pipeStatus');
+  if(!nodes.length||!st||REDUCED)return;
+  const cmds=['"click the checkout button"','"read this article aloud"','"search for flights to Barcelona"','"fill in the contact form"'];
+  let i=0,hold=0,cmd=0;
+  st.textContent='LISTENING: '+cmds[0];
+  setInterval(()=>{
+    if(hold>0){hold--;if(hold===0){nodes.forEach(n=>n.classList.remove('lit','block'));i=0;cmd=(cmd+1)%cmds.length;st.textContent='LISTENING: '+cmds[cmd];st.className='pipe-status';}return;}
+    nodes.forEach(n=>n.classList.remove('lit'));
+    const n=nodes[i];n.classList.add('lit');
+    if(n.classList.contains('gate')){
+      if(Math.random()<.35){n.classList.add('block');st.textContent='✕ GATE BLOCKED: sensitive field detected — action never executes';st.className='pipe-status bad';hold=3;return;}
+      st.textContent='✓ GATE PASSED: '+cmds[cmd];st.className='pipe-status ok';
+    }
+    i++;
+    if(i>=nodes.length){hold=2;}
+  },650);
+})();
+/* CLASSQ CHAOS SIM */
+(()=>{
+  const cv=document.getElementById('cqsim');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const reqEl=document.getElementById('cq-req'),seatEl=document.getElementById('cq-seat'),waitEl=document.getElementById('cq-wait');
+  const DPR=Math.min(2,devicePixelRatio||1),TOTAL=500,SEATS=30;
+  let W,H,parts=[],fired=0,seats=0,wait=0,running=false,resetT=0;
+  const fit=()=>{W=cv.width=cv.offsetWidth*DPR;H=cv.height=cv.offsetHeight*DPR;};
+  const reset=()=>{parts=[];fired=0;seats=0;wait=0;resetT=0;};
+  const loop=()=>{
+    ctx.clearRect(0,0,W,H);
+    const light=document.documentElement.dataset.theme==='light';
+    const ink=light?'20,20,20':'240,240,240';
+    const nx=W*.5,ny=H*.48,r=Math.min(H*.3,56*DPR);
+    if(fired<TOTAL){for(let k=0;k<6&&fired<TOTAL;k++){fired++;parts.push({x:-10*DPR,y:H*(.12+Math.random()*.76),st:0});}}
+    parts.forEach(p=>{
+      if(p.st===0){const dx=nx-p.x,dy=ny-p.y,d=Math.hypot(dx,dy);p.x+=dx/d*7*DPR;p.y+=dy/d*7*DPR;if(d<r){if(seats<SEATS){seats++;p.st=2;}else{wait++;p.st=1;}}}
+      else if(p.st===1){const qx=W*.86,qy=H*.5,dx=qx-p.x,dy=qy-p.y,d=Math.hypot(dx,dy);p.x+=dx/d*6*DPR;p.y+=dy/d*6*DPR;if(d<8*DPR)p.st=3;}
+      if(p.st===0){ctx.fillStyle='rgba('+ink+',.7)';}else if(p.st===1){ctx.fillStyle='rgba(150,150,160,.5)';}
+      if(p.st<2){ctx.beginPath();ctx.arc(p.x,p.y,1.6*DPR,0,7);ctx.fill();}
+    });
+    parts=parts.filter(p=>p.st<2);
+    ctx.lineWidth=3*DPR;
+    ctx.strokeStyle='rgba('+ink+',.18)';ctx.beginPath();ctx.arc(nx,ny,r,0,Math.PI*2);ctx.stroke();
+    ctx.strokeStyle='#3ecf74';ctx.beginPath();ctx.arc(nx,ny,r,-Math.PI/2,-Math.PI/2+Math.PI*2*(seats/SEATS));ctx.stroke();
+    ctx.fillStyle='rgba('+ink+',.9)';ctx.font=(12*DPR)+'px DM Mono,monospace';ctx.textAlign='center';
+    ctx.fillText(seats+'/'+SEATS,nx,ny+4*DPR);
+    ctx.fillText('SECTION',nx,ny+r+16*DPR);
+    ctx.textAlign='left';
+    const qn=Math.min(wait,40);
+    for(let k=0;k<qn;k++){const col=k%8,row=Math.floor(k/8);ctx.fillStyle='rgba(150,150,160,.55)';ctx.beginPath();ctx.arc(W*.82+col*7*DPR,H*.34+row*7*DPR,2*DPR,0,7);ctx.fill();}
+    ctx.fillStyle='rgba('+ink+',.6)';ctx.fillText('WAITLIST · FIFO',W*.82,H*.34-14*DPR);
+    reqEl.textContent=fired;seatEl.innerHTML=seats+'<em>/30</em>';waitEl.textContent=wait;
+    if(fired>=TOTAL&&parts.length===0){resetT++;if(resetT>160)reset();}
+    requestAnimationFrame(loop);
+  };
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting&&!running){
+      running=true;fit();
+      if(REDUCED){fired=TOTAL;seats=SEATS;wait=TOTAL-SEATS;reqEl.textContent=TOTAL;seatEl.innerHTML='30<em>/30</em>';waitEl.textContent=TOTAL-SEATS;const light=document.documentElement.dataset.theme==='light';const ink=light?'20,20,20':'240,240,240';const nx=W*.5,ny=H*.48,r=Math.min(H*.3,56*DPR);ctx.lineWidth=3*DPR;ctx.strokeStyle='#3ecf74';ctx.beginPath();ctx.arc(nx,ny,r,0,Math.PI*2);ctx.stroke();ctx.fillStyle='rgba('+ink+',.9)';ctx.font=(12*DPR)+'px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('30/30',nx,ny+4*DPR);}
+      else loop();
+    }
+  });},{threshold:.25});
+  io.observe(cv);
+  addEventListener('resize',fit);
 })();
 </script>
 <script>
