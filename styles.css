@@ -253,16 +253,18 @@ html.no-loader .loader { display: none; }
   color: var(--bg-3); white-space: nowrap; user-select: none; pointer-events: none; z-index: 0;
 }
 .hero-name {
-  position: absolute; left: var(--gutter); right: var(--gutter); top: 50%;
-  transform: translateY(-46%);
+  position: absolute; left: 50%; width: 100vw; top: 50%;
+  transform: translate(-50%, -46%);
   z-index: 1;
-  display: flex; justify-content: center; align-items: center;
+  display: flex; justify-content: center; align-items: flex-end;
   gap: 0.16em;
-  font-size: min(17.5vw, calc((100vw - 2 * var(--gutter)) / 5.75), 23rem);
+  overflow: hidden;
+  padding: 0.08em var(--gutter) 0.1em;
+  font-size: min(17.5vw, calc((100vw - 2 * var(--gutter)) / 5.9), 23rem);
   font-weight: 600; letter-spacing: -0.055em; line-height: 1;
   text-align: center; white-space: nowrap;
 }
-.hero-name .w { display: inline-block; overflow: hidden; padding: 0.05em 0.14em 0.08em 0.05em; margin: -0.05em -0.14em -0.08em -0.05em; }
+.hero-name .w { display: inline-block; }
 .hero-name .dot { font-style: normal; color: var(--accent); }
 .hero-name .ch { display: inline-block; will-change: transform; }
 .hero-kicker { position: absolute; left: var(--gutter); top: clamp(16px, 3vh, 40px); z-index: 3; display: flex; flex-direction: column; gap: 22px; }
@@ -586,6 +588,7 @@ footer { border-top: 1px solid var(--line); padding: 26px 0; }
   .hero-inner { height: auto; min-height: 0; display: flex; flex-direction: column; gap: 28px; padding: 16px 0 40px; }
   .hero-watermark { top: 30%; font-size: 38vw; }
   .hero-kicker, .hero-role, .hero-name, .hero-social, .hero-scroll, .hero-bio { position: static; transform: none; max-width: none; text-align: left; }
+  .hero-name { width: auto; padding: 0; overflow: visible; }
   .hero-side { display: none; }
   .hero-role { text-align: left; order: 2; }
   .hero-name { order: 3; display: block; margin: 8px 0; text-align: left; white-space: normal; font-size: clamp(3.4rem, 21vw, 8rem); line-height: 0.92; }
