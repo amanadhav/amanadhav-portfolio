@@ -73,14 +73,19 @@
   const splitChars = (el) => {
     const text = el.textContent;
     el.setAttribute('aria-label', text);
+    const frag = document.createDocumentFragment();
+    [...el.childNodes].forEach((n) => {
+      if (n.nodeType === 1) { n.classList.add('ch'); n.setAttribute('aria-hidden', 'true'); frag.appendChild(n); return; }
+      for (const ch of n.textContent) {
+        const s = document.createElement('span');
+        s.className = 'ch';
+        s.setAttribute('aria-hidden', 'true');
+        s.textContent = ch === ' ' ? ' ' : ch;
+        frag.appendChild(s);
+      }
+    });
     el.textContent = '';
-    for (const ch of text) {
-      const s = document.createElement('span');
-      s.className = 'ch';
-      s.setAttribute('aria-hidden', 'true');
-      s.textContent = ch === ' ' ? ' ' : ch;
-      el.appendChild(s);
-    }
+    el.appendChild(frag);
   };
   const wrapWord = (node, cls) => {
     const wd = document.createElement('span'); wd.className = 'wd';
@@ -122,8 +127,6 @@
     if (!HAS_GSAP) return null;
     const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
     tl.from('.hero-name .ch', { yPercent: 115, rotate: 3, duration: 1.15, stagger: { each: 0.035, from: 'start' } }, 0)
-      .from('.hero-photo', { clipPath: 'inset(100% 0% 0% 0%)', duration: 1.25, ease: 'expo.inOut' }, 0.05)
-      .from('.hero-photo img', { scale: 1.3, duration: 1.8 }, 0.05)
       .from('[data-hero-fade]', { y: 22, opacity: 0, duration: 0.9, stagger: 0.07 }, 0.5)
       .from('.hero-watermark', { opacity: 0, xPercent: -6, duration: 1.6 }, 0.2);
     return tl;
@@ -146,14 +149,14 @@
   if (HAS_GSAP && !REDUCED && hero) {
     const isDesktop = matchMedia('(min-width: 901px)');
     const heroScrub = () => gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } })
-      .to('.hero-photo', { yPercent: -22, ease: 'none' }, 0)
-      .to('.hero-name .w:first-child', { xPercent: -9, ease: 'none' }, 0)
-      .to('.hero-name .w:last-child', { xPercent: 9, ease: 'none' }, 0)
+      .to('.hero-name .w:first-child', { xPercent: -12, ease: 'none' }, 0)
+      .to('.hero-name .w:last-child', { xPercent: 12, ease: 'none' }, 0)
+      .to('.hero-name', { yPercent: 18, ease: 'none' }, 0)
       .to('.hero-watermark', { xPercent: -14, ease: 'none' }, 0)
       .to('.hero-kicker, .hero-role, .hero-side, .hero-social, .hero-scroll', { opacity: 0, y: -24, ease: 'none' }, 0);
     let scrub = isDesktop.matches ? heroScrub() : null;
     isDesktop.addEventListener('change', (e) => {
-      if (scrub) { scrub.scrollTrigger.kill(); scrub.kill(); gsap.set('.hero-photo, .hero-name .w, .hero-watermark, .hero-kicker, .hero-role, .hero-side, .hero-social, .hero-scroll', { clearProps: 'all' }); scrub = null; }
+      if (scrub) { scrub.scrollTrigger.kill(); scrub.kill(); gsap.set('.hero-name .w, .hero-watermark, .hero-kicker, .hero-role, .hero-side, .hero-social, .hero-scroll', { clearProps: 'all' }); scrub = null; }
       if (e.matches) scrub = heroScrub();
     });
   }
@@ -363,14 +366,14 @@
         ctx.fillStyle = acc; ctx.globalAlpha = 0.1; ctx.fillRect(gx0, padT, gx1 - gx0, H - padT - padB); ctx.globalAlpha = 1;
         ctx.setLineDash([3 * dpr, 4 * dpr]); ctx.strokeStyle = acc; ctx.beginPath(); ctx.moveTo(gx0, padT); ctx.lineTo(gx0, H - padB); ctx.stroke(); ctx.setLineDash([]);
         ctx.fillStyle = acc; ctx.font = `${10 * dpr}px ${cssVar('--font-mono')}`; ctx.textAlign = 'left';
-        ctx.fillText(W < 520 * dpr ? 'GUARD: ENTRY BLOCKED' : 'GUARD: FALLING KNIFE, ENTRY BLOCKED', gx0 + 6 * dpr, padT + 12 * dpr);
+        ctx.fillText(W < 760 * dpr ? 'GUARD: ENTRY BLOCKED' : 'GUARD: FALLING KNIFE, ENTRY BLOCKED', gx0 + 6 * dpr, padT + 12 * dpr);
       }
       // earnings marker
       const ek = 108;
       if (upto > ek) {
         ctx.setLineDash([3 * dpr, 4 * dpr]); ctx.strokeStyle = ink3; ctx.beginPath(); ctx.moveTo(x(ek), padT); ctx.lineTo(x(ek), H - padB); ctx.stroke(); ctx.setLineDash([]);
         ctx.fillStyle = ink3; ctx.font = `${10 * dpr}px ${cssVar('--font-mono')}`; ctx.textAlign = 'right';
-        ctx.fillText(W < 520 * dpr ? 'EARNINGS' : 'PRE-EARNINGS CARD', x(ek) - 6 * dpr, padT + (W < 520 * dpr ? 26 : 12) * dpr);
+        ctx.fillText(W < 520 * dpr ? 'EARNINGS' : 'PRE-EARNINGS CARD', x(ek) - 6 * dpr, padT + 28 * dpr);
       }
       // price line
       ctx.beginPath(); ctx.lineWidth = 1.6 * dpr; ctx.strokeStyle = ink; ctx.lineJoin = 'round';
@@ -478,25 +481,6 @@
       wrap.appendChild(f);
     });
   });
-
-  /* ---------------------------------------------------------------- cursor */
-  if (FINE && !REDUCED && HAS_GSAP) {
-    const dot = $('.cursor'), ring = $('.cursor-ring');
-    if (dot && ring) {
-      html.classList.add('has-cursor');
-      const dx = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power3' }), dy = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power3' });
-      const rx = gsap.quickTo(ring, 'x', { duration: 0.42, ease: 'power3' }), ry = gsap.quickTo(ring, 'y', { duration: 0.42, ease: 'power3' });
-      addEventListener('pointermove', (e) => { dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); }, { passive: true });
-      document.addEventListener('pointerover', (e) => {
-        const view = e.target.closest('[data-cursor="view"]');
-        const inter = e.target.closest('a, button, input, textarea, [data-cursor]');
-        ring.classList.toggle('is-view', !!view);
-        ring.classList.toggle('is-hover', !!inter && !view);
-      });
-      document.addEventListener('pointerleave', () => gsap.to([dot, ring], { opacity: 0, duration: 0.3 }));
-      document.addEventListener('pointerenter', () => gsap.to([dot, ring], { opacity: 1, duration: 0.3 }));
-    }
-  }
 
   /* -------------------------------------------------------------- magnetic */
   if (FINE && !REDUCED && HAS_GSAP) {
