@@ -149,14 +149,12 @@
   if (HAS_GSAP && !REDUCED && hero) {
     const isDesktop = matchMedia('(min-width: 901px)');
     const heroScrub = () => gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } })
-      .to('.hero-name .w:first-child', { xPercent: -12, ease: 'none' }, 0)
-      .to('.hero-name .w:last-child', { xPercent: 12, ease: 'none' }, 0)
-      .to('.hero-name', { yPercent: 18, ease: 'none' }, 0)
+      .to('.hero-name .track', { x: '-42vw', ease: 'none' }, 0)
       .to('.hero-watermark', { xPercent: -14, ease: 'none' }, 0)
       .to('.hero-kicker, .hero-role, .hero-side, .hero-social, .hero-scroll', { opacity: 0, y: -24, ease: 'none' }, 0);
     let scrub = isDesktop.matches ? heroScrub() : null;
     isDesktop.addEventListener('change', (e) => {
-      if (scrub) { scrub.scrollTrigger.kill(); scrub.kill(); gsap.set('.hero-name .w, .hero-watermark, .hero-kicker, .hero-role, .hero-side, .hero-social, .hero-scroll', { clearProps: 'all' }); scrub = null; }
+      if (scrub) { scrub.scrollTrigger.kill(); scrub.kill(); gsap.set('.hero-name .track, .hero-watermark, .hero-kicker, .hero-role, .hero-side, .hero-social, .hero-scroll', { clearProps: 'all' }); scrub = null; }
       if (e.matches) scrub = heroScrub();
     });
   }
