@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=5">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -298,7 +298,9 @@
     </div>
 
     <!-- AllVoice -->
+    <div class="cases">
     <article class="case">
+      <span class="case-ghost" aria-hidden="true">01</span>
       <div class="case-visual" data-flow data-prompt="Voice" data-cmds='["click the checkout button","read this article aloud","search for flights to Barcelona","fill in the contact form"]' data-blocked="Gate blocked: sensitive field detected. The action never reaches the page." data-passed="Gate passed" data-done="Executed and logged">
         <div class="viz-head"><b>AllVoice pipeline</b><span>6 stages, 1 mandatory gate</span></div>
         <div class="flow">
@@ -332,6 +334,7 @@
 
     <!-- TraderAI -->
     <article class="case flip">
+      <span class="case-ghost" aria-hidden="true">02</span>
       <div class="case-visual">
         <div class="viz-head"><b>TraderAI</b><span>Grounded by construction</span></div>
         <canvas id="traderViz" class="viz-canvas" aria-label="Animated price chart showing the ATR stop band, a blocked falling-knife entry and a pre-earnings marker" role="img"></canvas>
@@ -360,6 +363,7 @@
 
     <!-- Adversarial Coding Pipeline -->
     <article class="case">
+      <span class="case-ghost" aria-hidden="true">03</span>
       <div class="case-visual" data-flow data-prompt="Task" data-cmds='["implement $ref resolution","add a file size guard","parse a nested schema","handle a recursive $ref"]' data-blocked="Gate blocked: file:// URI in $ref. P1, exit code 2, nothing ships." data-passed="Gate clean" data-done="Merged with tests">
         <div class="viz-head"><b>Adversarial pipeline</b><span>4 agents, 1 deterministic gate</span></div>
         <div class="flow cols-5">
@@ -390,6 +394,7 @@
 
     <!-- ClassQ -->
     <article class="case flip">
+      <span class="case-ghost" aria-hidden="true">04</span>
       <div class="case-visual">
         <div class="viz-head"><b>ClassQ chaos test</b><span>500 requests, 30 seats, live replay</span></div>
         <canvas id="classqViz" class="viz-canvas" aria-label="Animated simulation of 500 concurrent registrations filling a 30-seat section with zero double-enrollments" role="img"></canvas>
@@ -416,12 +421,13 @@
         </div>
       </div>
     </article>
+    </div>
 
     <div class="more-head">
       <h3 data-split>More from the <em>shelf.</em></h3>
       <a class="link" href="https://github.com/amanadhav" target="_blank" rel="noopener" data-reveal>All repositories <svg><use href="#i-arrow-ur"/></svg></a>
     </div>
-    <div class="grid-more" data-reveal-group>
+    <div class="grid-more">
       <article class="mini">
         <div class="mini-top"><span>05</span><span>Live</span></div>
         <h4 class="mini-title">CineMind <svg><use href="#i-arrow-ur"/></svg></h4>
@@ -690,6 +696,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script src="main.js?v=4"></script>
+<script src="main.js?v=5"></script>
 </body>
 </html>

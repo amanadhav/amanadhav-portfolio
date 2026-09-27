@@ -40,7 +40,7 @@
 
   /* ---------------------------------------------------------- smooth scroll */
   let lenis = null;
-  if (typeof Lenis !== 'undefined' && !REDUCED && FINE) {
+  if (typeof Lenis !== 'undefined' && !REDUCED && FINE && !location.search.includes('nolenis')) {
     lenis = new Lenis({ lerp: 0.09, smoothWheel: true, wheelMultiplier: 0.95 });
     if (HAS_GSAP) {
       lenis.on('scroll', ScrollTrigger.update);
@@ -232,6 +232,78 @@
       });
     } else {
       gsap.set('[data-reveal], [data-reveal-group] > *', { opacity: 1 });
+    }
+  }
+
+  /* ------------------------------------------- featured project cards */
+  const cases = $$('.case');
+  if (HAS_GSAP && cases.length) {
+    const navH = () => parseInt(getComputedStyle(html).getPropertyValue('--nav-h')) || 76;
+    if (!REDUCED) {
+      // Sticky stack: the card underneath shrinks and dims as the next one slides over it.
+      const mm = gsap.matchMedia();
+      mm.add('(min-width: 901px) and (min-height: 700px)', () => {
+        cases.forEach((card, i) => {
+          const next = cases[i + 1];
+          if (!next) return;
+          gsap.to(card, {
+            scale: 0.93, y: -16, '--dim': 0.72, ease: 'none',
+            scrollTrigger: { trigger: next, start: 'top bottom', end: () => `top top+=${navH() + 12}`, scrub: true },
+          });
+        });
+      });
+      cases.forEach((card) => {
+        const vis = $('.case-visual', card);
+        const ghost = $('.case-ghost', card);
+        const body = $$('.case-body > *', card);
+        // Visual panel: scrubbed clip-path wipe with a slow settle from zoomed-in to true size.
+        gsap.fromTo(vis,
+          { clipPath: 'inset(16% 10% 16% 10% round 32px)', scale: 1.1 },
+          { clipPath: 'inset(0% 0% 0% 0% round 18px)', scale: 1, ease: 'none', scrollTrigger: { trigger: card, start: 'top 92%', end: 'top 30%', scrub: 0.6 } });
+        gsap.from(body, { y: 34, opacity: 0, duration: 1, stagger: 0.075, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 72%', once: true } });
+        if (ghost) gsap.fromTo(ghost, { yPercent: 40, rotate: 4 }, { yPercent: -30, rotate: -2, ease: 'none', scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true } });
+      });
+    }
+    // Pointer spotlight and a light 3D tilt on the visual panel.
+    if (FINE && !REDUCED) {
+      cases.forEach((card) => {
+        const vis = $('.case-visual', card);
+        if (!vis) return;
+        const rx = gsap.quickTo(vis, 'rotateX', { duration: 0.6, ease: 'power3' });
+        const ry = gsap.quickTo(vis, 'rotateY', { duration: 0.6, ease: 'power3' });
+        gsap.set(vis, { transformPerspective: 1100 });
+        vis.addEventListener('pointermove', (e) => {
+          const r = vis.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+          vis.style.setProperty('--gx', `${px * 100}%`);
+          vis.style.setProperty('--gy', `${py * 100}%`);
+          rx((0.5 - py) * 6);
+          ry((px - 0.5) * 6);
+        });
+        vis.addEventListener('pointerleave', () => { rx(0); ry(0); });
+      });
+    }
+  }
+
+  /* --------------------------------------------- project grid entrance */
+  const grid = $('.grid-more');
+  if (grid) {
+    const minis = $$('.mini', grid);
+    if (HAS_GSAP && !REDUCED) {
+      const tl = gsap.timeline({ scrollTrigger: { trigger: grid, start: 'top 82%', once: true } });
+      tl.from(minis, { y: 48, opacity: 0, scale: 0.96, duration: 0.9, stagger: { each: 0.06, from: 'start' }, ease: 'expo.out' }, 0)
+        .fromTo(minis, { '--bar-scale': 0 }, { '--bar-scale': 1, duration: 0.7, stagger: 0.06, ease: 'power2.out' }, 0.35); // draws each card's orange top rule in sequence
+    } else {
+      minis.forEach((m) => m.style.setProperty('--bar-scale', '1'));
+    }
+    if (FINE) {
+      grid.addEventListener('pointermove', (e) => {
+        const m = e.target.closest('.mini');
+        if (!m) return;
+        const r = m.getBoundingClientRect();
+        m.style.setProperty('--gx', `${((e.clientX - r.left) / r.width) * 100}%`);
+        m.style.setProperty('--gy', `${((e.clientY - r.top) / r.height) * 100}%`);
+      });
     }
   }
 

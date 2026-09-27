@@ -328,8 +328,26 @@ html.no-loader .loader { display: none; }
 .stat > span { display: block; margin-top: 12px; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
 
 /* ---------- Work ---------- */
-.case { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: clamp(24px, 4vw, 72px); padding: clamp(28px, 3.4vw, 48px) 0; border-top: 1px solid var(--line); align-items: stretch; }
-.case:last-of-type { border-bottom: 1px solid var(--line); }
+.cases { position: relative; }
+.case {
+  position: relative; display: grid; grid-template-columns: 1.02fr 0.98fr; gap: clamp(24px, 4vw, 72px); align-items: stretch;
+  padding: clamp(22px, 3vw, 40px);
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+  margin-bottom: 20px; overflow: hidden;
+  transform-origin: 50% 0%; will-change: transform;
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.45);
+}
+.case > * { position: relative; z-index: 1; }
+/* Dimming layer for the card underneath in the sticky stack; keeps the card itself opaque. */
+.case::after { content: ''; position: absolute; inset: 0; z-index: 6; pointer-events: none; border-radius: inherit; background: var(--bg); opacity: var(--dim, 0); }
+.case-ghost {
+  position: absolute; z-index: 0; right: clamp(12px, 2.5vw, 36px); top: -0.14em;
+  font-size: clamp(7rem, 17vw, 16rem); font-weight: 700; letter-spacing: -0.06em; line-height: 1;
+  color: var(--ink); opacity: 0.045; pointer-events: none; user-select: none;
+}
+@media (min-width: 901px) and (min-height: 700px) {
+  .case { position: sticky; top: calc(var(--nav-h) + 12px); min-height: calc(100svh - var(--nav-h) - 24px); }
+}
 .case.flip .case-visual { order: 2; }
 .case-visual {
   position: relative; min-height: 420px;
@@ -338,6 +356,10 @@ html.no-loader .loader { display: none; }
   display: flex; flex-direction: column;
 }
 .case-visual::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 80% at 50% 0%, transparent 60%, rgba(0, 0, 0, 0.05)); }
+.case-visual::before { content: ''; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; transition: opacity 0.5s; background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 50%), color-mix(in srgb, var(--accent) 16%, transparent), transparent 62%); }
+.case-visual:hover::before { opacity: 1; }
+.case-visual { transform-style: preserve-3d; will-change: transform, clip-path; }
+.case-body { justify-content: center; }
 .case-body { display: flex; flex-direction: column; gap: 18px; padding: 6px 0; }
 .case-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .case-top > .mono:first-child { color: var(--accent); }
@@ -388,8 +410,12 @@ html.no-loader .loader { display: none; }
 .more-head { display: flex; justify-content: space-between; align-items: end; margin: clamp(56px, 8vw, 110px) 0 28px; gap: 20px; }
 .more-head h3 { font-size: clamp(1.5rem, 2.4vw, 2.2rem); letter-spacing: -0.035em; }
 .grid-more { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
-.mini { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 28px; min-height: 290px; background: var(--bg); transition: background var(--dur-2); }
+.mini { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 28px; min-height: 290px; background: var(--bg); transition: background var(--dur-2); overflow: hidden; }
+.mini::before { content: ''; position: absolute; left: 0; top: 0; height: 2px; width: 100%; background: var(--accent); transform: scaleX(var(--bar-scale, 1)); transform-origin: left; z-index: 2; }
+.mini::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.45s; background: radial-gradient(360px circle at var(--gx, 50%) var(--gy, 50%), color-mix(in srgb, var(--accent) 12%, transparent), transparent 65%); }
 .mini:hover { background: var(--card); }
+.mini:hover::after { opacity: 1; }
+.mini > * { position: relative; z-index: 1; }
 .mini-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
 .mini-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 1.3rem; letter-spacing: -0.03em; }
 .mini-title svg { width: 18px; height: 18px; flex: none; color: var(--ink-3); transition: transform var(--dur-2) var(--ease-out), color var(--dur-2); }
@@ -580,7 +606,8 @@ footer { border-top: 1px solid var(--line); padding: 26px 0; }
   .sec-num { padding-bottom: 0; }
   .about-grid, .case, .xp, .rec-grid, .edu-grid, .contact-grid { grid-template-columns: 1fr; }
   .case.flip .case-visual { order: 0; }
-  .case-visual { min-height: 360px; }
+  .case-visual { min-height: 340px; }
+  .case-ghost { font-size: 6rem; top: -0.1em; }
   .xp-side { position: static; }
   .xp-head { grid-template-columns: 1fr auto; }
   .xp-date { grid-column: 1; padding-top: 0; }
