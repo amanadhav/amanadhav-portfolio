@@ -269,14 +269,12 @@
       cases.forEach((card) => {
         const vis = $('.case-visual', card);
         if (!vis) return;
-        const rx = gsap.quickTo(vis, 'rotateX', { duration: 0.6, ease: 'power3' });
-        const ry = gsap.quickTo(vis, 'rotateY', { duration: 0.6, ease: 'power3' });
+        const rx = gsap.quickTo(vis, 'rotationX', { duration: 0.6, ease: 'power3' });
+        const ry = gsap.quickTo(vis, 'rotationY', { duration: 0.6, ease: 'power3' });
         gsap.set(vis, { transformPerspective: 1100 });
         vis.addEventListener('pointermove', (e) => {
           const r = vis.getBoundingClientRect();
           const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-          vis.style.setProperty('--gx', `${px * 100}%`);
-          vis.style.setProperty('--gy', `${py * 100}%`);
           rx((0.5 - py) * 6);
           ry((px - 0.5) * 6);
         });
@@ -295,15 +293,6 @@
         .fromTo(minis, { '--bar-scale': 0 }, { '--bar-scale': 1, duration: 0.7, stagger: 0.06, ease: 'power2.out' }, 0.35); // draws each card's orange top rule in sequence
     } else {
       minis.forEach((m) => m.style.setProperty('--bar-scale', '1'));
-    }
-    if (FINE) {
-      grid.addEventListener('pointermove', (e) => {
-        const m = e.target.closest('.mini');
-        if (!m) return;
-        const r = m.getBoundingClientRect();
-        m.style.setProperty('--gx', `${((e.clientX - r.left) / r.width) * 100}%`);
-        m.style.setProperty('--gy', `${((e.clientY - r.top) / r.height) * 100}%`);
-      });
     }
   }
 
@@ -348,176 +337,234 @@
     });
   });
 
-  /* ------------------------------------------------ flow diagrams (agents) */
-  $$('[data-flow]').forEach((root) => {
-    const nodes = $$('.node', root);
-    const status = $('.flow-status', root);
-    if (!nodes.length || !status) return;
-    const cmds = JSON.parse(root.dataset.cmds || '[]');
-    const blocked = root.dataset.blocked || 'Blocked by the gate.';
-    const passed = root.dataset.passed || 'Gate passed';
-    const done = root.dataset.done || 'Done';
-    let i = 0, hold = 0, c = 0, timer = null;
-    const label = () => cmds.length ? `${root.dataset.prompt || 'Input'}: ${cmds[c]}` : '';
-    const reset = () => { nodes.forEach((n) => n.classList.remove('lit', 'block')); i = 0; c = (c + 1) % Math.max(cmds.length, 1); status.textContent = label(); status.className = 'flow-status'; };
-    status.textContent = label();
-    if (REDUCED) { nodes.forEach((n) => n.classList.add('lit')); status.textContent = `${done}: ${cmds[0] || ''}`; status.className = 'flow-status ok'; return; }
-    const tick = () => {
-      if (hold > 0) { hold--; if (hold === 0) reset(); return; }
-      nodes.forEach((n) => n.classList.remove('lit'));
-      const n = nodes[i];
-      n.classList.add('lit');
-      if (n.classList.contains('gate')) {
-        if (Math.random() < 0.34) { n.classList.add('block'); status.textContent = blocked; status.className = 'flow-status bad'; hold = 4; return; }
-        status.textContent = `${passed}: ${cmds[c] || ''}`; status.className = 'flow-status ok';
-      }
-      i++;
-      if (i >= nodes.length) { status.textContent = `${done}: ${cmds[c] || ''}`; status.className = 'flow-status ok'; hold = 3; }
-    };
-    const start = () => { if (!timer) timer = setInterval(tick, 720); };
-    const stop = () => { clearInterval(timer); timer = null; };
-    const io = new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? start() : stop())), { threshold: 0.2 });
-    io.observe(root);
-  });
-
-  /* ----------------------------------------------------- canvas helpers */
-  const cssVar = (name) => getComputedStyle(html).getPropertyValue(name).trim();
-  const fitCanvas = (cv) => {
-    const dpr = Math.min(2, devicePixelRatio || 1);
-    const w = cv.clientWidth, h = cv.clientHeight;
-    if (!w || !h) return null;
-    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
-    return { ctx: cv.getContext('2d'), W: cv.width, H: cv.height, dpr };
-  };
-  const onView = (el, cb, threshold = 0.25) => {
-    const io = new IntersectionObserver((es) => es.forEach((e) => cb(e.isIntersecting)), { threshold });
+  /* ------------------------------------------------ shared visual helpers */
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  // Runs an async loop only while the element is on screen; the token cancels a run mid-way.
+  const runWhileVisible = (el, loopFn, threshold = 0.2) => {
+    let token = 0, active = false;
+    const io = new IntersectionObserver((es) => es.forEach(async (e) => {
+      if (e.isIntersecting && !active) { active = true; const my = ++token; while (active && my === token) { await loopFn(() => active && my === token); } }
+      else if (!e.isIntersecting && active) { active = false; token++; }
+    }), { threshold });
     io.observe(el);
   };
 
-  /* -------------------------------------------- TraderAI: grounded chart */
-  const tcv = $('#traderViz');
-  if (tcv) {
-    // Deterministic pseudo-random walk so the chart reads the same on every load.
-    let seed = 20260926;
+  /* ----------------------------------------- AllVoice: voice on a demo page */
+  $$('[data-flow]').forEach((root) => {
+    const nodes = $$('.node', root), status = $('.flow-status', root), transcript = $('.transcript', root);
+    let cmds = [];
+    try { cmds = JSON.parse(root.dataset.cmds || '[]'); } catch (e) { return; }
+    if (!nodes.length || !status || !cmds.length) return;
+    const targets = $$('[data-target]', root);
+    const clearTargets = () => targets.forEach((t) => t.classList.remove('scan', 'act', 'blocked'));
+    const tgt = (name) => root.querySelector(`[data-target="${name}"]`);
+    const say = (text, cls = '') => { status.textContent = text; status.className = 'flow-status' + (cls ? ' ' + cls : ''); };
+    if (REDUCED) { nodes.forEach((n) => n.classList.add('lit')); say(`Executed and logged: "${cmds[0].t}"`, 'ok'); if (transcript) transcript.textContent = `"${cmds[0].t}"`; return; }
+    let c = 0;
+    runWhileVisible(root, async (alive) => {
+      const cmd = cmds[c];
+      nodes.forEach((n) => n.classList.remove('lit', 'block'));
+      clearTargets();
+      root.classList.remove('is-muted');
+      if (transcript) transcript.textContent = `"${cmd.t}"`;
+      say(`Voice: "${cmd.t}"`);
+      await sleep(900);
+      for (let i = 0; i < nodes.length && alive(); i++) {
+        nodes.forEach((n) => n.classList.remove('lit'));
+        const n = nodes[i]; n.classList.add('lit');
+        const step = n.dataset.step, t = tgt(cmd.target);
+        if (step === 'intent') { say(`Intent parsed: ${cmd.blocked ? 'fill' : (cmd.target === 'article' ? 'read' : cmd.target === 'checkout' ? 'click' : 'fill')} → "${cmd.target}"`); root.classList.add('is-muted'); }
+        if (step === 'observe') { if (t) t.classList.add('scan'); say(`Observing DOM: found ${cmd.label || cmd.target}, checking accessible name and field type`); }
+        if (step === 'gate') {
+          if (cmd.blocked) {
+            n.classList.add('block');
+            if (t) { t.classList.remove('scan'); t.classList.add('blocked'); }
+            say(`Gate blocked: ${cmd.rule}. The action never reaches the page.`, 'bad');
+            await sleep(3200);
+            break;
+          }
+          say('Gate passed: 5 rules evaluated, no sensitive field, control is labeled', 'ok');
+        }
+        if (step === 'execute') { if (t) { t.classList.remove('scan'); t.classList.add('act'); } say(cmd.done || 'Executed'); }
+        if (step === 'respond') { say(`Speaking: "${cmd.say || 'Done.'}"`); }
+        if (step === 'audit') { say(`Audit log: ${cmd.target} · allowed · ${new Date().toISOString().slice(11, 19)}Z · chrome.storage.local`, 'ok'); }
+        await sleep(i === 0 ? 700 : 950);
+      }
+      await sleep(1800);
+      c = (c + 1) % cmds.length;
+    });
+  });
+
+  /* --------------------------------------------- TraderAI: grounded run */
+  const trader = $('.viz-trader');
+  if (trader) {
+    const rows = $$('.t-row:not(.t-h)', trader), log = $('.t-log ul', trader), count = $('.t-count', trader);
+    const brief = $('.t-type', trader), budgetBar = $('.t-budget .bar i', trader), budgetB = $('.t-budget b', trader);
+    // Deterministic sparkline shapes.
+    let seed = 7;
     const rnd = () => { seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; };
-    const N = 140, series = [];
-    let p = 100;
-    for (let k = 0; k < N; k++) {
-      let drift = 0.25;
-      if (k > 62 && k < 74) drift = -1.9;           // sharp drop: the falling knife guard fires
-      if (k >= 74 && k < 92) drift = -0.15;
-      if (k >= 92) drift = 0.55;
-      p += drift + (rnd() - 0.5) * 2.2;
-      series.push(p);
+    rows.forEach((r) => {
+      const trend = r.dataset.trend, pts = [];
+      let v = 13;
+      for (let k = 0; k < 24; k++) {
+        const drift = trend === 'up' ? -0.45 : trend === 'down' ? (k > 14 ? 1.3 : 0.1) : 0;
+        v = Math.max(3, Math.min(23, v + drift + (rnd() - 0.5) * 3));
+        pts.push(`${(k / 23) * 120},${v.toFixed(1)}`);
+      }
+      $('polyline', r).setAttribute('points', pts.join(' '));
+    });
+    const BRIEF = 'HELIX leads the tier at 82 with a clean guard and 2.4 R:R to the ATR stop. ORBT fell 9% over three sessions, so the falling-knife guard blocked entry. KESTREL reports in three days: a pre-earnings card is ready. Every figure here was fetched, not recalled.';
+    const line = (name, result, cls = '') => { const li = document.createElement('li'); li.className = cls; li.innerHTML = `<b>${name}</b><em>${result}</em>`; log.appendChild(li); while (log.children.length > 8) log.removeChild(log.firstChild); };
+    const reset = () => {
+      rows.forEach((r) => { r.classList.remove('on'); $('.t-score', r).textContent = '0'; const g = $('.t-guard', r); g.textContent = 'pending'; g.className = 't-guard'; });
+      log.innerHTML = ''; if (count) count.textContent = '0 / 11 tools'; if (brief) brief.textContent = ''; if (budgetBar) budgetBar.style.setProperty('--w', '0%'); if (budgetB) budgetB.innerHTML = '$0.00 <em>/ $2.00 cap</em>';
+    };
+    const countTo = async (el, end, ms) => { const t0 = performance.now(); return new Promise((res) => { const step = (t) => { const p = Math.min(1, (t - t0) / ms); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); else res(); }; requestAnimationFrame(step); }); };
+    if (REDUCED) {
+      reset();
+      rows.forEach((r) => { r.classList.add('on'); $('.t-score', r).textContent = r.dataset.score; const g = $('.t-guard', r); g.textContent = r.dataset.guard; g.className = 't-guard ' + (r.dataset.guard === 'clear' ? 'ok' : r.dataset.guard.includes('knife') ? 'bad' : 'warn'); });
+      line('get_snapshot ×5', '612 ms', 'ok'); line('score ×5', 'ok', 'ok'); line('guard.check(ORBT)', 'falling knife', 'bad'); line('briefing', 'cached', 'ok');
+      if (brief) brief.textContent = BRIEF; if (budgetBar) budgetBar.style.setProperty('--w', '12%'); if (budgetB) budgetB.innerHTML = '$0.24 <em>/ $2.00 cap</em>';
+    } else {
+      runWhileVisible(trader, async (alive) => {
+        reset();
+        await sleep(600);
+        let used = 0;
+        const tools = (n) => { used = Math.min(11, used + n); if (count) count.textContent = `${used} / 11 tools`; };
+        for (const r of rows) {
+          if (!alive()) return;
+          const sym = r.dataset.sym, score = +r.dataset.score, guard = r.dataset.guard;
+          line(`get_snapshot(${sym})`, `${90 + Math.round(Math.random() * 80)} ms`, 'ok'); tools(1);
+          await sleep(260);
+          r.classList.add('on');
+          countTo($('.t-score', r), score, 700);
+          line(`score(${sym})`, `→ ${score}`); tools(1);
+          await sleep(320);
+          const g = $('.t-guard', r);
+          if (guard.includes('knife')) { line(`guard.check(${sym})`, 'falling knife · blocked', 'bad'); g.textContent = 'blocked'; g.className = 't-guard bad'; }
+          else if (guard.includes('earnings')) { line(`earnings(${sym})`, 'in 3 days · card ready'); g.textContent = 'earnings 3d'; g.className = 't-guard warn'; }
+          else { g.textContent = 'clear'; g.className = 't-guard ok'; }
+          tools(1);
+          await sleep(300);
+        }
+        if (!alive()) return;
+        line('risk.size(HELIX)', 'ATR stop · 2.4 R:R'); tools(1);
+        await sleep(400);
+        line('briefing()', 'cached · 1 call today', 'ok'); tools(1);
+        if (budgetBar) budgetBar.style.setProperty('--w', '12%'); if (budgetB) budgetB.innerHTML = '$0.24 <em>/ $2.00 cap</em>';
+        for (let k = 0; k <= BRIEF.length && alive(); k += 3) { if (brief) brief.textContent = BRIEF.slice(0, k); await sleep(18); }
+        if (brief) brief.textContent = BRIEF;
+        await sleep(4200);
+      });
     }
-    const min = Math.min(...series), max = Math.max(...series);
-    let prog = 0, running = false, raf = null;
-    const draw = () => {
-      const f = fitCanvas(tcv); if (!f) return;
-      const { ctx, W, H, dpr } = f;
-      const ink = cssVar('--ink'), ink3 = cssVar('--ink-3'), line = cssVar('--line-2'), acc = cssVar('--accent'), ok = cssVar('--ok');
-      ctx.clearRect(0, 0, W, H);
-      const padL = 18 * dpr, padR = 26 * dpr, padT = 26 * dpr, padB = 34 * dpr;
-      const x = (k) => padL + (k / (N - 1)) * (W - padL - padR);
-      const y = (v) => padT + (1 - (v - min) / (max - min)) * (H - padT - padB);
-      // grid
-      ctx.strokeStyle = line; ctx.lineWidth = 1;
-      for (let g = 0; g <= 4; g++) { const gy = padT + (g / 4) * (H - padT - padB); ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(W - padR, gy); ctx.stroke(); }
-      const upto = Math.max(2, Math.floor(prog * N));
-      // ATR stop band (below price)
-      ctx.beginPath();
-      for (let k = 0; k < upto; k++) { const yy = y(series[k] - 6.5); k === 0 ? ctx.moveTo(x(k), yy) : ctx.lineTo(x(k), yy); }
-      for (let k = upto - 1; k >= 0; k--) ctx.lineTo(x(k), y(series[k] - 11));
-      ctx.closePath(); ctx.fillStyle = ink; ctx.globalAlpha = 0.06; ctx.fill(); ctx.globalAlpha = 1;
-      // guard zone
-      const g0 = 62, g1 = 76;
-      if (upto > g0) {
-        const gx0 = x(g0), gx1 = x(Math.min(g1, upto - 1));
-        ctx.fillStyle = acc; ctx.globalAlpha = 0.1; ctx.fillRect(gx0, padT, gx1 - gx0, H - padT - padB); ctx.globalAlpha = 1;
-        ctx.setLineDash([3 * dpr, 4 * dpr]); ctx.strokeStyle = acc; ctx.beginPath(); ctx.moveTo(gx0, padT); ctx.lineTo(gx0, H - padB); ctx.stroke(); ctx.setLineDash([]);
-        ctx.fillStyle = acc; ctx.font = `${10 * dpr}px ${cssVar('--font-mono')}`; ctx.textAlign = 'left';
-        ctx.fillText(W < 760 * dpr ? 'GUARD: ENTRY BLOCKED' : 'GUARD: FALLING KNIFE, ENTRY BLOCKED', gx0 + 6 * dpr, padT + 12 * dpr);
-      }
-      // earnings marker
-      const ek = 108;
-      if (upto > ek) {
-        ctx.setLineDash([3 * dpr, 4 * dpr]); ctx.strokeStyle = ink3; ctx.beginPath(); ctx.moveTo(x(ek), padT); ctx.lineTo(x(ek), H - padB); ctx.stroke(); ctx.setLineDash([]);
-        ctx.fillStyle = ink3; ctx.font = `${10 * dpr}px ${cssVar('--font-mono')}`; ctx.textAlign = 'right';
-        ctx.fillText(W < 520 * dpr ? 'EARNINGS' : 'PRE-EARNINGS CARD', x(ek) - 6 * dpr, padT + 28 * dpr);
-      }
-      // price line
-      ctx.beginPath(); ctx.lineWidth = 1.6 * dpr; ctx.strokeStyle = ink; ctx.lineJoin = 'round';
-      for (let k = 0; k < upto; k++) { k === 0 ? ctx.moveTo(x(k), y(series[k])) : ctx.lineTo(x(k), y(series[k])); }
-      ctx.stroke();
-      // head dot
-      const hk = upto - 1;
-      ctx.beginPath(); ctx.arc(x(hk), y(series[hk]), 3.2 * dpr, 0, 7); ctx.fillStyle = prog >= 1 ? ok : ink; ctx.fill();
-      // axis labels
-      ctx.fillStyle = ink3; ctx.font = `${10 * dpr}px ${cssVar('--font-mono')}`; ctx.textAlign = 'left';
-      ctx.fillText('730-DAY WALK-FORWARD', padL, H - 12 * dpr);
-      ctx.textAlign = 'right'; ctx.fillText('ATR STOP BAND', W - padR, H - 12 * dpr);
-    };
-    const loop = () => {
-      if (!running) return;
-      prog = Math.min(1, prog + (REDUCED ? 1 : 0.008));
-      draw();
-      if (prog < 1) raf = requestAnimationFrame(loop);
-      else raf = null;
-    };
-    onView(tcv, (v) => { running = v; if (v && !raf) raf = requestAnimationFrame(loop); });
-    addEventListener('resize', () => draw());
-    new MutationObserver(() => draw()).observe(html, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
-  /* ------------------------------------------------ ClassQ: chaos replay */
-  const qcv = $('#classqViz');
-  if (qcv) {
-    const reqEl = $('#cq-req'), seatEl = $('#cq-seat'), waitEl = $('#cq-wait');
-    const TOTAL = 500, SEATS = 30;
-    let parts = [], fired = 0, seats = 0, wait = 0, running = false, raf = null, settle = 0;
-    const reset = () => { parts = []; fired = 0; seats = 0; wait = 0; settle = 0; };
-    const draw = () => {
-      const f = fitCanvas(qcv); if (!f) return;
-      const { ctx, W, H, dpr } = f;
-      const ink = cssVar('--ink'), ink3 = cssVar('--ink-3'), ok = cssVar('--ok'), line = cssVar('--line');
-      ctx.clearRect(0, 0, W, H);
-      const nx = W * 0.5, ny = H * 0.47, r = Math.min(H * 0.28, 60 * dpr);
-      if (fired < TOTAL) for (let k = 0; k < 6 && fired < TOTAL; k++) { fired++; parts.push({ x: -8 * dpr, y: H * (0.14 + Math.random() * 0.72), st: 0 }); }
-      parts.forEach((q) => {
-        if (q.st === 0) {
-          const dx = nx - q.x, dy = ny - q.y, d = Math.hypot(dx, dy);
-          q.x += (dx / d) * 7 * dpr; q.y += (dy / d) * 7 * dpr;
-          if (d < r) { if (seats < SEATS) { seats++; q.st = 2; } else { wait++; q.st = 1; } }
-        } else if (q.st === 1) {
-          const qx = W * 0.86, qy = H * 0.5, dx = qx - q.x, dy = qy - q.y, d = Math.hypot(dx, dy);
-          q.x += (dx / d) * 6 * dpr; q.y += (dy / d) * 6 * dpr;
-          if (d < 8 * dpr) q.st = 3;
+  /* ----------------------------------- Adversarial pipeline: terminal run */
+  const term = $('#acpTerm');
+  if (term) {
+    const acpStatus = $('#acpStatus');
+    const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const L = (segs, delay = 420) => ({ segs, delay });
+    const BUILD = [
+      L([['p', '$ forge run --task "validate-json CLI" --mode build']], 300),
+      L([['a', '[architect] '], ['', 'drafting design.md … '], ['hl', '12 requirements, interfaces locked']]),
+      L([['a', '[architect] '], ['', 'waiting for human approval … '], ['ok', 'approved']], 900),
+      L([['a', '[coder]     '], ['', 'writing failing tests first … '], ['hl', '37 tests, 37 failing']]),
+      L([['a', '[coder]     '], ['', 'implementing against the locked design … '], ['ok', '37 passing · 99% coverage']], 700),
+      L([['a', '[reviewer]  '], ['', 'phase 1 · spec compliance … '], ['ok', 'ok']]),
+      L([['a', '[reviewer]  '], ['', 'phase 2 · attacker mindset … '], ['p1', 'P1'], ['', '  $ref "file:///etc/passwd" reads arbitrary local files']], 600),
+      L([['a', '[reviewer]  '], ['', 'phase 2 · attacker mindset … '], ['p1', 'P1'], ['', '  self-referencing $ref → RecursionError, wrong exit code']]),
+      L([['a', '[reviewer]  '], ['', 'phase 2 · attacker mindset … '], ['hl', 'P2'], ['', '  TOCTOU race in the file-size guard']]),
+      L([['a', '[coder]     '], ['', 'change cycle 2 of 3 … '], ['ok', '3 fixes · 39 passing']], 800),
+      L([['a', '[reviewer]  '], ['', 'phase 3 · QA verification … '], ['ok', 'ok']]),
+      L([['a', '[gate]      '], ['', 'scanning 8 files, regex only, no model … '], ['ok', 'clean · 14/14 gate tests']], 700),
+      L([['ok', '✔ delivered '], ['hl', 'validate-json'], ['', '  ·  1 review cycle  ·  0 P1 open  ·  exit 0']], 500),
+    ];
+    const AUDIT = [
+      L([['p', '$ forge run --mode audit --target tinydb@4.9.0 --read-only']], 300),
+      L([['a', '[baseline]  '], ['', 'upstream suite … '], ['ok', '225 passing · 94% coverage']]),
+      L([['a', '[gate]      '], ['', 'scanning 10 source files … '], ['ok', 'clean']], 600),
+      L([['a', '[architect] '], ['', 'ranking attack surfaces … '], ['hl', '6 surfaces: doc_id coercion, key coercion, query cache, middleware']]),
+      L([['a', '[reviewer]  '], ['', 'reproducing … '], ['p1', 'P1'], ['', '  int() leniency collapses keys "1", " 1", "+1", "01" → documents silently destroyed']], 700),
+      L([['a', '[reviewer]  '], ['', 'reproducing … '], ['p1', 'P1'], ['', '  string doc_id bypasses duplicate-ID ValueError → silent overwrite']]),
+      L([['a', '[reviewer]  '], ['', 'reproducing … '], ['p1', 'P1'], ['', '  regex flags dropped from query-cache hash → stale empty result']]),
+      L([['a', '[reviewer]  '], ['', 'candidate 13 … '], ['hl', 'NOT REPRODUCED'], ['', '  rejected, not padded into the count']], 800),
+      L([['a', '[qa]        '], ['', 'independent re-reproduction … '], ['ok', '6 of 6 confirmed']]),
+      L([['ok', '✔ report    '], ['hl', '14 findings · 6 P1 · runnable PoCs'], ['', '  →  private disclosure, maintainer responded']], 500),
+    ];
+    const render = (lines) => { term.innerHTML = lines.map((l) => `<span class="ln">${l.segs.map(([c, t]) => `<span class="${c}">${esc(t)}</span>`).join('')}</span>`).join('') + '<span class="cur">▍</span>'; };
+    if (REDUCED) { render(BUILD); if (acpStatus) { acpStatus.textContent = 'Build mode: delivered with 0 P1 open'; acpStatus.className = 'flow-status ok'; } }
+    else {
+      let which = 0;
+      runWhileVisible(term.closest('.case-visual'), async (alive) => {
+        const script = which % 2 === 0 ? BUILD : AUDIT;
+        const shown = [];
+        if (acpStatus) { acpStatus.textContent = which % 2 === 0 ? 'Build mode: the agent proposes, the gate disposes' : 'Audit mode: read-only run against a real library'; acpStatus.className = 'flow-status'; }
+        render(shown);
+        await sleep(500);
+        for (const l of script) {
+          if (!alive()) return;
+          if (l.segs[0][0] === 'p') {
+            // Type the prompt line character by character.
+            const text = l.segs[0][1];
+            for (let k = 1; k <= text.length && alive(); k += 2) { render([...shown, L([['p', text.slice(0, k)]])]); await sleep(14); }
+          }
+          shown.push(l);
+          render(shown);
+          if (l.segs.some(([c]) => c === 'p1') && acpStatus) { acpStatus.textContent = 'Reviewer found a P1. The deterministic gate will not let it ship.'; acpStatus.className = 'flow-status bad'; }
+          await sleep(l.delay);
         }
-        if (q.st < 2) { ctx.fillStyle = q.st === 0 ? ink : ink3; ctx.globalAlpha = q.st === 0 ? 0.75 : 0.5; ctx.beginPath(); ctx.arc(q.x, q.y, 1.7 * dpr, 0, 7); ctx.fill(); ctx.globalAlpha = 1; }
+        if (acpStatus) { acpStatus.textContent = which % 2 === 0 ? 'Delivered: 1 review cycle, 0 P1 open, exit 0' : 'Reported privately: 14 findings, 6 P1, 1 honestly rejected'; acpStatus.className = 'flow-status ok'; }
+        await sleep(4500);
+        which++;
       });
-      parts = parts.filter((q) => q.st < 2);
-      ctx.lineWidth = 3 * dpr;
-      ctx.strokeStyle = line; ctx.beginPath(); ctx.arc(nx, ny, r, 0, Math.PI * 2); ctx.stroke();
-      ctx.strokeStyle = ok; ctx.beginPath(); ctx.arc(nx, ny, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * (seats / SEATS)); ctx.stroke();
-      ctx.fillStyle = ink; ctx.font = `${12 * dpr}px ${cssVar('--font-mono')}`; ctx.textAlign = 'center';
-      ctx.fillText(`${seats}/${SEATS}`, nx, ny + 4 * dpr);
-      ctx.fillStyle = ink3; ctx.font = `${10 * dpr}px ${cssVar('--font-mono')}`;
-      ctx.fillText('SECTION · REDIS LUA', nx, ny + r + 18 * dpr);
-      ctx.textAlign = 'left';
-      const qn = Math.min(wait, 48);
-      for (let k = 0; k < qn; k++) { const col = k % 8, row = Math.floor(k / 8); ctx.fillStyle = ink3; ctx.globalAlpha = 0.55; ctx.beginPath(); ctx.arc(W * 0.8 + col * 7 * dpr, H * 0.36 + row * 7 * dpr, 2 * dpr, 0, 7); ctx.fill(); ctx.globalAlpha = 1; }
-      ctx.fillStyle = ink3; ctx.fillText('WAITLIST · FIFO', W * 0.8, H * 0.36 - 14 * dpr);
-      if (reqEl) reqEl.textContent = fired;
-      if (seatEl) seatEl.innerHTML = `${seats}<em>/30</em>`;
-      if (waitEl) waitEl.textContent = wait;
-      if (fired >= TOTAL && parts.length === 0) { settle++; if (settle > 180) reset(); }
+    }
+  }
+
+  /* ---------------------------------------- ClassQ: registration burst */
+  const cqRoot = $('.viz-classq');
+  if (cqRoot) {
+    const seatsEl = $('#cqSeats'), queueEl = $('#cqQueue'), reqEl = $('#cq-req'), rpsEl = $('#cq-rps'), luaEl = $('#cq-lua'), seatEl = $('#cq-seat'), waitEl = $('#cq-wait'), assertEl = $('#cqAssert');
+    const TOTAL = 500, SEATS = 30, SHOW = 18;
+    for (let i = 0; i < SEATS; i++) { const d = document.createElement('i'); d.className = 'seat'; seatsEl.appendChild(d); }
+    const seats = $$('.seat', seatsEl);
+    const paint = (fired, elapsed) => {
+      const filled = Math.min(SEATS, fired), waiting = Math.max(0, fired - SEATS);
+      seats.forEach((s, i) => s.classList.toggle('on', i < filled));
+      reqEl.textContent = fired; luaEl.textContent = fired;
+      rpsEl.textContent = elapsed > 0 ? Math.round(fired / Math.max(0.35, elapsed / 1000)) : 0;
+      seatEl.textContent = `${filled} / ${SEATS} seats`; waitEl.textContent = `${waiting} waiting`;
+      const shown = Math.min(SHOW, waiting);
+      while (queueEl.children.length < shown) { const t = document.createElement('span'); t.className = 'qtok'; t.textContent = `#${queueEl.children.length + 1}`; queueEl.appendChild(t); }
+      let more = $('.qtok.more', queueEl);
+      if (waiting > SHOW) { if (!more) { more = document.createElement('span'); more.className = 'qtok more'; queueEl.appendChild(more); } more.textContent = `+${waiting - SHOW} more, in order`; }
     };
-    const loop = () => { if (!running) { raf = null; return; } draw(); raf = requestAnimationFrame(loop); };
-    onView(qcv, (v) => {
-      running = v;
-      if (REDUCED) { fired = TOTAL; seats = SEATS; wait = TOTAL - SEATS; draw(); running = false; return; }
-      if (v && !raf) raf = requestAnimationFrame(loop);
-    });
+    const reset = () => { queueEl.innerHTML = ''; seats.forEach((s) => s.classList.remove('on')); paint(0, 0); assertEl.textContent = 'waiting for burst'; assertEl.className = 'pill run'; };
+    if (REDUCED) { paint(TOTAL, 2400); assertEl.textContent = 'passed · 0 oversold'; assertEl.className = 'pill ok'; }
+    else {
+      runWhileVisible(cqRoot, async (alive) => {
+        reset();
+        await sleep(700);
+        if (!alive()) return;
+        assertEl.textContent = 'burst in flight'; assertEl.className = 'pill run';
+        const DUR = 2600, t0 = performance.now();
+        await new Promise((res) => {
+          const step = (t) => {
+            if (!alive()) return res();
+            const p = Math.min(1, (t - t0) / DUR), e = 1 - Math.pow(1 - p, 2.2);
+            paint(Math.round(TOTAL * e), t - t0);
+            if (p < 1) requestAnimationFrame(step); else res();
+          };
+          requestAnimationFrame(step);
+        });
+        if (!alive()) return;
+        await sleep(400);
+        assertEl.textContent = 'checking DB'; assertEl.className = 'pill run';
+        await sleep(700);
+        assertEl.textContent = 'passed · 0 oversold'; assertEl.className = 'pill ok';
+        await sleep(3800);
+      });
+    }
   }
 
   /* ----------------------------------------------------- bench bars */
@@ -577,14 +624,6 @@
     e.preventDefault();
     try { await navigator.clipboard.writeText(addr); say('Email copied'); } catch (err) { location.href = `mailto:${addr}`; }
   }));
-
-  /* ------------------------------------------------------------------ clock */
-  const clock = $('[data-clock]');
-  if (clock) {
-    const f = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Phoenix' });
-    const tickClock = () => { clock.textContent = f.format(new Date()); };
-    tickClock(); setInterval(tickClock, 30000);
-  }
 
   /* ------------------------------------------------------------ back to top */
   $$('[data-top]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); scrollTo(0, 0); }));

@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -67,9 +67,9 @@
   <a class="brand" href="#top" aria-label="Aman Adhav, back to top">Aman Adhav <small>Software Engineer</small></a>
   <nav aria-label="Primary">
     <ul class="nav-links">
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#work">Work</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#work">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -84,9 +84,9 @@
 
 <div class="menu" id="menu">
   <ul class="menu-links">
-    <li><a href="#experience"><span>01</span>Experience</a></li>
-    <li><a href="#work"><span>02</span>Work</a></li>
-    <li><a href="#about"><span>03</span>About</a></li>
+    <li><a href="#about"><span>01</span>About</a></li>
+    <li><a href="#experience"><span>02</span>Experience</a></li>
+    <li><a href="#work"><span>03</span>Projects</a></li>
     <li><a href="#skills"><span>04</span>Skills</a></li>
     <li><a href="#contact"><span>05</span>Contact</a></li>
   </ul>
@@ -292,7 +292,7 @@
 <section class="section" id="work">
   <div class="container">
     <div class="sec-head">
-      <div class="sec-num mono" data-reveal>03 / Selected work</div>
+      <div class="sec-num mono" data-reveal>03 / Projects</div>
       <h2 class="sec-title" data-split>Things I have <em>shipped.</em></h2>
       <p class="sec-lede" data-reveal>Four builds in depth, then the rest of the shelf. Every project ships with its tests, and most ship with a live demo or a public repo.</p>
     </div>
@@ -301,15 +301,32 @@
     <div class="cases">
     <article class="case">
       <span class="case-ghost" aria-hidden="true">01</span>
-      <div class="case-visual" data-flow data-prompt="Voice" data-cmds='["click the checkout button","read this article aloud","search for flights to Barcelona","fill in the contact form"]' data-blocked="Gate blocked: sensitive field detected. The action never reaches the page." data-passed="Gate passed" data-done="Executed and logged">
-        <div class="viz-head"><b>AllVoice pipeline</b><span>6 stages, 1 mandatory gate</span></div>
-        <div class="flow">
-          <div class="node">1 Intent<small>Parse command</small></div>
-          <div class="node">2 Observe<small>Read the DOM</small></div>
-          <div class="node gate">3 Ethics Gate<small>5 rules, pure fn</small></div>
-          <div class="node">4 Execute<small>Click, fill, navigate</small></div>
-          <div class="node">5 Respond<small>TTS + visual</small></div>
-          <div class="node">6 Audit<small>Structured log</small></div>
+      <div class="case-visual viz-allvoice" data-flow data-cmds='[{"t":"click the checkout button","target":"checkout","label":"button Checkout","done":"Clicked: Checkout","say":"Opening checkout. Two items, one hundred twenty-nine dollars."},{"t":"read the return policy aloud","target":"article","label":"article Return policy","done":"Reading: Return policy","say":"Returns are accepted within thirty days of delivery."},{"t":"enter my card number","target":"card","blocked":true,"rule":"PRIVACY_SENSITIVE_FIELD, card number"},{"t":"fill in my email address","target":"email","label":"input Email","done":"Filled: Email","say":"Email entered."},{"t":"type my password","target":"password","blocked":true,"rule":"PRIVACY_SENSITIVE_FIELD, password"}]'>
+        <div class="viz-head"><b>AllVoice, live on a demo store</b><span>Voice in, gate in the middle</span></div>
+        <div class="browser" aria-hidden="true">
+          <div class="chrome-bar"><i></i><i></i><i></i><span class="url">https://northwind-outfitters.example/checkout</span></div>
+          <div class="page">
+            <div class="page-nav"><b>Northwind Outfitters</b><span>Shop</span><span>Journal</span><span>Cart (2)</span></div>
+            <div class="page-hero">
+              <div class="ph-img"></div>
+              <div class="ph-copy"><h5>Trail Runner 3</h5><p>Lightweight, grippy, ready for dust and dark mornings.</p><div class="price">$129.00</div><span class="pg-btn" data-target="checkout">Checkout</span></div>
+            </div>
+            <div class="page-form">
+              <label>Email<span class="pg-input" data-target="email">you@example.com</span></label>
+              <label>Card number<span class="pg-input" data-target="card">4242 4242 4242 4242</span></label>
+              <label>Password<span class="pg-input" data-target="password">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span></label>
+            </div>
+            <div class="page-article" data-target="article"><h6>Return policy</h6><p>Returns are accepted within 30 days of delivery. Items must be unworn, with tags attached. Refunds land in 5 to 7 business days.</p></div>
+          </div>
+          <div class="a11y"><span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="transcript">Listening</span><span class="a11y-tag">7:1 contrast · TTS on</span></div>
+        </div>
+        <div class="flow flow-strip">
+          <div class="node" data-step="intent">1 Intent</div>
+          <div class="node" data-step="observe">2 Observe</div>
+          <div class="node gate" data-step="gate">3 Ethics Gate</div>
+          <div class="node" data-step="execute">4 Execute</div>
+          <div class="node" data-step="respond">5 Respond</div>
+          <div class="node" data-step="audit">6 Audit</div>
         </div>
         <div class="flow-status">Listening</div>
       </div>
@@ -335,9 +352,24 @@
     <!-- TraderAI -->
     <article class="case flip">
       <span class="case-ghost" aria-hidden="true">02</span>
-      <div class="case-visual">
-        <div class="viz-head"><b>TraderAI</b><span>Grounded by construction</span></div>
-        <canvas id="traderViz" class="viz-canvas" aria-label="Animated price chart showing the ATR stop band, a blocked falling-knife entry and a pre-earnings marker" role="img"></canvas>
+      <div class="case-visual viz-trader">
+        <div class="viz-head"><b>TraderAI, morning run</b><span>Every number fetched by a tool</span></div>
+        <div class="trader" aria-hidden="true">
+          <div class="t-watch">
+            <div class="t-row t-h"><span>Ticker</span><span>Score</span><span>60d</span><span>Guard</span></div>
+            <div class="t-row" data-sym="ACME" data-score="74" data-trend="up" data-guard="clear"><span class="t-sym">ACME</span><b class="t-score">0</b><svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">clear</span></div>
+            <div class="t-row" data-sym="HELIX" data-score="82" data-trend="up" data-guard="clear"><span class="t-sym">HELIX</span><b class="t-score">0</b><svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">clear</span></div>
+            <div class="t-row" data-sym="ORBT" data-score="38" data-trend="down" data-guard="falling knife"><span class="t-sym">ORBT</span><b class="t-score">0</b><svg class="spark down" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">clear</span></div>
+            <div class="t-row" data-sym="NOVA" data-score="61" data-trend="flat" data-guard="clear"><span class="t-sym">NOVA</span><b class="t-score">0</b><svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">clear</span></div>
+            <div class="t-row" data-sym="KESTREL" data-score="55" data-trend="flat" data-guard="earnings in 3d"><span class="t-sym">KESTREL</span><b class="t-score">0</b><svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">clear</span></div>
+            <div class="t-note">Synthetic tickers. Scores, stops and R:R are computed in code; the model only writes the words.</div>
+          </div>
+          <div class="t-side">
+            <div class="t-log"><div class="t-log-h">Tool calls <em class="t-count">0 / 11 tools</em></div><ul></ul></div>
+            <div class="t-brief"><div class="t-log-h">Daily briefing <em>cached · 1 call / day</em></div><p class="t-type"></p></div>
+            <div class="t-budget"><span>Daily AI budget, enforced in code</span><div class="bar"><i></i></div><b>$0.00 <em>/ $2.00 cap</em></b></div>
+          </div>
+        </div>
         <div class="viz-foot">
           <div><b>11</b><span>Typed tools the analyst must use</span></div>
           <div><b>306</b><span>Hermetic pytest tests</span></div>
@@ -364,16 +396,13 @@
     <!-- Adversarial Coding Pipeline -->
     <article class="case">
       <span class="case-ghost" aria-hidden="true">03</span>
-      <div class="case-visual" data-flow data-prompt="Task" data-cmds='["implement $ref resolution","add a file size guard","parse a nested schema","handle a recursive $ref"]' data-blocked="Gate blocked: file:// URI in $ref. P1, exit code 2, nothing ships." data-passed="Gate clean" data-done="Merged with tests">
-        <div class="viz-head"><b>Adversarial pipeline</b><span>4 agents, 1 deterministic gate</span></div>
-        <div class="flow cols-5">
-          <div class="node">Architect<small>Locked design</small></div>
-          <div class="node">Coder<small>Strict TDD</small></div>
-          <div class="node">Reviewer<small>Attacker mindset</small></div>
-          <div class="node gate">Safety Gate<small>Regex, no LLM</small></div>
-          <div class="node">Ship<small>Tests + report</small></div>
+      <div class="case-visual viz-term">
+        <div class="viz-head"><b>Adversarial pipeline, live run</b><span>4 agents, 1 deterministic gate</span></div>
+        <div class="term" aria-hidden="true">
+          <div class="chrome-bar"><i></i><i></i><i></i><span class="url">forge · adversarial-coding-pipeline</span></div>
+          <pre class="term-out" id="acpTerm"></pre>
         </div>
-        <div class="flow-status">Waiting for a task</div>
+        <div class="flow-status" id="acpStatus">Idle</div>
       </div>
       <div class="case-body">
         <div class="case-top"><span class="mono">Project 03 · 2026</span><span class="mono">Multi-agent system</span></div>
@@ -395,14 +424,28 @@
     <!-- ClassQ -->
     <article class="case flip">
       <span class="case-ghost" aria-hidden="true">04</span>
-      <div class="case-visual">
-        <div class="viz-head"><b>ClassQ chaos test</b><span>500 requests, 30 seats, live replay</span></div>
-        <canvas id="classqViz" class="viz-canvas" aria-label="Animated simulation of 500 concurrent registrations filling a 30-seat section with zero double-enrollments" role="img"></canvas>
+      <div class="case-visual viz-classq">
+        <div class="viz-head"><b>ClassQ chaos test</b><span>500 requests, one 30-seat section</span></div>
+        <div class="cq" aria-hidden="true">
+          <div class="cq-top">
+            <div class="cq-metric"><b id="cq-req">0</b><span>Requests fired</span></div>
+            <div class="cq-metric"><b id="cq-rps">0</b><span>Requests / second</span></div>
+            <div class="cq-metric"><b id="cq-lua">0</b><span>Atomic Lua claims</span></div>
+          </div>
+          <div class="cq-block">
+            <div class="cq-label"><span>CSE 310 · Section 001 · capacity 30</span><em id="cq-seat">0 / 30 seats</em></div>
+            <div class="seats" id="cqSeats"></div>
+          </div>
+          <div class="cq-block">
+            <div class="cq-label"><span>Waitlist · Redis sorted set · FIFO</span><em id="cq-wait">0 waiting</em></div>
+            <div class="queue" id="cqQueue"></div>
+          </div>
+          <div class="cq-check"><code>assert confirmed_count &lt;= capacity</code><span class="pill run" id="cqAssert">waiting for burst</span></div>
+        </div>
         <div class="viz-foot">
-          <div><b id="cq-req">0</b><span>Requests fired</span></div>
-          <div><b id="cq-seat">0<em>/30</em></b><span>Seats filled</span></div>
-          <div><b id="cq-wait">0</b><span>Waitlisted, in order</span></div>
-          <div><b class="ok">0</b><span>Double-enrollments</span></div>
+          <div><b>500</b><span>Concurrent requests</span></div>
+          <div><b class="ok">0</b><span>Double-enrollments, every run</span></div>
+          <div><b>O(V+E)</b><span>Prerequisite DAG check</span></div>
         </div>
       </div>
       <div class="case-body">
@@ -686,7 +729,7 @@
 <footer>
   <div class="container foot">
     <span>&copy; 2026 Aman Adhav</span>
-    <span class="clock"><i></i>Tempe, AZ <span data-clock>--:--</span></span>
+    <span>Software Engineer · Agentic AI &amp; Backend</span>
     <a class="to-top" href="#top" data-top>Back to top <svg><use href="#i-arrow-up"/></svg></a>
   </div>
 </footer>
@@ -696,6 +739,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script src="main.js?v=5"></script>
+<script src="main.js?v=6"></script>
 </body>
 </html>
