@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -301,32 +301,28 @@
     <div class="cases">
     <article class="case">
       <span class="case-ghost" aria-hidden="true">01</span>
-      <div class="case-visual viz-allvoice" data-flow data-cmds='[{"t":"click the checkout button","target":"checkout","label":"button Checkout","done":"Clicked: Checkout","say":"Opening checkout. Two items, one hundred twenty-nine dollars."},{"t":"read the return policy aloud","target":"article","label":"article Return policy","done":"Reading: Return policy","say":"Returns are accepted within thirty days of delivery."},{"t":"enter my card number","target":"card","blocked":true,"rule":"PRIVACY_SENSITIVE_FIELD, card number"},{"t":"fill in my email address","target":"email","label":"input Email","done":"Filled: Email","say":"Email entered."},{"t":"type my password","target":"password","blocked":true,"rule":"PRIVACY_SENSITIVE_FIELD, password"}]'>
-        <div class="viz-head"><b>AllVoice, live on a demo store</b><span>Voice in, gate in the middle</span></div>
+      <div class="case-visual viz-allvoice" data-flow data-cmds='[{"t":"click the checkout button","target":"checkout","done":"Done: clicked Checkout"},{"t":"type my password","target":"password","blocked":true},{"t":"fill in my email","target":"email","done":"Done: filled in the email"}]'>
+        <div class="viz-head"><b>AllVoice demo</b><span>Voice control for blind users</span></div>
+        <p class="viz-caption">You speak, it acts on the page. A safety gate blocks anything sensitive, like passwords, before it is touched.</p>
         <div class="browser" aria-hidden="true">
-          <div class="chrome-bar"><i></i><i></i><i></i><span class="url">https://northwind-outfitters.example/checkout</span></div>
+          <div class="chrome-bar"><i></i><i></i><i></i><span class="url">northwind-outfitters.example/checkout</span></div>
           <div class="page">
-            <div class="page-nav"><b>Northwind Outfitters</b><span>Shop</span><span>Journal</span><span>Cart (2)</span></div>
+            <div class="page-nav"><b>Northwind Outfitters</b><span>Shop</span><span>Cart (2)</span></div>
             <div class="page-hero">
               <div class="ph-img"></div>
-              <div class="ph-copy"><h5>Trail Runner 3</h5><p>Lightweight, grippy, ready for dust and dark mornings.</p><div class="price">$129.00</div><span class="pg-btn" data-target="checkout">Checkout</span></div>
+              <div class="ph-copy"><h5>Trail Runner 3</h5><p>Lightweight, grippy, ready for dust.</p><div class="price">$129.00</div><span class="pg-btn" data-target="checkout">Checkout</span></div>
             </div>
             <div class="page-form">
               <label>Email<span class="pg-input" data-target="email">you@example.com</span></label>
-              <label>Card number<span class="pg-input" data-target="card">4242 4242 4242 4242</span></label>
               <label>Password<span class="pg-input" data-target="password">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span></label>
             </div>
-            <div class="page-article" data-target="article"><h6>Return policy</h6><p>Returns are accepted within 30 days of delivery. Items must be unworn, with tags attached. Refunds land in 5 to 7 business days.</p></div>
           </div>
-          <div class="a11y"><span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="transcript">Listening</span><span class="a11y-tag">7:1 contrast · TTS on</span></div>
+          <div class="a11y"><span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="transcript">Listening</span></div>
         </div>
         <div class="flow flow-strip">
-          <div class="node" data-step="intent">1 Intent</div>
-          <div class="node" data-step="observe">2 Observe</div>
-          <div class="node gate" data-step="gate">3 Ethics Gate</div>
-          <div class="node" data-step="execute">4 Execute</div>
-          <div class="node" data-step="respond">5 Respond</div>
-          <div class="node" data-step="audit">6 Audit</div>
+          <div class="node" data-step="intent">1 &nbsp;Hear the command</div>
+          <div class="node gate" data-step="gate">2 &nbsp;Safety gate</div>
+          <div class="node" data-step="execute">3 &nbsp;Act on the page</div>
         </div>
         <div class="flow-status">Listening</div>
       </div>
@@ -353,27 +349,22 @@
     <article class="case flip">
       <span class="case-ghost" aria-hidden="true">02</span>
       <div class="case-visual viz-trader">
-        <div class="viz-head"><b>TraderAI, morning run</b><span>Every number fetched by a tool</span></div>
+        <div class="viz-head"><b>TraderAI demo</b><span>Runs on your own machine</span></div>
+        <p class="viz-caption">Scores stocks and enforces your risk rules. The AI writes the words; the code owns every number.</p>
         <div class="trader" aria-hidden="true">
           <div class="t-watch">
-            <div class="t-row t-h"><span>Ticker</span><span>Score</span><span>60d</span><span>Guard</span></div>
-            <div class="t-row" data-sym="ACME" data-score="74" data-trend="up" data-guard="clear"><span class="t-sym">ACME</span><b class="t-score">0</b><svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">clear</span></div>
-            <div class="t-row" data-sym="HELIX" data-score="82" data-trend="up" data-guard="clear"><span class="t-sym">HELIX</span><b class="t-score">0</b><svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">clear</span></div>
-            <div class="t-row" data-sym="ORBT" data-score="38" data-trend="down" data-guard="falling knife"><span class="t-sym">ORBT</span><b class="t-score">0</b><svg class="spark down" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">clear</span></div>
-            <div class="t-row" data-sym="NOVA" data-score="61" data-trend="flat" data-guard="clear"><span class="t-sym">NOVA</span><b class="t-score">0</b><svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">clear</span></div>
-            <div class="t-row" data-sym="KESTREL" data-score="55" data-trend="flat" data-guard="earnings in 3d"><span class="t-sym">KESTREL</span><b class="t-score">0</b><svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">clear</span></div>
-            <div class="t-note">Synthetic tickers. Scores, stops and R:R are computed in code; the model only writes the words.</div>
+            <div class="t-row t-h"><span>Stock</span><span>Score</span><span>Last 60 days</span><span>Risk check</span></div>
+            <div class="t-row" data-sym="ACME" data-score="82" data-trend="up" data-guard="Clear to enter" data-kind="ok"><span class="t-sym">ACME</span><b class="t-score">0</b><svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">checking</span></div>
+            <div class="t-row" data-sym="ORBT" data-score="38" data-trend="down" data-guard="Blocked: falling fast" data-kind="bad"><span class="t-sym">ORBT</span><b class="t-score">0</b><svg class="spark down" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">checking</span></div>
+            <div class="t-row" data-sym="KESTREL" data-score="55" data-trend="flat" data-guard="Earnings in 3 days" data-kind="warn"><span class="t-sym">KESTREL</span><b class="t-score">0</b><svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points=""/></svg><span class="t-guard">checking</span></div>
           </div>
-          <div class="t-side">
-            <div class="t-log"><div class="t-log-h">Tool calls <em class="t-count">0 / 11 tools</em></div><ul></ul></div>
-            <div class="t-brief"><div class="t-log-h">Daily briefing <em>cached · 1 call / day</em></div><p class="t-type"></p></div>
-            <div class="t-budget"><span>Daily AI budget, enforced in code</span><div class="bar"><i></i></div><b>$0.00 <em>/ $2.00 cap</em></b></div>
-          </div>
+          <div class="t-brief"><div class="t-log-h">Morning briefing <em>written by the AI from the numbers above</em></div><p class="t-type"></p></div>
+          <div class="t-ground"><i></i><span>Every figure above was fetched by one of 11 tools. The AI cannot invent a number.</span></div>
         </div>
         <div class="viz-foot">
-          <div><b>11</b><span>Typed tools the analyst must use</span></div>
-          <div><b>306</b><span>Hermetic pytest tests</span></div>
-          <div><b>$1<em>-2/mo</em></b><span>To run on your own keys</span></div>
+          <div><b>306</b><span>Automated tests</span></div>
+          <div><b>$1<em>-2</em></b><span>Per month to run</span></div>
+          <div><b>0</b><span>Numbers written by the model</span></div>
         </div>
       </div>
       <div class="case-body">
@@ -397,10 +388,11 @@
     <article class="case">
       <span class="case-ghost" aria-hidden="true">03</span>
       <div class="case-visual viz-term">
-        <div class="viz-head"><b>Adversarial pipeline, live run</b><span>4 agents, 1 deterministic gate</span></div>
+        <div class="viz-head"><b>Adversarial pipeline demo</b><span>Four agents, one gate</span></div>
+        <p class="viz-caption">Four AI agents write the code and attack each other's work. A deterministic safety gate, not an AI, decides if it ships.</p>
         <div class="term" aria-hidden="true">
-          <div class="chrome-bar"><i></i><i></i><i></i><span class="url">forge · adversarial-coding-pipeline</span></div>
-          <pre class="term-out" id="acpTerm"></pre>
+          <div class="chrome-bar"><i></i><i></i><i></i><span class="url">pipeline run</span></div>
+          <div class="term-out" id="acpTerm"></div>
         </div>
         <div class="flow-status" id="acpStatus">Idle</div>
       </div>
@@ -425,27 +417,23 @@
     <article class="case flip">
       <span class="case-ghost" aria-hidden="true">04</span>
       <div class="case-visual viz-classq">
-        <div class="viz-head"><b>ClassQ chaos test</b><span>500 requests, one 30-seat section</span></div>
+        <div class="viz-head"><b>ClassQ demo</b><span>Class registration under load</span></div>
+        <p class="viz-caption">500 students hit one 30-seat class in the same second. Seats fill once, everyone else queues in order, nobody is double-booked.</p>
         <div class="cq" aria-hidden="true">
           <div class="cq-top">
-            <div class="cq-metric"><b id="cq-req">0</b><span>Requests fired</span></div>
-            <div class="cq-metric"><b id="cq-rps">0</b><span>Requests / second</span></div>
-            <div class="cq-metric"><b id="cq-lua">0</b><span>Atomic Lua claims</span></div>
+            <div class="cq-metric"><b id="cq-req">0</b><span>Students trying</span></div>
+            <div class="cq-metric"><b id="cq-seat">0</b><span>Seats filled, of 30</span></div>
+            <div class="cq-metric"><b id="cq-wait">0</b><span>Waiting in line</span></div>
           </div>
           <div class="cq-block">
-            <div class="cq-label"><span>CSE 310 · Section 001 · capacity 30</span><em id="cq-seat">0 / 30 seats</em></div>
+            <div class="cq-label"><span>The 30 seats</span><em id="cq-seat-l">0 / 30</em></div>
             <div class="seats" id="cqSeats"></div>
           </div>
           <div class="cq-block">
-            <div class="cq-label"><span>Waitlist · Redis sorted set · FIFO</span><em id="cq-wait">0 waiting</em></div>
+            <div class="cq-label"><span>The waitlist, first come first served</span><em id="cq-wait-l">0 waiting</em></div>
             <div class="queue" id="cqQueue"></div>
           </div>
-          <div class="cq-check"><code>assert confirmed_count &lt;= capacity</code><span class="pill run" id="cqAssert">waiting for burst</span></div>
-        </div>
-        <div class="viz-foot">
-          <div><b>500</b><span>Concurrent requests</span></div>
-          <div><b class="ok">0</b><span>Double-enrollments, every run</span></div>
-          <div><b>O(V+E)</b><span>Prerequisite DAG check</span></div>
+          <div class="cq-check"><span>Students given a seat twice</span><span class="pill run" id="cqAssert">waiting</span></div>
         </div>
       </div>
       <div class="case-body">
@@ -739,6 +727,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script src="main.js?v=7"></script>
+<script src="main.js?v=8"></script>
 </body>
 </html>

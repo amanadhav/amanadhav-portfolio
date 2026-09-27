@@ -379,38 +379,42 @@
     const clearTargets = () => targets.forEach((t) => t.classList.remove('scan', 'act', 'blocked'));
     const tgt = (name) => root.querySelector(`[data-target="${name}"]`);
     const say = (text, cls = '') => { status.textContent = text; status.className = 'flow-status' + (cls ? ' ' + cls : ''); };
-    if (REDUCED) { nodes.forEach((n) => n.classList.add('lit')); say(`Executed and logged: "${cmds[0].t}"`, 'ok'); if (transcript) transcript.textContent = `"${cmds[0].t}"`; return; }
+    if (REDUCED) { nodes.forEach((n) => n.classList.add('lit')); say(cmds[0].done || 'Done', 'ok'); if (transcript) transcript.textContent = `"${cmds[0].t}"`; return; }
     let c = 0;
     runWhileVisible(root, async (alive) => {
-      const cmd = cmds[c];
+      const cmd = cmds[c], t = tgt(cmd.target);
       nodes.forEach((n) => n.classList.remove('lit', 'block'));
       clearTargets();
       root.classList.remove('is-muted');
+      if (transcript) transcript.textContent = 'Listening';
+      say('Listening for a voice command');
+      await sleep(1100);
+      if (!alive()) return;
+      // 1. hear
+      nodes[0].classList.add('lit');
       if (transcript) transcript.textContent = `"${cmd.t}"`;
-      say(`Voice: "${cmd.t}"`);
-      await sleep(900);
-      for (let i = 0; i < nodes.length && alive(); i++) {
-        nodes.forEach((n) => n.classList.remove('lit'));
-        const n = nodes[i]; n.classList.add('lit');
-        const step = n.dataset.step, t = tgt(cmd.target);
-        if (step === 'intent') { say(`Intent parsed: ${cmd.blocked ? 'fill' : (cmd.target === 'article' ? 'read' : cmd.target === 'checkout' ? 'click' : 'fill')} → "${cmd.target}"`); root.classList.add('is-muted'); }
-        if (step === 'observe') { if (t) t.classList.add('scan'); say(`Observing DOM: found ${cmd.label || cmd.target}, checking accessible name and field type`); }
-        if (step === 'gate') {
-          if (cmd.blocked) {
-            n.classList.add('block');
-            if (t) { t.classList.remove('scan'); t.classList.add('blocked'); }
-            say(`Gate blocked: ${cmd.rule}. The action never reaches the page.`, 'bad');
-            await sleep(3200);
-            break;
-          }
-          say('Gate passed: 5 rules evaluated, no sensitive field, control is labeled', 'ok');
-        }
-        if (step === 'execute') { if (t) { t.classList.remove('scan'); t.classList.add('act'); } say(cmd.done || 'Executed'); }
-        if (step === 'respond') { say(`Speaking: "${cmd.say || 'Done.'}"`); }
-        if (step === 'audit') { say(`Audit log: ${cmd.target} · allowed · ${new Date().toISOString().slice(11, 19)}Z · chrome.storage.local`, 'ok'); }
-        await sleep(i === 0 ? 700 : 950);
+      if (t) t.classList.add('scan');
+      say(`Heard: "${cmd.t}"`);
+      root.classList.add('is-muted');
+      await sleep(1400);
+      if (!alive()) return;
+      // 2. gate
+      nodes[0].classList.remove('lit'); nodes[1].classList.add('lit');
+      if (cmd.blocked) {
+        nodes[1].classList.add('block');
+        if (t) { t.classList.remove('scan'); t.classList.add('blocked'); }
+        say('Blocked: the gate never lets a password be touched', 'bad');
+        await sleep(3200);
+      } else {
+        say('Safe: nothing sensitive involved', 'ok');
+        await sleep(1200);
+        if (!alive()) return;
+        // 3. act
+        nodes[1].classList.remove('lit'); nodes[2].classList.add('lit');
+        if (t) { t.classList.remove('scan'); t.classList.add('act'); }
+        say(cmd.done || 'Done', 'ok');
+        await sleep(2400);
       }
-      await sleep(1800);
       c = (c + 1) % cmds.length;
     });
   });
@@ -418,9 +422,7 @@
   /* --------------------------------------------- TraderAI: grounded run */
   const trader = $('.viz-trader');
   if (trader) {
-    const rows = $$('.t-row:not(.t-h)', trader), log = $('.t-log ul', trader), count = $('.t-count', trader);
-    const brief = $('.t-type', trader), budgetBar = $('.t-budget .bar i', trader), budgetB = $('.t-budget b', trader);
-    // Deterministic sparkline shapes.
+    const rows = $$('.t-row:not(.t-h)', trader), brief = $('.t-type', trader);
     let seed = 7;
     const rnd = () => { seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; };
     rows.forEach((r) => {
@@ -433,109 +435,81 @@
       }
       $('polyline', r).setAttribute('points', pts.join(' '));
     });
-    const BRIEF = 'HELIX leads the tier at 82 with a clean guard and 2.4 R:R to the ATR stop. ORBT fell 9% over three sessions, so the falling-knife guard blocked entry. KESTREL reports in three days: a pre-earnings card is ready. Every figure here was fetched, not recalled.';
-    const line = (name, result, cls = '') => { const li = document.createElement('li'); li.className = cls; li.innerHTML = `<b>${name}</b><em>${result}</em>`; log.appendChild(li); while (log.children.length > 8) log.removeChild(log.firstChild); };
-    const reset = () => {
-      rows.forEach((r) => { r.classList.remove('on'); $('.t-score', r).textContent = '0'; const g = $('.t-guard', r); g.textContent = 'pending'; g.className = 't-guard'; });
-      log.innerHTML = ''; if (count) count.textContent = '0 / 11 tools'; if (brief) brief.textContent = ''; if (budgetBar) budgetBar.style.setProperty('--w', '0%'); if (budgetB) budgetB.innerHTML = '$0.00 <em>/ $2.00 cap</em>';
-    };
-    const countTo = async (el, end, ms) => { const t0 = performance.now(); return new Promise((res) => { const step = (t) => { const p = Math.min(1, (t - t0) / ms); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); else res(); }; requestAnimationFrame(step); }); };
-    if (REDUCED) {
-      reset();
-      rows.forEach((r) => { r.classList.add('on'); $('.t-score', r).textContent = r.dataset.score; const g = $('.t-guard', r); g.textContent = r.dataset.guard; g.className = 't-guard ' + (r.dataset.guard === 'clear' ? 'ok' : r.dataset.guard.includes('knife') ? 'bad' : 'warn'); });
-      line('get_snapshot ×5', '612 ms', 'ok'); line('score ×5', 'ok', 'ok'); line('guard.check(ORBT)', 'falling knife', 'bad'); line('briefing', 'cached', 'ok');
-      if (brief) brief.textContent = BRIEF; if (budgetBar) budgetBar.style.setProperty('--w', '12%'); if (budgetB) budgetB.innerHTML = '$0.24 <em>/ $2.00 cap</em>';
-    } else {
+    const BRIEF = 'ACME is clear to enter at 82. ORBT dropped 9% in three days, so the falling-knife guard blocked it. KESTREL reports earnings in three days, so a decision card is ready.';
+    const setGuard = (r, final) => { const g = $('.t-guard', r); g.textContent = final ? r.dataset.guard : 'checking'; g.className = 't-guard' + (final ? ' ' + r.dataset.kind : ''); };
+    const reset = () => { rows.forEach((r) => { r.classList.remove('on'); $('.t-score', r).textContent = '0'; setGuard(r, false); }); if (brief) brief.textContent = ''; };
+    const countTo = (el, end, ms) => new Promise((res) => { const t0 = performance.now(); const step = (t) => { const p = Math.min(1, (t - t0) / ms); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); else res(); }; requestAnimationFrame(step); });
+    if (REDUCED) { rows.forEach((r) => { r.classList.add('on'); $('.t-score', r).textContent = r.dataset.score; setGuard(r, true); }); if (brief) brief.textContent = BRIEF; }
+    else {
       runWhileVisible(trader, async (alive) => {
         reset();
-        await sleep(600);
-        let used = 0;
-        const tools = (n) => { used = Math.min(11, used + n); if (count) count.textContent = `${used} / 11 tools`; };
+        await sleep(700);
         for (const r of rows) {
           if (!alive()) return;
-          const sym = r.dataset.sym, score = +r.dataset.score, guard = r.dataset.guard;
-          line(`get_snapshot(${sym})`, `${90 + Math.round(Math.random() * 80)} ms`, 'ok'); tools(1);
-          await sleep(260);
           r.classList.add('on');
-          countTo($('.t-score', r), score, 700);
-          line(`score(${sym})`, `→ ${score}`); tools(1);
-          await sleep(320);
-          const g = $('.t-guard', r);
-          if (guard.includes('knife')) { line(`guard.check(${sym})`, 'falling knife · blocked', 'bad'); g.textContent = 'blocked'; g.className = 't-guard bad'; }
-          else if (guard.includes('earnings')) { line(`earnings(${sym})`, 'in 3 days · card ready'); g.textContent = 'earnings 3d'; g.className = 't-guard warn'; }
-          else { g.textContent = 'clear'; g.className = 't-guard ok'; }
-          tools(1);
-          await sleep(300);
+          await countTo($('.t-score', r), +r.dataset.score, 800);
+          setGuard(r, true);
+          await sleep(500);
         }
         if (!alive()) return;
-        line('risk.size(HELIX)', 'ATR stop · 2.4 R:R'); tools(1);
-        await sleep(400);
-        line('briefing()', 'cached · 1 call today', 'ok'); tools(1);
-        if (budgetBar) budgetBar.style.setProperty('--w', '12%'); if (budgetB) budgetB.innerHTML = '$0.24 <em>/ $2.00 cap</em>';
-        for (let k = 0; k <= BRIEF.length && alive(); k += 3) { if (brief) brief.textContent = BRIEF.slice(0, k); await sleep(18); }
+        await sleep(300);
+        for (let k = 0; k <= BRIEF.length && alive(); k += 3) { if (brief) brief.textContent = BRIEF.slice(0, k); await sleep(16); }
         if (brief) brief.textContent = BRIEF;
-        await sleep(4200);
+        await sleep(5000);
       });
     }
   }
 
-  /* ----------------------------------- Adversarial pipeline: terminal run */
+  /* ----------------------------------- Adversarial pipeline: relay run */
   const term = $('#acpTerm');
   if (term) {
     const acpStatus = $('#acpStatus');
     const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-    const L = (segs, delay = 420) => ({ segs, delay });
     const BUILD = [
-      L([['p', '$ forge run --task "validate-json CLI" --mode build']], 300),
-      L([['a', '[architect] '], ['', 'drafting design.md … '], ['hl', '12 requirements, interfaces locked']]),
-      L([['a', '[architect] '], ['', 'waiting for human approval … '], ['ok', 'approved']], 900),
-      L([['a', '[coder]     '], ['', 'writing failing tests first … '], ['hl', '37 tests, 37 failing']]),
-      L([['a', '[coder]     '], ['', 'implementing against the locked design … '], ['ok', '37 passing · 99% coverage']], 700),
-      L([['a', '[reviewer]  '], ['', 'phase 1 · spec compliance … '], ['ok', 'ok']]),
-      L([['a', '[reviewer]  '], ['', 'phase 2 · attacker mindset … '], ['p1', 'P1'], ['', '  $ref "file:///etc/passwd" reads arbitrary local files']], 600),
-      L([['a', '[reviewer]  '], ['', 'phase 2 · attacker mindset … '], ['p1', 'P1'], ['', '  self-referencing $ref → RecursionError, wrong exit code']]),
-      L([['a', '[reviewer]  '], ['', 'phase 2 · attacker mindset … '], ['hl', 'P2'], ['', '  TOCTOU race in the file-size guard']]),
-      L([['a', '[coder]     '], ['', 'change cycle 2 of 3 … '], ['ok', '3 fixes · 39 passing']], 800),
-      L([['a', '[reviewer]  '], ['', 'phase 3 · QA verification … '], ['ok', 'ok']]),
-      L([['a', '[gate]      '], ['', 'scanning 8 files, regex only, no model … '], ['ok', 'clean · 14/14 gate tests']], 700),
-      L([['ok', '✔ delivered '], ['hl', 'validate-json'], ['', '  ·  1 review cycle  ·  0 P1 open  ·  exit 0']], 500),
+      { prompt: 'Task: build a command-line JSON validator' },
+      { who: 'Architect', what: 'plans the design and waits for a human OK', res: 'approved', cls: 'ok', d: 900 },
+      { who: 'Coder', what: 'writes the failing tests first, then the code', res: '37 tests pass', cls: 'ok', d: 900 },
+      { who: 'Reviewer', what: 'attacks the code like an adversary', res: 'P1: could read local files', cls: 'p1', d: 1300 },
+      { who: 'Coder', what: 'fixes what the Reviewer found', res: '39 tests pass', cls: 'ok', d: 900 },
+      { who: 'Safety gate', what: 'scans everything, no AI involved', res: 'clean', cls: 'ok', d: 900 },
+      { done: 'Shipped. One review round, zero open issues.', cls: 'ok' },
     ];
     const AUDIT = [
-      L([['p', '$ forge run --mode audit --target tinydb@4.9.0 --read-only']], 300),
-      L([['a', '[baseline]  '], ['', 'upstream suite … '], ['ok', '225 passing · 94% coverage']]),
-      L([['a', '[gate]      '], ['', 'scanning 10 source files … '], ['ok', 'clean']], 600),
-      L([['a', '[architect] '], ['', 'ranking attack surfaces … '], ['hl', '6 surfaces: doc_id coercion, key coercion, query cache, middleware']]),
-      L([['a', '[reviewer]  '], ['', 'reproducing … '], ['p1', 'P1'], ['', '  int() leniency collapses keys "1", " 1", "+1", "01" → documents silently destroyed']], 700),
-      L([['a', '[reviewer]  '], ['', 'reproducing … '], ['p1', 'P1'], ['', '  string doc_id bypasses duplicate-ID ValueError → silent overwrite']]),
-      L([['a', '[reviewer]  '], ['', 'reproducing … '], ['p1', 'P1'], ['', '  regex flags dropped from query-cache hash → stale empty result']]),
-      L([['a', '[reviewer]  '], ['', 'candidate 13 … '], ['hl', 'NOT REPRODUCED'], ['', '  rejected, not padded into the count']], 800),
-      L([['a', '[qa]        '], ['', 'independent re-reproduction … '], ['ok', '6 of 6 confirmed']]),
-      L([['ok', '✔ report    '], ['hl', '14 findings · 6 P1 · runnable PoCs'], ['', '  →  private disclosure, maintainer responded']], 500),
+      { prompt: 'Task: audit TinyDB, a real open-source library, read-only' },
+      { who: 'Safety gate', what: 'scans all 10 source files', res: 'clean', cls: 'ok', d: 900 },
+      { who: 'Architect', what: 'ranks where bugs are most likely', res: '6 areas', cls: '', d: 900 },
+      { who: 'Reviewer', what: 'reproduces each bug with a runnable proof', res: '14 found, 6 critical', cls: 'p1', d: 1300 },
+      { who: 'Reviewer', what: 'one candidate could not be reproduced', res: 'rejected, not counted', cls: '', d: 1100 },
+      { done: 'Reported privately. The maintainer responded.', cls: 'ok' },
     ];
-    const render = (lines) => { term.innerHTML = lines.map((l) => `<span class="ln">${l.segs.map(([c, t]) => `<span class="${c}">${esc(t)}</span>`).join('')}</span>`).join('') + '<span class="cur">▍</span>'; };
-    if (REDUCED) { render(BUILD); if (acpStatus) { acpStatus.textContent = 'Build mode: delivered with 0 P1 open'; acpStatus.className = 'flow-status ok'; } }
+    const render = (lines) => {
+      term.innerHTML = lines.map((l) => {
+        if (l.prompt !== undefined) return `<div class="prompt">${esc(l.prompt)}<span class="cur">▍</span></div>`;
+        if (l.done) return `<div class="done ${l.cls}">${esc(l.done)}</div>`;
+        return `<div class="row"><span class="who">${esc(l.who)}</span><span class="what">${esc(l.what)}</span><span class="res ${l.cls}">${esc(l.res)}</span></div>`;
+      }).join('');
+    };
+    if (REDUCED) { render(BUILD); if (acpStatus) { acpStatus.textContent = 'Shipped with zero open issues'; acpStatus.className = 'flow-status ok'; } }
     else {
       let which = 0;
       runWhileVisible(term.closest('.case-visual'), async (alive) => {
         const script = which % 2 === 0 ? BUILD : AUDIT;
         const shown = [];
-        if (acpStatus) { acpStatus.textContent = which % 2 === 0 ? 'Build mode: the agent proposes, the gate disposes' : 'Audit mode: read-only run against a real library'; acpStatus.className = 'flow-status'; }
+        if (acpStatus) { acpStatus.textContent = which % 2 === 0 ? 'Building new code' : 'Auditing existing code'; acpStatus.className = 'flow-status'; }
         render(shown);
-        await sleep(500);
+        await sleep(400);
         for (const l of script) {
           if (!alive()) return;
-          if (l.segs[0][0] === 'p') {
-            // Type the prompt line character by character.
-            const text = l.segs[0][1];
-            for (let k = 1; k <= text.length && alive(); k += 2) { render([...shown, L([['p', text.slice(0, k)]])]); await sleep(14); }
+          if (l.prompt !== undefined) {
+            for (let k = 1; k <= l.prompt.length && alive(); k += 2) { render([...shown, { prompt: l.prompt.slice(0, k) }]); await sleep(14); }
+            shown.push({ prompt: l.prompt }); render(shown); await sleep(600); continue;
           }
-          shown.push(l);
-          render(shown);
-          if (l.segs.some(([c]) => c === 'p1') && acpStatus) { acpStatus.textContent = 'Reviewer found a P1. The deterministic gate will not let it ship.'; acpStatus.className = 'flow-status bad'; }
-          await sleep(l.delay);
+          shown.push(l); render(shown);
+          if (l.cls === 'p1' && acpStatus) { acpStatus.textContent = 'The Reviewer found a serious bug. It goes back, it does not ship.'; acpStatus.className = 'flow-status bad'; }
+          await sleep(l.d || 900);
         }
-        if (acpStatus) { acpStatus.textContent = which % 2 === 0 ? 'Delivered: 1 review cycle, 0 P1 open, exit 0' : 'Reported privately: 14 findings, 6 P1, 1 honestly rejected'; acpStatus.className = 'flow-status ok'; }
-        await sleep(4500);
+        if (acpStatus) { acpStatus.textContent = which % 2 === 0 ? 'Shipped. One review round, zero open issues.' : 'Fourteen real bugs found and reported privately.'; acpStatus.className = 'flow-status ok'; }
+        await sleep(5000);
         which++;
       });
     }
@@ -544,45 +518,42 @@
   /* ---------------------------------------- ClassQ: registration burst */
   const cqRoot = $('.viz-classq');
   if (cqRoot) {
-    const seatsEl = $('#cqSeats'), queueEl = $('#cqQueue'), reqEl = $('#cq-req'), rpsEl = $('#cq-rps'), luaEl = $('#cq-lua'), seatEl = $('#cq-seat'), waitEl = $('#cq-wait'), assertEl = $('#cqAssert');
+    const seatsEl = $('#cqSeats'), queueEl = $('#cqQueue'), reqEl = $('#cq-req'), seatEl = $('#cq-seat'), seatL = $('#cq-seat-l'), waitEl = $('#cq-wait'), waitL = $('#cq-wait-l'), assertEl = $('#cqAssert');
     const TOTAL = 500, SEATS = 30, SHOW = 18;
     for (let i = 0; i < SEATS; i++) { const d = document.createElement('i'); d.className = 'seat'; seatsEl.appendChild(d); }
     const seats = $$('.seat', seatsEl);
-    const paint = (fired, elapsed) => {
+    const paint = (fired) => {
       const filled = Math.min(SEATS, fired), waiting = Math.max(0, fired - SEATS);
       seats.forEach((s, i) => s.classList.toggle('on', i < filled));
-      reqEl.textContent = fired; luaEl.textContent = fired;
-      rpsEl.textContent = elapsed > 0 ? Math.round(fired / Math.max(0.35, elapsed / 1000)) : 0;
-      seatEl.textContent = `${filled} / ${SEATS} seats`; waitEl.textContent = `${waiting} waiting`;
+      reqEl.textContent = fired; seatEl.textContent = filled; waitEl.textContent = waiting;
+      seatL.textContent = `${filled} / ${SEATS}`; waitL.textContent = `${waiting} waiting`;
       const shown = Math.min(SHOW, waiting);
-      while (queueEl.children.length < shown) { const t = document.createElement('span'); t.className = 'qtok'; t.textContent = `#${queueEl.children.length + 1}`; queueEl.appendChild(t); }
+      while ($$('.qtok:not(.more)', queueEl).length < shown) { const t = document.createElement('span'); t.className = 'qtok'; t.textContent = `#${$$('.qtok:not(.more)', queueEl).length + 1}`; queueEl.appendChild(t); }
       let more = $('.qtok.more', queueEl);
       if (waiting > SHOW) { if (!more) { more = document.createElement('span'); more.className = 'qtok more'; queueEl.appendChild(more); } more.textContent = `+${waiting - SHOW} more, in order`; }
     };
-    const reset = () => { queueEl.innerHTML = ''; seats.forEach((s) => s.classList.remove('on')); paint(0, 0); assertEl.textContent = 'waiting for burst'; assertEl.className = 'pill run'; };
-    if (REDUCED) { paint(TOTAL, 2400); assertEl.textContent = 'passed · 0 oversold'; assertEl.className = 'pill ok'; }
+    const reset = () => { queueEl.innerHTML = ''; paint(0); assertEl.textContent = 'waiting'; assertEl.className = 'pill run'; };
+    if (REDUCED) { paint(TOTAL); assertEl.textContent = '0, verified'; assertEl.className = 'pill ok'; }
     else {
       runWhileVisible(cqRoot, async (alive) => {
         reset();
-        await sleep(700);
+        await sleep(900);
         if (!alive()) return;
-        assertEl.textContent = 'burst in flight'; assertEl.className = 'pill run';
+        assertEl.textContent = 'counting';
         const DUR = 2600, t0 = performance.now();
         await new Promise((res) => {
           const step = (t) => {
             if (!alive()) return res();
             const p = Math.min(1, (t - t0) / DUR), e = 1 - Math.pow(1 - p, 2.2);
-            paint(Math.round(TOTAL * e), t - t0);
+            paint(Math.round(TOTAL * e));
             if (p < 1) requestAnimationFrame(step); else res();
           };
           requestAnimationFrame(step);
         });
         if (!alive()) return;
-        await sleep(400);
-        assertEl.textContent = 'checking DB'; assertEl.className = 'pill run';
-        await sleep(700);
-        assertEl.textContent = 'passed · 0 oversold'; assertEl.className = 'pill ok';
-        await sleep(3800);
+        await sleep(500);
+        assertEl.textContent = '0, verified'; assertEl.className = 'pill ok';
+        await sleep(4200);
       });
     }
   }
