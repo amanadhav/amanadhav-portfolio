@@ -290,9 +290,8 @@
     if (HAS_GSAP && !REDUCED) {
       const tl = gsap.timeline({ scrollTrigger: { trigger: grid, start: 'top 82%', once: true } });
       tl.from(minis, { y: 48, opacity: 0, scale: 0.96, duration: 0.9, stagger: { each: 0.06, from: 'start' }, ease: 'expo.out' }, 0)
-        .fromTo(minis, { '--bar-scale': 0 }, { '--bar-scale': 1, duration: 0.7, stagger: 0.06, ease: 'power2.out' }, 0.35); // draws each card's orange top rule in sequence
+        ;
     } else {
-      minis.forEach((m) => m.style.setProperty('--bar-scale', '1'));
     }
   }
 
@@ -336,6 +335,27 @@
       onEnter: () => gsap.to(o, { v: end, duration: 1.6, ease: 'power4.out', onUpdate: () => fmt(el, o.v) }),
     });
   });
+
+  /* ------------------------------------- border glow that follows the pointer */
+  if (FINE) {
+    $$('.case, .card, .mini, .sg, .now, .crow, .xp-figs div, .cq-metric, .cq-block, .cert-list, .edu-grid > .card').forEach((el) => {
+      if (el.classList.contains('glow')) return;
+      el.classList.add('glow');
+      const ring = document.createElement('span');
+      ring.className = 'glow-ring';
+      ring.setAttribute('aria-hidden', 'true');
+      el.appendChild(ring);
+    });
+    document.addEventListener('pointermove', (e) => {
+      let el = e.target.closest ? e.target.closest('.glow') : null;
+      while (el) {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        el.style.setProperty('--my', `${e.clientY - r.top}px`);
+        el = el.parentElement ? el.parentElement.closest('.glow') : null;
+      }
+    }, { passive: true });
+  }
 
   /* ------------------------------------------------ shared visual helpers */
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
