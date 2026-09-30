@@ -338,7 +338,7 @@
 
   /* ------------------------------------- border glow that follows the pointer */
   if (FINE) {
-    $$('.case, .card, .mini, .sg, .now, .crow, .xp-figs div, .cq-metric, .cq-block, .cert-list, .edu-grid > .card').forEach((el) => {
+    $$('.case, .card, .mini, .sg, .now, .crow, .tl-card, .xp-figs div, .cq-metric, .cq-block, .cert-list, .edu-grid > .card').forEach((el) => {
       if (el.classList.contains('glow')) return;
       el.classList.add('glow');
       const ring = document.createElement('span');
@@ -565,15 +565,37 @@
     ScrollTrigger.create({ trigger: b, start: 'top 90%', once: true, onEnter: () => gsap.to(b, { width: w, duration: 1.4, ease: 'expo.out' }) });
   });
 
-  /* ------------------------------------------------------------- accordion */
-  $$('.xp-head').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.xp-item');
-      const open = item.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', String(open));
-      if (HAS_GSAP) setTimeout(() => ScrollTrigger.refresh(), 520);
+  /* ------------------------------------------------------ experience timeline */
+  const timeline = $('.timeline');
+  if (timeline) {
+    const items = $$('.tl-item', timeline);
+    const setOpen = (item, open) => {
+      item.classList.toggle('is-open', open);
+      const btn = $('.tl-toggle', item);
+      if (btn) { btn.setAttribute('aria-expanded', String(open)); $('span', btn).textContent = open ? 'Hide the work' : 'See the work'; }
+      if (open && HAS_GSAP && !REDUCED) {
+        gsap.fromTo($$('.tl-body li, .tl-body .xp-figs div, .tl-body .tag', item), { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, ease: 'power3.out', delay: 0.12, overwrite: true });
+      }
+      if (HAS_GSAP) setTimeout(() => ScrollTrigger.refresh(), 650);
+    };
+    items.forEach((item) => {
+      const head = $('.tl-head', item);
+      head.addEventListener('click', (e) => { if (e.target.closest('a')) return; setOpen(item, !item.classList.contains('is-open')); });
+      head.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target === head) setOpen(item, !item.classList.contains('is-open')); });
     });
-  });
+    if (HAS_GSAP && !REDUCED) {
+      const fill = $('.tl-fill', timeline);
+      if (fill) gsap.to(fill, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 62%', end: 'bottom 62%', scrub: 0.4 } });
+      items.forEach((item) => {
+        const card = $('.tl-card', item), dot = $('.tl-dot', item), fromLeft = item.classList.contains('left');
+        gsap.from(card, { x: fromLeft ? -44 : 44, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 85%', once: true } });
+        gsap.from(dot, { scale: 0, duration: 0.6, ease: 'back.out(2)', scrollTrigger: { trigger: item, start: 'top 85%', once: true } });
+        ScrollTrigger.create({ trigger: item, start: 'top 62%', end: 'bottom 62%', onEnter: () => item.classList.add('is-on'), onEnterBack: () => item.classList.add('is-on'), onLeaveBack: () => item.classList.remove('is-on') });
+      });
+    } else {
+      items.forEach((item) => item.classList.add('is-on'));
+    }
+  }
 
   /* ----------------------------------------------------------- video facade */
   $$('.video button').forEach((btn) => {

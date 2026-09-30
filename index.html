@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -189,23 +189,26 @@
 <section class="section" id="experience" style="padding-top:0">
   <div class="container">
     <div class="rule"></div>
-    <div class="xp" style="padding-top:clamp(40px,6vw,84px)">
-      <div class="xp-side">
-        <div class="sec-num mono" data-reveal>02 / Experience</div>
-        <h2 class="sec-title" data-split style="margin-top:16px">Where I have <em>worked.</em></h2>
-        <p data-reveal>Enterprise integration work by day, with a bias toward shipping tested code and leaving a written trail behind it.</p>
-      </div>
-      <div class="xp-list" data-reveal-group>
-        <div class="xp-item is-open">
-          <button class="xp-head" type="button" aria-expanded="true">
-            <div>
-              <div class="xp-role">Software Engineer <span class="badge">Current</span></div>
-              <div class="xp-co">ASU Enterprise Technology <em>· Integration &amp; APIs team · Scottsdale, AZ</em></div>
-            </div>
-            <div class="xp-date">Mar 2026 - Present</div>
-            <div class="xp-tog"><svg><use href="#i-plus"/></svg></div>
-          </button>
-          <div class="xp-body"><div>
+    <div class="sec-head" style="padding-top:clamp(40px,6vw,84px)">
+      <div class="sec-num mono" data-reveal>02 / Experience</div>
+      <h2 class="sec-title" data-split>Where I have <em>worked.</em></h2>
+      <p class="sec-lede" data-reveal>Four roles, newest first. Open any of them to see everything I shipped there.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-spine" aria-hidden="true"><i class="tl-fill"></i></div>
+
+      <article class="tl-item left is-current">
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-date">Mar 2026 - Present <span class="badge">Current</span></div>
+            <h3 class="tl-role">Software Engineer</h3>
+            <div class="tl-co">ASU Enterprise Technology · Integration &amp; APIs · Scottsdale, AZ</div>
+            <p class="tl-sum">Production AI agent skills, event-driven pipelines and cloud automation on AWS, with a human approval gate in front of every write.</p>
+            <button class="tl-toggle" type="button" aria-expanded="false" aria-controls="tl-1"><span>See the work</span><em>6 highlights</em><svg><use href="#i-arrow-r"/></svg></button>
+          </div>
+          <div class="tl-body" id="tl-1"><div>
             <ul>
               <li>Consolidated 21 REST endpoints onto a central data platform, retiring direct SQL access to a legacy system of record and an interim integration layer. Built each endpoint across 11 layers: extraction DAO, sync unit, DynamoDB store, REST resource, CDC handler, stream processor and Terraform.</li>
               <li>Authored the platform's OpenAPI 3.0 specification by inventorying every SQL query across four repositories and mapping the upstream dependency graph, then wrote the team's dataset-onboarding guide from the migration.</li>
@@ -220,21 +223,26 @@
               <div><b>&lt;3h</b><span>Outage to fix</span></div>
               <div><b>~40</b><span>Repos retired</span></div>
             </div>
+            <div class="tags"><span class="tag">AWS Lambda</span><span class="tag">EventBridge</span><span class="tag">DynamoDB</span><span class="tag">Athena</span><span class="tag">Terraform</span><span class="tag">Jenkins</span><span class="tag">Kiro agent skills</span><span class="tag">Java</span><span class="tag">Node.js</span><span class="tag">Python</span></div>
           </div></div>
         </div>
-        <div class="xp-item">
-          <button class="xp-head" type="button" aria-expanded="false">
-            <div>
-              <div class="xp-role">Undergraduate Teaching Assistant</div>
-              <div class="xp-co">Arizona State University <em>· Linear Algebra and Calculus · MAT 242, 210, 266, 117</em></div>
-            </div>
-            <div class="xp-date">Aug 2024 - Mar 2026</div>
-            <div class="xp-tog"><svg><use href="#i-plus"/></svg></div>
-          </button>
-          <div class="xp-body"><div>
+      </article>
+
+      <article class="tl-item right">
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-date">Aug 2024 - Mar 2026</div>
+            <h3 class="tl-role">Undergraduate Teaching Assistant</h3>
+            <div class="tl-co">Arizona State University · Linear Algebra and Calculus · Tempe, AZ</div>
+            <p class="tl-sum">Taught the linear algebra behind modern machine learning to 200+ students across four courses and three semesters.</p>
+            <button class="tl-toggle" type="button" aria-expanded="false" aria-controls="tl-2"><span>See the work</span><em>3 highlights</em><svg><use href="#i-arrow-r"/></svg></button>
+          </div>
+          <div class="tl-body" id="tl-2"><div>
             <ul>
-              <li>TA, grader and instructional aide across four math courses: weekly office hours, problem sessions and graded work with written feedback across multiple concurrent sections.</li>
-              <li>Taught linear algebra for three semesters, the vector spaces, eigenvectors and matrix decompositions behind the SVD recommender I later deployed in CineMind.</li>
+              <li>TA, grader and instructional aide for MAT 242 (Linear Algebra), MAT 210, MAT 266 and MAT 117: weekly office hours, problem sessions and graded work with written feedback across multiple concurrent sections.</li>
+              <li>Taught linear algebra for three semesters: vector spaces, eigenvectors and matrix decompositions, the same math behind the SVD recommender later deployed in CineMind.</li>
+              <li>Supported faculty across sections while carrying a full course load and, from March 2026, an engineering role.</li>
             </ul>
             <div class="xp-figs">
               <div><b>200+</b><span>Students</span></div>
@@ -243,47 +251,58 @@
             </div>
           </div></div>
         </div>
-        <div class="xp-item">
-          <button class="xp-head" type="button" aria-expanded="false">
-            <div>
-              <div class="xp-role">Software Engineering Intern</div>
-              <div class="xp-co">Rachita Infotech <em>· Pune, India · Hybrid</em></div>
-            </div>
-            <div class="xp-date">May 2024 - Aug 2024</div>
-            <div class="xp-tog"><svg><use href="#i-plus"/></svg></div>
-          </button>
-          <div class="xp-body"><div>
+      </article>
+
+      <article class="tl-item left">
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-date">May 2024 - Aug 2024</div>
+            <h3 class="tl-role">Software Engineering Intern</h3>
+            <div class="tl-co">Rachita Infotech · Pune, India · Hybrid</div>
+            <p class="tl-sum">Built a full-stack project-tracking app in React, Node and Express and raised test coverage on the core modules.</p>
+            <button class="tl-toggle" type="button" aria-expanded="false" aria-controls="tl-3"><span>See the work</span><em>3 highlights</em><svg><use href="#i-arrow-r"/></svg></button>
+          </div>
+          <div class="tl-body" id="tl-3"><div>
             <ul>
               <li>Built a full-stack React, Node.js and Express app that improved internal project-tracking workflows by roughly 15%, with REST APIs over MongoDB using Mongoose.</li>
-              <li>Containerized services with Docker and supported deployment to AWS (EC2, S3). Raised core-module Jest coverage from roughly 60% to 75% inside Agile sprints tracked in Jira.</li>
+              <li>Containerized services with Docker and supported deployment to AWS (EC2, S3).</li>
+              <li>Raised core-module Jest coverage from roughly 60% to 75% inside Agile sprints tracked in Jira.</li>
             </ul>
             <div class="xp-figs">
               <div><b>~15%</b><span>Workflow improvement</span></div>
               <div><b>60 to 75%</b><span>Test coverage</span></div>
             </div>
+            <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">MongoDB</span><span class="tag">Docker</span><span class="tag">AWS EC2, S3</span><span class="tag">Jest</span></div>
           </div></div>
         </div>
-        <div class="xp-item">
-          <button class="xp-head" type="button" aria-expanded="false">
-            <div>
-              <div class="xp-role">Data Science Intern</div>
-              <div class="xp-co">Rachita Infotech <em>· Pune, India · Remote</em></div>
-            </div>
-            <div class="xp-date">Jun 2023 - Aug 2023</div>
-            <div class="xp-tog"><svg><use href="#i-plus"/></svg></div>
-          </button>
-          <div class="xp-body"><div>
+      </article>
+
+      <article class="tl-item right">
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-date">Jun 2023 - Aug 2023</div>
+            <h3 class="tl-role">Data Science Intern</h3>
+            <div class="tl-co">Rachita Infotech · Pune, India · Remote</div>
+            <p class="tl-sum">Shipped a customer churn model at roughly 84% held-out accuracy and packaged it as a Dockerized Flask endpoint.</p>
+            <button class="tl-toggle" type="button" aria-expanded="false" aria-controls="tl-4"><span>See the work</span><em>4 highlights</em><svg><use href="#i-arrow-r"/></svg></button>
+          </div>
+          <div class="tl-body" id="tl-4"><div>
             <ul>
-              <li>Shipped a customer churn prediction model at roughly 84% held-out accuracy with scikit-learn and XGBoost, then packaged it as a Dockerized Flask endpoint.</li>
-              <li>Cut data preparation time about 20% by cleaning and preprocessing large datasets in pandas and SQL, and surfaced behavioral trends through EDA and Tableau dashboards.</li>
+              <li>Built a customer churn prediction model with scikit-learn and XGBoost, reaching roughly 84% accuracy on held-out test data.</li>
+              <li>Cleaned and preprocessed large datasets with pandas and SQL, cutting data preparation time by about 20%.</li>
+              <li>Ran exploratory analysis and basic statistical testing to surface customer behavior trends, presented through Tableau dashboards.</li>
+              <li>Packaged and deployed the model as a Flask endpoint in Docker.</li>
             </ul>
             <div class="xp-figs">
               <div><b>~84%</b><span>Model accuracy</span></div>
               <div><b>~20%</b><span>Faster data prep</span></div>
             </div>
+            <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">XGBoost</span><span class="tag">pandas</span><span class="tag">SQL</span><span class="tag">Tableau</span><span class="tag">Flask</span><span class="tag">Docker</span></div>
           </div></div>
         </div>
-      </div>
+      </article>
     </div>
   </div>
 </section>
@@ -727,6 +746,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script src="main.js?v=8"></script>
+<script src="main.js?v=9"></script>
 </body>
 </html>
