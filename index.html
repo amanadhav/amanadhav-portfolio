@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=9">
+<link rel="stylesheet" href="styles.css?v=10">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -128,7 +128,7 @@
 
     <h1 class="hero-name"><span class="track"><span class="w">Aman</span><span class="w">Adhav<i class="dot" aria-hidden="true">.</i></span></span></h1>
 
-    <p class="hero-bio" data-hero-fade><strong>Software engineer at ASU Enterprise Technology</strong>, shipping production AI agent skills, event-driven pipelines and cloud automation on AWS. Grand Prize and Best in Build at the Amazon Kiro Challenge, first of fifty teams.</p>
+    <p class="hero-bio" data-hero-fade><strong>Software engineer at ASU Enterprise Technology.</strong> I ship production AI agents and the AWS backend around them.</p>
     <div class="hero-social" data-hero-fade>
       <a class="icon-btn" href="https://github.com/amanadhav" target="_blank" rel="noopener" aria-label="GitHub"><svg><use href="#i-github"/></svg></a>
       <a class="icon-btn" href="https://linkedin.com/in/aman-adhav/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
@@ -158,7 +158,7 @@
     </div>
     <div class="about-grid">
       <div>
-        <p class="statement">I am a software engineer on the Integration &amp; APIs team at ASU Enterprise Technology, where I ship production AI agent skills, event-driven pipelines and cloud automation on AWS, with <em>a human approval gate in front of every write</em>. My team's voice copilot for blind and low-vision users took the <em>Grand Prize at the Amazon Kiro Challenge</em>, first of fifty teams. I graduate in December 2026 and I am looking for a full-time engineering role from January 2027.</p>
+        <p class="statement">I build production AI agent systems and the backend that keeps them safe, with <em>a human approval gate in front of every write</em>. Graduating December 2026, available from January 2027.</p>
         <p class="quote" data-reveal>The agent proposes. Deterministic code disposes.</p>
       </div>
       <aside class="now" data-reveal data-delay="0.15">
@@ -172,7 +172,6 @@
         <ul>
           <li>Building an AWS-native MCP server for multi-agent investigations</li>
           <li>Studying for the AWS Developer Associate exam</li>
-          <li>Capstone: an AI Algebra 1 tutor built with Gemini and React</li>
         </ul>
       </aside>
     </div>
@@ -192,7 +191,7 @@
     <div class="sec-head" style="padding-top:clamp(40px,6vw,84px)">
       <div class="sec-num mono" data-reveal>02 / Experience</div>
       <h2 class="sec-title" data-split>Where I have <em>worked.</em></h2>
-      <p class="sec-lede" data-reveal>Four roles, newest first. Open any of them to see everything I shipped there.</p>
+      <p class="sec-lede" data-reveal>Newest first. Open a role for the full record.</p>
     </div>
 
     <div class="timeline">
@@ -210,12 +209,12 @@
           </div>
           <div class="tl-body" id="tl-1"><div>
             <ul>
-              <li>Consolidated 21 REST endpoints onto a central data platform, retiring direct SQL access to a legacy system of record and an interim integration layer. Built each endpoint across 11 layers: extraction DAO, sync unit, DynamoDB store, REST resource, CDC handler, stream processor and Terraform.</li>
-              <li>Authored the platform's OpenAPI 3.0 specification by inventorying every SQL query across four repositories and mapping the upstream dependency graph, then wrote the team's dataset-onboarding guide from the migration.</li>
-              <li>Cut event-source onboarding 12x, from 4 hours to 20 minutes, with a production LLM agent skill that orchestrates Jira, Terraform and GitHub pull requests behind human approval gates. Shipped a second skill that runs partition-aware Athena queries over an 80,000+ record event archive with per-source access control.</li>
-              <li>Recovered a customer-facing chatbot from a full production outage in under 3 hours by tracing failures to revoked upstream credentials, then shipped a feature-flagged whitelist pre-filter backed by 32 Vitest tests.</li>
-              <li>Enabled automated end-to-end testing on a legacy app by building a mock authentication Lambda with isolated test personas, reusing gated dev infrastructure instead of provisioning a new AWS environment.</li>
-              <li>Standardized CI across 12 repositories with reusable GitHub Actions and Jenkins workflows carrying SonarQube quality gates. Decommissioning roughly 40 legacy MuleSoft integration repos end to end.</li>
+              <li>Consolidated 21 REST endpoints onto a central data platform, retiring two legacy access paths. Each endpoint built across 11 layers.</li>
+              <li>Cut event-source onboarding 12x, from 4 hours to 20 minutes, with a production LLM agent gated by human approvals.</li>
+              <li>Built an Athena agent over an 80,000+ record event archive with per-source access control.</li>
+              <li>Fixed a customer-facing chatbot outage in under 3 hours, then shipped a feature-flagged pre-filter with 32 tests.</li>
+              <li>Enabled end-to-end tests on a legacy app with a mock auth Lambda instead of a new AWS environment.</li>
+              <li>Standardized CI across 12 repos with SonarQube gates. Retiring about 40 legacy MuleSoft repos.</li>
             </ul>
             <div class="xp-figs">
               <div><b>21</b><span>Endpoints shipped</span></div>
@@ -236,13 +235,12 @@
             <h3 class="tl-role">Undergraduate Teaching Assistant</h3>
             <div class="tl-co">Arizona State University · Linear Algebra and Calculus · Tempe, AZ</div>
             <p class="tl-sum">Taught the linear algebra behind modern machine learning to 200+ students across four courses and three semesters.</p>
-            <button class="tl-toggle" type="button" aria-expanded="false" aria-controls="tl-2"><span>See the work</span><em>3 highlights</em><svg><use href="#i-arrow-r"/></svg></button>
+            <button class="tl-toggle" type="button" aria-expanded="false" aria-controls="tl-2"><span>See the work</span><em>2 highlights</em><svg><use href="#i-arrow-r"/></svg></button>
           </div>
           <div class="tl-body" id="tl-2"><div>
             <ul>
-              <li>TA, grader and instructional aide for MAT 242 (Linear Algebra), MAT 210, MAT 266 and MAT 117: weekly office hours, problem sessions and graded work with written feedback across multiple concurrent sections.</li>
-              <li>Taught linear algebra for three semesters: vector spaces, eigenvectors and matrix decompositions, the same math behind the SVD recommender later deployed in CineMind.</li>
-              <li>Supported faculty across sections while carrying a full course load and, from March 2026, an engineering role.</li>
+              <li>TA, grader and instructional aide for four math courses: office hours, problem sessions, written feedback.</li>
+              <li>Taught linear algebra for three semesters, the math behind the SVD recommender in CineMind.</li>
             </ul>
             <div class="xp-figs">
               <div><b>200+</b><span>Students</span></div>
@@ -265,9 +263,9 @@
           </div>
           <div class="tl-body" id="tl-3"><div>
             <ul>
-              <li>Built a full-stack React, Node.js and Express app that improved internal project-tracking workflows by roughly 15%, with REST APIs over MongoDB using Mongoose.</li>
-              <li>Containerized services with Docker and supported deployment to AWS (EC2, S3).</li>
-              <li>Raised core-module Jest coverage from roughly 60% to 75% inside Agile sprints tracked in Jira.</li>
+              <li>Full-stack React, Node and Express app that improved project tracking by about 15%.</li>
+              <li>REST APIs over MongoDB, services in Docker, deployed to AWS EC2 and S3.</li>
+              <li>Raised core-module Jest coverage from about 60% to 75%.</li>
             </ul>
             <div class="xp-figs">
               <div><b>~15%</b><span>Workflow improvement</span></div>
@@ -286,14 +284,13 @@
             <h3 class="tl-role">Data Science Intern</h3>
             <div class="tl-co">Rachita Infotech · Pune, India · Remote</div>
             <p class="tl-sum">Shipped a customer churn model at roughly 84% held-out accuracy and packaged it as a Dockerized Flask endpoint.</p>
-            <button class="tl-toggle" type="button" aria-expanded="false" aria-controls="tl-4"><span>See the work</span><em>4 highlights</em><svg><use href="#i-arrow-r"/></svg></button>
+            <button class="tl-toggle" type="button" aria-expanded="false" aria-controls="tl-4"><span>See the work</span><em>3 highlights</em><svg><use href="#i-arrow-r"/></svg></button>
           </div>
           <div class="tl-body" id="tl-4"><div>
             <ul>
-              <li>Built a customer churn prediction model with scikit-learn and XGBoost, reaching roughly 84% accuracy on held-out test data.</li>
-              <li>Cleaned and preprocessed large datasets with pandas and SQL, cutting data preparation time by about 20%.</li>
-              <li>Ran exploratory analysis and basic statistical testing to surface customer behavior trends, presented through Tableau dashboards.</li>
-              <li>Packaged and deployed the model as a Flask endpoint in Docker.</li>
+              <li>Churn model with scikit-learn and XGBoost at about 84% held-out accuracy.</li>
+              <li>Cut data preparation time about 20% with pandas and SQL; Tableau dashboards for the team.</li>
+              <li>Shipped the model as a Dockerized Flask endpoint.</li>
             </ul>
             <div class="xp-figs">
               <div><b>~84%</b><span>Model accuracy</span></div>
@@ -313,7 +310,7 @@
     <div class="sec-head">
       <div class="sec-num mono" data-reveal>03 / Projects</div>
       <h2 class="sec-title" data-split>Things I have <em>shipped.</em></h2>
-      <p class="sec-lede" data-reveal>Four builds in depth, then the rest of the shelf. Every project ships with its tests, and most ship with a live demo or a public repo.</p>
+      <p class="sec-lede" data-reveal>Four in depth, nine more below. Every one ships with tests.</p>
     </div>
 
     <!-- AllVoice -->
@@ -349,7 +346,7 @@
         <div class="case-top"><span class="mono">Project 01 · May 2026</span><span class="badge">Grand Prize · 1st of 50 teams</span></div>
         <h3 class="case-title">AllVoice</h3>
         <div class="case-sub">Amazon Kiro Challenge · Grand Prize and Best in Build · $6,000</div>
-        <p class="case-desc">A voice-controlled Chrome extension that lets blind and low-vision users operate the browser entirely by speech. I owned the pipeline architecture and orchestration: six stages from intent to audit log, with a mandatory Ethics Logic Gate at stage three. The gate is a pure, deterministic function that evaluates five privacy and safety rules and blocks password, payment and PII actions before anything touches the page. Built spec-first in Kiro and later presented on the official Kiro developer livestream.</p>
+        <p class="case-desc">Voice-controlled Chrome extension so blind and low-vision users can run the browser by speech. I built the six-stage pipeline and its deterministic Ethics Gate, which blocks password, payment and PII actions before they reach the page.</p>
         <div class="case-figs">
           <div class="fig"><b>6</b><span>Pipeline stages</span></div>
           <div class="fig"><b>103</b><span>Automated tests</span></div>
@@ -390,7 +387,7 @@
         <div class="case-top"><span class="mono">Project 02 · Sep 2026</span><span class="mono">Open source, MIT</span></div>
         <h3 class="case-title">TraderAI</h3>
         <div class="case-sub">Self-hosted market analysis platform · FastAPI + React 19</div>
-        <p class="case-desc">A platform that scores equities, enforces your own risk rules and writes a daily briefing, running on your machine for a couple of dollars a month. The analyst can only answer through eleven typed tools, so every number it cites was fetched, never recalled. A fast typed model returns calibrated probabilities inside the pipeline while Claude handles narrative, and every AI feature degrades to keyword classification when a key is missing. The 730-day walk-forward backtester flagged one of its own thresholds as curve-fit and kept only the tier that survived both regimes.</p>
+        <p class="case-desc">Scores stocks, enforces your risk rules and writes a daily briefing, self-hosted for about $1 a month. The AI can only answer through 11 typed tools, so every number it cites was fetched, never invented.</p>
         <div class="case-figs">
           <div class="fig"><b>730</b><span>Day backtest, walk-forward</span></div>
           <div class="fig"><b>+3.8<span class="mono" style="font-size:.5em;letter-spacing:0"> pts</span></b><span>Median alpha from the knife guard</span></div>
@@ -419,7 +416,7 @@
         <div class="case-top"><span class="mono">Project 03 · 2026</span><span class="mono">Multi-agent system</span></div>
         <h3 class="case-title">Adversarial Coding Pipeline</h3>
         <div class="case-sub">Architect, Coder, Reviewer and a gate that cannot be argued with</div>
-        <p class="case-desc">Four specialized agents build a production-quality JSON validator: an Architect that waits for human sign-off, a Coder held to failing-tests-first, a three-phase adversarial Reviewer, and a deterministic Safety Gate written in plain Python that scans every artifact before delivery. The review caught five real issues in the pipeline's own output, including two P1s. Run in audit mode against TinyDB, it produced fourteen reproducible findings with proofs of concept, six of them P1, and correctly rejected one of its own candidates as not reproducible. Reported privately; the maintainer responded.</p>
+        <p class="case-desc">Four AI agents build code and attack each other's work; a deterministic safety gate decides what ships. Run as an audit against TinyDB, it found 14 real bugs, 6 critical, reported privately to the maintainer.</p>
         <div class="case-figs">
           <div class="fig"><b>6</b><span>P1 defects found in TinyDB</span></div>
           <div class="fig"><b>37/37</b><span>Tests, 99% coverage</span></div>
@@ -459,7 +456,7 @@
         <div class="case-top"><span class="mono">Project 04 · 2026</span><span class="mono">Distributed systems</span></div>
         <h3 class="case-title">ClassQ</h3>
         <div class="case-sub">Course registration built to prove it cannot oversell a section</div>
-        <p class="case-desc">Ten thousand students hitting one endpoint in the same second is the whole problem. Seat claims run as atomic Redis Lua scripts so two students can never take the same seat, full sections route to a sorted-set waitlist with a queue position, and prerequisite checks run as a BFS over the course DAG with a separate topological pass for cycle detection. A transactional outbox keeps event delivery off the registration hot path. A chaos button fires 500 concurrent registrations at a 30-seat section, then a correctness script asserts the invariant held. Provisioned end to end with Terraform.</p>
+        <p class="case-desc">Course registration that cannot oversell a seat: atomic Redis Lua claims, a FIFO waitlist and a transactional outbox. 500 concurrent requests at a 30-seat section, zero double-enrollments, proven by a chaos harness.</p>
         <div class="case-figs">
           <div class="fig"><b>500</b><span>Concurrent requests</span></div>
           <div class="fig"><b>0</b><span>Oversold sections</span></div>
@@ -481,62 +478,62 @@
       <article class="mini">
         <div class="mini-top"><span>05</span><span>Live</span></div>
         <h4 class="mini-title">CineMind <svg><use href="#i-arrow-ur"/></svg></h4>
-        <p class="mini-desc">Hybrid movie recommender blending SVD matrix factorization over 100k+ MovieLens ratings with TF-IDF content similarity. New users are folded into the latent space without retraining, so cold-start picks stay personal.</p>
+        <p class="mini-desc">Hybrid movie recommender: SVD over 100k+ ratings plus TF-IDF similarity, with cold-start handled without retraining.</p>
         <div class="mini-tags">Python · Flask · scikit-learn · SciPy · Next.js 14 · 71 tests</div>
         <div class="mini-links"><a class="link" href="https://github.com/amanadhav/Cinemind" target="_blank" rel="noopener">GitHub</a><a class="link" href="https://cinemind-prod.vercel.app/" target="_blank" rel="noopener">Live</a></div>
       </article>
       <article class="mini">
         <div class="mini-top"><span>06</span><span>ML · NLP</span></div>
         <h4 class="mini-title">TakeMeter <svg><use href="#i-arrow-ur"/></svg></h4>
-        <p class="mini-desc">Fine-tuned DistilBERT classifier for r/soccer discourse quality. Collected 615 posts, hand-reviewed a balanced 239-example set and beat a zero-shot Llama 3.3 70B baseline by 30.6 points (69.4% vs 38.9%, macro F1 0.68).</p>
+        <p class="mini-desc">Fine-tuned DistilBERT that beat a zero-shot 70B model by 30.6 points on a dataset I collected and hand-labeled.</p>
         <div class="mini-tags">Python · Hugging Face · DistilBERT · Gradio · Colab</div>
         <div class="mini-links"><a class="link" href="https://github.com/amanadhav/ai201-project3-takemeter" target="_blank" rel="noopener">GitHub</a></div>
       </article>
       <article class="mini">
         <div class="mini-top"><span>07</span><span>Live</span></div>
         <h4 class="mini-title">ASU Orbit <svg><use href="#i-arrow-ur"/></svg></h4>
-        <p class="mini-desc">Housing and sublease platform for ASU students: an apartment directory with resident reviews, a scam-resistant sublease board tied to verified buildings, and a move-out marketplace. Every submission passes a moderation queue.</p>
+        <p class="mini-desc">Housing and sublease platform for ASU students with verified listings and a moderation queue on every submission.</p>
         <div class="mini-tags">Next.js 16 · React 19 · TypeScript · Supabase · Zod · Vercel</div>
         <div class="mini-links"><a class="link" href="https://github.com/amanadhav/asu-orbit" target="_blank" rel="noopener">GitHub</a><a class="link" href="https://asu-orbit.vercel.app/" target="_blank" rel="noopener">Live</a></div>
       </article>
       <article class="mini">
         <div class="mini-top"><span>08</span><span>iOS</span></div>
         <h4 class="mini-title">TripSmart <svg><use href="#i-arrow-ur"/></svg></h4>
-        <p class="mini-desc">AI travel planner for iOS: trip CRUD in SwiftData, attraction discovery through Google Places, five-day forecasts and Claude-generated day-by-day itineraries. Strict MVVM across five layers with real loading, error and empty states.</p>
+        <p class="mini-desc">iOS travel planner with Google Places, weather and Claude-generated day-by-day itineraries. Strict MVVM, SwiftData.</p>
         <div class="mini-tags">Swift · SwiftUI · SwiftData · MapKit · Claude API</div>
         <div class="mini-links"><a class="link" href="https://github.com/amanadhav/TripSmart" target="_blank" rel="noopener">GitHub</a><a class="link" href="https://youtu.be/owPVkEs2f7I" target="_blank" rel="noopener">Demo</a></div>
       </article>
       <article class="mini">
         <div class="mini-top"><span>09</span><span>Agentic automation</span></div>
         <h4 class="mini-title">Capability Forge <svg><use href="#i-arrow-ur"/></svg></h4>
-        <p class="mini-desc">Discover once, replay deliberately. An LLM operates a hostile legacy banking UI while a recorder produces a typed capability artifact; a separate executor replays it with new parameters and zero model calls. Policy allowlists, schema-validated artifacts and a fenced human-takeover lease bound everything.</p>
+        <p class="mini-desc">An LLM explores a hostile legacy UI once, a recorder captures the steps, and replays run with zero model calls.</p>
         <div class="mini-tags">Node.js 22 · Playwright · OpenAI API · JSON Schema · 11 replay scenarios</div>
         <div class="mini-links"><a class="link" href="https://github.com/amanadhav/capability-forge" target="_blank" rel="noopener">GitHub</a></div>
       </article>
       <article class="mini">
         <div class="mini-top"><span>10</span><span>Applied AI</span></div>
         <h4 class="mini-title">Provenance Guard <svg><use href="#i-arrow-ur"/></svg></h4>
-        <p class="mini-desc">Human-vs-AI text attribution for creative platforms. An LLM forensic classifier is weighted against pure-Python stylometrics by word count, with an asymmetric 0.71 threshold for AI verdicts, an SQLite audit log and an appeals workflow that never re-classifies automatically.</p>
+        <p class="mini-desc">Human-vs-AI text attribution that weighs an LLM against stylometrics and is tuned to keep false accusations rare.</p>
         <div class="mini-tags">Python · Flask · Llama 3.3 70B · SQLite · Rate limiting</div>
         <div class="mini-links"><a class="link" href="https://github.com/amanadhav/ai201-project4-provenance-guard" target="_blank" rel="noopener">GitHub</a></div>
       </article>
       <article class="mini">
         <div class="mini-top"><span>11</span><span>Hackathon · Sep 2026</span></div>
         <h4 class="mini-title">Atlas <svg><use href="#i-arrow-ur"/></svg></h4>
-        <p class="mini-desc">Human-in-the-loop emergency-operations copilot co-developed in under 48 hours at the ASU AIR Spark Challenge. Clusters duplicate 911-style reports, recommends priority, unit and hospital with explainable factors, and never moves a unit without a dispatcher's approval.</p>
+        <p class="mini-desc">Human-in-the-loop emergency dispatch copilot, co-developed in 48 hours. It recommends; a dispatcher approves every move.</p>
         <div class="mini-tags">React · Vite · FastAPI · WebSockets · SQLAlchemy · 24 backend tests</div>
       </article>
       <article class="mini">
         <div class="mini-top"><span>12</span><span>RAG</span></div>
         <h4 class="mini-title">The Unofficial Guide <svg><use href="#i-arrow-ur"/></svg></h4>
-        <p class="mini-desc">Grounded RAG system answering ASU course and professor questions from curated documents: 500-character chunks with overlap, MiniLM embeddings in ChromaDB, strict grounding prompt with source attribution, plus a root-cause analysis of a cross-contamination hallucination.</p>
+        <p class="mini-desc">Grounded RAG over curated ASU course notes with source attribution and an honest analysis of one hallucination.</p>
         <div class="mini-tags">Python · ChromaDB · sentence-transformers · Groq · Gradio</div>
         <div class="mini-links"><a class="link" href="https://github.com/amanadhav/ai201-project1-unofficial-guide-starter" target="_blank" rel="noopener">GitHub</a></div>
       </article>
       <article class="mini">
         <div class="mini-top"><span>13</span><span>Open source</span></div>
         <h4 class="mini-title">PathReview <svg><use href="#i-arrow-ur"/></svg></h4>
-        <p class="mini-desc">Contributor to an open-source AI portfolio review assistant. Root-caused a suite-wide test failure where structlog output bypassed stdlib logging and never reached pytest's caplog fixture, traced to logger configuration never running under test.</p>
+        <p class="mini-desc">Open-source contribution: root-caused a suite-wide test failure where structlog output never reached pytest.</p>
         <div class="mini-tags">Python · pytest · structlog · FastAPI</div>
         <div class="mini-links"><a class="link" href="https://github.com/amanadhav/pathreview" target="_blank" rel="noopener">GitHub</a></div>
       </article>
@@ -556,7 +553,7 @@
         <span class="badge" style="align-self:flex-start">Grand Prize · Best in Build</span>
         <h3>Amazon Kiro Challenge, first of fifty teams</h3>
         <div class="sub">Kiro Spark Challenge · Arizona State University · May 2026</div>
-        <p>$6,000 in scholarships with team "21 Brain Cells" for AllVoice. Category winner for Best in Build, then the highest overall score across all 50 ASU teams for the Grand Prize, with guaranteed interviews with Kiro. The win led to an invitation onto the official Kiro developer livestream.</p>
+        <p>Grand Prize and Best in Build for AllVoice with team "21 Brain Cells": highest score of 50 teams, $6,000 in scholarships, interviews with Kiro.</p>
         <div class="big-figs">
           <div><b>1st</b><span>Of 50 teams</span></div>
           <div><b>$6K</b><span>Scholarships</span></div>
@@ -566,7 +563,7 @@
       <div class="card">
         <div class="sub">Kiro Developer Spotlight · Official Kiro (AWS) YouTube channel · July 2026</div>
         <h3>Featured developer, live on the Kiro channel</h3>
-        <p>Walked through AllVoice's six-stage architecture, spec-driven development in Kiro and the ethics-first safety design, with a live code review of the agent pipeline on air.</p>
+        <p>Presented AllVoice's architecture and ethics-first design live on the official Kiro channel.</p>
         <div class="video" data-src="https://www.youtube-nocookie.com/embed/ktpKOuWAbO8?start=129" data-title="Kiro Developer Spotlight featuring AllVoice">
           <img src="https://i.ytimg.com/vi/ktpKOuWAbO8/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
           <button type="button" aria-label="Play the Kiro Developer Spotlight video"><span><svg><use href="#i-play"/></svg></span></button>
@@ -582,7 +579,7 @@
     <div class="sec-head">
       <div class="sec-num mono" data-reveal>05 / Skills</div>
       <h2 class="sec-title" data-split>What I work <em>with.</em></h2>
-      <p class="sec-lede" data-reveal>AWS-heavy backend and infrastructure, with a production track record in agent tooling. Everything here has shipped in a project above.</p>
+      <p class="sec-lede" data-reveal>What I use in production. Everything here appears in a project above.</p>
     </div>
     <div class="sticker-row" data-reveal-group>
       <span class="sticker" style="--rot:-3deg">Agentic AI</span>
@@ -595,12 +592,12 @@
       <span class="sticker alt" style="--rot:-2.5deg">Human-in-the-loop</span>
     </div>
     <div class="skill-groups" data-reveal-group>
-      <div class="sg"><h3>Languages <span>01</span></h3><div class="tags"><span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">JavaScript (Node.js)</span><span class="tag">Java</span><span class="tag">Swift</span><span class="tag">SQL (Postgres, Athena)</span><span class="tag">HCL (Terraform)</span><span class="tag">Lua (Redis)</span><span class="tag">Bash</span></div></div>
-      <div class="sg"><h3>Backend &amp; data <span>02</span></h3><div class="tags"><span class="tag">FastAPI</span><span class="tag">Flask</span><span class="tag">Node.js + Express</span><span class="tag">REST API design</span><span class="tag">OpenAPI 3.0</span><span class="tag">GraphQL (AppSync)</span><span class="tag">WebSockets</span><span class="tag">PostgreSQL</span><span class="tag">DynamoDB</span><span class="tag">Redis</span><span class="tag">SQLite</span><span class="tag">Supabase</span><span class="tag">Transactional outbox</span><span class="tag">Pydantic</span><span class="tag">Zod</span></div></div>
-      <div class="sg"><h3>Cloud &amp; infrastructure <span>03</span></h3><div class="tags"><span class="tag">AWS Lambda</span><span class="tag">EventBridge</span><span class="tag">S3 + Athena</span><span class="tag">ECS Fargate</span><span class="tag">RDS Multi-AZ</span><span class="tag">ElastiCache</span><span class="tag">API Gateway</span><span class="tag">IAM + SSO</span><span class="tag">Lex V2</span><span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">Jenkins</span><span class="tag">GitHub Actions</span><span class="tag">Datadog</span><span class="tag">SonarQube</span></div></div>
-      <div class="sg"><h3>AI &amp; agents <span>04</span></h3><div class="tags"><span class="tag">Kiro agent skills + hooks</span><span class="tag">MCP servers (GitHub, Jira)</span><span class="tag">Approval gates + guardrails</span><span class="tag">Multi-agent pipelines</span><span class="tag">Claude API</span><span class="tag">OpenAI API</span><span class="tag">Gemini API</span><span class="tag">Groq, Llama 3.3</span><span class="tag">RAG (ChromaDB)</span><span class="tag">sentence-transformers</span><span class="tag">Structured outputs</span><span class="tag">Evals</span><span class="tag">Bedrock Titan embeddings</span></div></div>
-      <div class="sg"><h3>ML &amp; data science <span>05</span></h3><div class="tags"><span class="tag">scikit-learn</span><span class="tag">SciPy (SVD)</span><span class="tag">pandas</span><span class="tag">NumPy</span><span class="tag">Hugging Face Transformers</span><span class="tag">DistilBERT fine-tuning</span><span class="tag">XGBoost</span><span class="tag">Recommender systems</span><span class="tag">Error analysis</span><span class="tag">Jupyter</span></div></div>
-      <div class="sg"><h3>Frontend, mobile &amp; testing <span>06</span></h3><div class="tags"><span class="tag">React 18/19</span><span class="tag">Next.js 14/16</span><span class="tag">Tailwind v4</span><span class="tag">shadcn/ui</span><span class="tag">Chrome Extension MV3</span><span class="tag">SwiftUI + SwiftData</span><span class="tag">Accessibility (ARIA, WCAG)</span><span class="tag">Vitest</span><span class="tag">pytest</span><span class="tag">Jest</span><span class="tag">Playwright</span><span class="tag">Chaos harnesses</span></div></div>
+      <div class="sg"><h3>Languages <span>01</span></h3><div class="tags"><span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">JavaScript</span><span class="tag">Java</span><span class="tag">Swift</span><span class="tag">SQL</span><span class="tag">Terraform (HCL)</span></div></div>
+      <div class="sg"><h3>Backend &amp; data <span>02</span></h3><div class="tags"><span class="tag">FastAPI</span><span class="tag">Flask</span><span class="tag">Node.js</span><span class="tag">REST API design</span><span class="tag">PostgreSQL</span><span class="tag">DynamoDB</span><span class="tag">Redis</span><span class="tag">GraphQL</span></div></div>
+      <div class="sg"><h3>Cloud &amp; infrastructure <span>03</span></h3><div class="tags"><span class="tag">AWS Lambda</span><span class="tag">EventBridge</span><span class="tag">S3 + Athena</span><span class="tag">ECS Fargate</span><span class="tag">IAM</span><span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">GitHub Actions + Jenkins</span></div></div>
+      <div class="sg"><h3>AI &amp; agents <span>04</span></h3><div class="tags"><span class="tag">Agent skills (Kiro)</span><span class="tag">MCP servers</span><span class="tag">Approval gates + guardrails</span><span class="tag">Multi-agent pipelines</span><span class="tag">Claude API</span><span class="tag">OpenAI API</span><span class="tag">RAG (ChromaDB)</span><span class="tag">Evals</span></div></div>
+      <div class="sg"><h3>ML &amp; data science <span>05</span></h3><div class="tags"><span class="tag">scikit-learn</span><span class="tag">Hugging Face Transformers</span><span class="tag">PyTorch</span><span class="tag">pandas + NumPy</span><span class="tag">Recommender systems</span><span class="tag">Fine-tuning</span></div></div>
+      <div class="sg"><h3>Frontend, mobile &amp; testing <span>06</span></h3><div class="tags"><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Tailwind</span><span class="tag">SwiftUI</span><span class="tag">Chrome Extensions (MV3)</span><span class="tag">pytest</span><span class="tag">Vitest</span><span class="tag">Playwright</span></div></div>
     </div>
     <div class="logos" aria-hidden="true">
       <div class="logo-track">
@@ -677,9 +674,9 @@
           <div class="mono">Aug 2023 - Dec 2026</div>
         </div>
         <dl class="kv">
-          <div><dt>Coursework</dt><dd>Machine Learning, Software QA and Testing, Databases, Operating Systems, Software Engineering, Cloud Computing, Mobile Computing (iOS), Data Structures and Algorithms</dd></div>
-          <div><dt>Capstone</dt><dd><strong>MyEdMaster.</strong> AI-powered Algebra 1 tutoring platform built with React, the Gemini API and KaTeX for a sponsor under NDA. Developer on frontend, testing and Gemini integration across Scrum sprints.</dd></div>
-          <div><dt>Programs</dt><dd><strong>Grand Challenges Scholar</strong>, Ira A. Fulton Schools of Engineering (2023 to 2025). <strong>Fulton Accelerated Community Engagement</strong>, two-semester engineering leadership program (2023 to 2024).</dd></div>
+          <div><dt>Coursework</dt><dd>Machine Learning, Databases, Operating Systems, Software Engineering, Cloud Computing</dd></div>
+          <div><dt>Capstone</dt><dd><strong>MyEdMaster.</strong> AI Algebra 1 tutor built with React and the Gemini API. I own frontend, testing and the Gemini integration.</dd></div>
+          <div><dt>Programs</dt><dd><strong>Grand Challenges Scholar</strong> and the <strong>Fulton FACE</strong> engineering leadership program.</dd></div>
         </dl>
       </div>
       <div class="card">
@@ -704,7 +701,7 @@
     <h2 class="contact-title" data-split style="margin-top:16px">Let's build <em>something.</em></h2>
     <div class="contact-grid">
       <div data-reveal>
-        <p class="contact-lede">Open to full-time software engineering roles starting January 2027, with a focus on backend, cloud infrastructure, integrations and agentic AI. Anywhere in the US, in office or remote. Happy to talk through anything on this page.</p>
+        <p class="contact-lede">Open to full-time software engineering roles from January 2027: backend, cloud, integrations and agentic AI. Anywhere in the US.</p>
         <a class="email" href="#" data-email><span data-email="text">avadhav at asu.edu</span><button class="icon-btn" type="button" data-copy-email aria-label="Copy email address"><svg><use href="#i-copy"/></svg></button></a>
         <div class="contact-rows">
           <a class="crow" href="https://linkedin.com/in/aman-adhav/" target="_blank" rel="noopener"><span class="ic"><svg><use href="#i-linkedin"/></svg></span><div><small>LinkedIn</small><span>linkedin.com/in/aman-adhav</span></div><svg><use href="#i-arrow-ur"/></svg></a>
@@ -746,6 +743,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script src="main.js?v=9"></script>
+<script src="main.js?v=10"></script>
 </body>
 </html>
