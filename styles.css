@@ -37,15 +37,15 @@
 }
 
 [data-theme="dark"] {
-  --bg: #0b0b0b;
-  --bg-2: #121212;
-  --bg-3: #1b1b1b;
-  --ink: #f2f1ec;
-  --ink-2: #b7b6b0;
-  --ink-3: #8b8a85;
-  --line: rgba(255, 255, 255, 0.15);
-  --line-2: rgba(255, 255, 255, 0.075);
-  --card: #101010;
+  --bg: #0a0d0b;
+  --bg-2: #0f1210;
+  --bg-3: #171b18;
+  --ink: #f3f0e4;
+  --ink-2: #b9b7ad;
+  --ink-3: #8c8b83;
+  --line: rgba(243, 240, 228, 0.15);
+  --line-2: rgba(243, 240, 228, 0.075);
+  --card: #0e110f;
   --accent: #ff5a24;
   --ok: #3ecf74;
   color-scheme: dark;
@@ -246,12 +246,16 @@ html.no-loader .loader { display: none; }
 /* ---------- Hero ---------- */
 .hero { --hero-h: max(640px, calc(100svh - var(--nav-h))); position: relative; min-height: 100svh; padding-top: var(--nav-h); overflow: hidden; }
 .hero-inner { position: relative; height: var(--hero-h); }
-.hero-watermark {
-  position: absolute; left: 50%; top: 46%;
-  transform: translate(-50%, -50%);
-  font-size: clamp(8rem, 30vw, 34rem); font-weight: 700; letter-spacing: -0.06em; line-height: 1;
-  color: var(--bg-3); white-space: nowrap; user-select: none; pointer-events: none; z-index: 0;
+.hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(var(--line-2) 1px, transparent 1px), linear-gradient(90deg, var(--line-2) 1px, transparent 1px); background-size: 64px 64px; background-position: center top; -webkit-mask-image: radial-gradient(ellipse 70% 62% at 50% 48%, #000 15%, transparent 75%); mask-image: radial-gradient(ellipse 70% 62% at 50% 48%, #000 15%, transparent 75%); }
+.hero-code {
+  position: absolute; z-index: 0; right: clamp(0px, 5vw, 96px); top: 17%; margin: 0;
+  font-family: var(--font-mono); font-size: clamp(11px, 0.95vw, 14px); line-height: 1.75;
+  color: var(--ink); opacity: 0.09; white-space: pre; pointer-events: none; user-select: none; max-width: 100%; overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent); mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
 }
+.hero-code .k { color: var(--accent); }
+.hero-code .c { opacity: 0.6; }
+.code-line { display: block; margin-bottom: 10px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--accent); }
 .hero-name {
   position: absolute; left: 50%; width: 100vw; top: 50%;
   transform: translate(-50%, -46%);
@@ -291,6 +295,11 @@ html.no-loader .loader { display: none; }
 .hero-scroll i { position: relative; width: 1px; height: 48px; background: var(--line); overflow: hidden; display: block; }
 .hero-scroll i::after { content: ''; position: absolute; left: 0; top: -100%; width: 100%; height: 100%; background: var(--accent); animation: drop 1.8s var(--ease-in-out) infinite; }
 @keyframes drop { 0% { top: -100%; } 60%, 100% { top: 100%; } }
+
+/* Numbers in the code font: the figures are the proof, so they get the engineer's typeface. */
+.hs b, .stat b, .fig b, .big-figs b, .xp-figs b, .gpa b, .cq-metric b, .viz-foot div b, .t-score { font-family: var(--font-mono); font-weight: 500; letter-spacing: -0.02em; }
+/* Faint colour fringe on display type in the dark theme, after the reference. */
+[data-theme="dark"] .hero-name, [data-theme="dark"] .sec-title, [data-theme="dark"] .contact-title, [data-theme="dark"] .tl-role, [data-theme="dark"] .case-title { text-shadow: -1px 0 rgba(255, 96, 64, 0.22), 1px 0 rgba(96, 196, 255, 0.18); }
 
 /* ---------- Ticker ---------- */
 .ticker { position: relative; overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 16px 0; background: var(--bg); z-index: 2; }
@@ -800,7 +809,7 @@ footer { border-top: 1px solid var(--line); padding: 26px 0; }
   .xp-tog { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
 
   .hero-inner { height: auto; min-height: 0; display: flex; flex-direction: column; gap: 28px; padding: 16px 0 40px; }
-  .hero-watermark { top: 30%; font-size: 38vw; }
+  .hero-code { display: none; }
   .hero-kicker, .hero-role, .hero-name, .hero-social, .hero-scroll, .hero-bio { position: static; transform: none; max-width: none; text-align: left; }
   .hero-name { width: auto; padding: 0; clip-path: none; }
   .hero-name .track { display: block; }
